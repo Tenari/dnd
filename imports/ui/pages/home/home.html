@@ -1,0 +1,16 @@
+<template name="App_home">
+  {{> loginButtons}}
+  {{#if currentUser}}
+    <div>
+      <a href="/game/create">create a game</a>
+      <p>join a game!</p>
+      <ul>
+        {{#each games}}
+          {{> game_card}}
+        {{/each}}
+      </ul>
+    </div>
+  {{else}}
+    <p>you gotta sign in to play or create a game</p>
+  {{/if}}
+</template>

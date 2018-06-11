@@ -1,0 +1,35 @@
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+
+// Import needed templates
+import '../../ui/layouts/body/body.js';
+import '../../ui/pages/home/home.js';
+import '../../ui/pages/create-game/create-game.js';
+import '../../ui/pages/game-details/game-details.js';
+import '../../ui/pages/not-found/not-found.js';
+
+// Set up all routes in the app
+FlowRouter.route('/', {
+  name: 'App.home',
+  action() {
+    BlazeLayout.render('App_body', { main: 'App_home' });
+  },
+});
+FlowRouter.route('/game/create', {
+  name: 'Game.create',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Game_create' });
+  },
+});
+FlowRouter.route('/game/:_id', {
+  name: 'Game.details',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Game_details' });
+  },
+});
+
+FlowRouter.notFound = {
+  action() {
+    BlazeLayout.render('App_body', { main: 'App_notFound' });
+  },
+};
