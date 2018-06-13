@@ -6,6 +6,7 @@ import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
+import '../../ui/pages/character-create/character-create.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
@@ -25,6 +26,12 @@ FlowRouter.route('/game/:_id', {
   name: 'Game.details',
   action() {
     BlazeLayout.render('App_body', { main: 'Game_details' });
+  },
+});
+FlowRouter.route('/game/:_id/character/create', {
+  name: 'Character.create',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Character_create' });
   },
 });
 

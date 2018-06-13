@@ -1,4 +1,4 @@
-// All links-related publications
+// All games-related publications
 
 import { Meteor } from 'meteor/meteor';
 import { Games } from '../games.js';

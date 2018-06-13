@@ -8,9 +8,10 @@ Template.Game_create.events({
 
     const target = event.target;
     const name = target.name;
+    const description = target.description;
     const password = target.password;
 
-    Meteor.call('games.insert', name.value, password.value, (error) => {
+    Meteor.call('games.insert', name.value, description.value, password.value, (error) => {
       if (error) {
         alert(error.error);
       } else {

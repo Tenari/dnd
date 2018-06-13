@@ -1,12 +1,13 @@
 // Definition of the Characters collection
 
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'aldeed:simple-schema';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Characters = new Mongo.Collection('characters');
 
 Characters.schema = new SimpleSchema({
   gameId: {type: String},
+  userId: {type: String},
   name: {type: String},
   race: {type: String},
   klass: {type: String},

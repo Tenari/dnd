@@ -1,0 +1,34 @@
+<template name="Character_create">
+  <p>Design your character:</p>
+  <form class="character-create-form">
+    <p>What is your name?: <input type="text" name="name" class="character-name"/></p>
+    {{#if reactiveVar 'name'}}
+      <p>Pick a race: {{> dropdown options=races className='races'}}</p>
+      {{#if reactiveVar 'race'}}
+        <p>Racial bonus: {{racialBonus}}</p>
+        <p>Pick a class: {{> dropdown options=classes className='classes'}}</p>
+        {{#if reactiveVar 'klass'}}
+          <p>Class bonus: {{classBonus}}</p>
+          <ul class="abilities-list">
+            <p>remaining buy points: {{reactiveVar 'buyPoints'}}</p>
+            {{#each ability in abilities}}
+              <li>
+                <span class="ability-label">{{ability.label}}</span>
+                <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
+                {{racialBonusFor ability}}
+                {{#if canSelectAbility}}
+                  <button class="select-ability-bonus" data-key="{{ability.key}}">Select as racial bonus</button>
+                {{/if}}
+              </li>
+            {{/each}}
+          </ul>
+          {{#unless reactiveVar 'buyPoints'}}
+            <p>Choose your skills</p>
+            <div class="skills-list">
+            </div>
+          {{/unless}}
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  </form>
+</template>
