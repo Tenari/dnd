@@ -2,13 +2,30 @@
   <p>Design your character:</p>
   <form class="character-create-form">
     <p>What is your name?: <input type="text" name="name" class="character-name"/></p>
+    <p>Gender: {{> dropdown options=genders className='genders'}}</p>
+    <p>Alignment: {{> dropdown options=alignments className='alignments'}}</p>
     {{#if reactiveVar 'name'}}
       <p>Pick a race: {{> dropdown options=races className='races'}}</p>
       {{#if reactiveVar 'race'}}
         <p>Racial bonus: {{racialBonus}}</p>
+        <p>Double Proficiencies: {{doubleProficiencies}}</p>
+        <p>Proficiencies: {{proficiencies}}</p>
+        {{#if extraProficiencies}}
+          <p>Choose extra proficiencies</p>
+          {{#each prof in proficiencyChoices}}
+            {{> dropdown options=availableProficiencies className='proficiency-select' key=prof}}
+          {{/each}}
+        {{/if}}
+        <p>Languages: {{reactiveVar 'languages'}}</p>
+        {{#if extraLanguages}}
+          <p>Choose extra languages</p>
+          {{#each lang in languageChoices}}
+            {{> dropdown options=languages className='language-select' key=lang}}
+          {{/each}}
+        {{/if}}
         <p>Pick a class: {{> dropdown options=classes className='classes'}}</p>
         {{#if reactiveVar 'klass'}}
-          <p>Class bonus: {{classBonus}}</p>
+          <p>Class description: {{classDescription}}</p>
           <ul class="abilities-list">
             <p>remaining buy points: {{reactiveVar 'buyPoints'}}</p>
             {{#each ability in abilities}}
@@ -16,16 +33,13 @@
                 <span class="ability-label">{{ability.label}}</span>
                 <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
                 {{racialBonusFor ability}}
-                {{#if canSelectAbility}}
-                  <button class="select-ability-bonus" data-key="{{ability.key}}">Select as racial bonus</button>
-                {{/if}}
               </li>
             {{/each}}
           </ul>
           {{#unless reactiveVar 'buyPoints'}}
-            <p>Choose your skills</p>
-            <div class="skills-list">
-            </div>
+            {{#if classIs 'cleric'}}
+              {{> clericSetup domain=currentDomain}}
+            {{/if}}
           {{/unless}}
         {{/if}}
       {{/if}}

@@ -9,6 +9,7 @@ export const RACES = {
     proficiencies: ['light_armor', 'medium_armor', 'battleaxe', 'handaxe', 'light_hammer', 'warhammer'],
     resistances: ['poison'],
     saving_throw_advantages: ['poison'],
+    languages: ['common', 'dwarvish'],
  //   extra_feature: 'dwarven_armor_training', // You have profciency with light and medium armor.
 // Dwarven Resilience. You have advantage on saving throws against poison, and you have resistance against poison damage (explained in chapter 9).
 //Dwarven Combat Training. You have profciency with the battleaxe, handaxe, light hammer, and warhammer.
@@ -25,6 +26,8 @@ export const RACES = {
 //    extra_feature: 'dwarven_toughness', // Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.
     resistances: ['poison'],
     saving_throw_advantages: ['poison'],
+    proficiencies: [],
+    languages: ['common', 'dwarvish'],
   },
   high_elf: {
     label: 'High Elf',
@@ -37,6 +40,8 @@ export const RACES = {
     sleep: 'trance',
     inte_bonus: 1,
     extra_wizard_cantrips: 1,
+    features: ['extra_language'],
+    languages: ['common', 'elvish'],
   },
   wood_elf: {
     label: 'Wood Elf',
@@ -48,6 +53,7 @@ export const RACES = {
     saving_throw_advantages: ['charmed'],
     sleep: 'trance',
     wis_bonus: 1,
+    languages: ['common', 'elvish'],
   },
   human: {
     label: 'Human',
@@ -59,6 +65,9 @@ export const RACES = {
     inte_bonus: 1,
     wis_bonus: 1,
     cha_bonus: 1,
+    proficiencies: [],
+    languages: ['common'],
+    features: ['extra_language'],
   },
   lightfoot_halfling: {
     label: 'Lightfoot Halfling',
@@ -67,8 +76,10 @@ export const RACES = {
     lucky: true, // When you roll a 1 on the d20 for an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.
     dex_bonus: 2,
     saving_throw_advantages: ['frightened'],
-    nimbleness: true, //You can move through the space of any creature that is of a size larger than yours.
+    features: ['nimbleness'],//You can move through the space of any creature that is of a size larger than yours.
     cha_bonus: 1,
+    proficiencies: [],
+    languages: ['common', 'halfling'],
     //Naturally Stealthy. You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.
   },
   stout_halfling: {
@@ -81,5 +92,75 @@ export const RACES = {
     resistances: ['poison'],
     nimbleness: true, //You can move through the space of any creature that is of a size larger than yours.
     con_bonus: 1,
+    proficiencies: [],
+    languages: ['common', 'halfling'],
   },
+  dragonborn: {
+    label: 'Dragonborn',
+    size: 'medium',
+    speed: 6,
+    str_bonus: 2,
+    cha_bonus: 1,
+    features: ['draconic_ancestry'],
+    languages: ['common', 'draconic'],
+  },
+  forest_gnome: {
+    label: 'Forest Gnome',
+    size: 'small',
+    speed: 5,
+    inte_bonus: 2,
+    vision: 'darkvision',
+    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
+    dex_bonus: 1,
+    spells: ['minor_illusion'],
+    features: ['speak_with_small_beasts'],
+    languages: ['common', 'gnomish'],
+  },
+  rock_gnome: {
+    label: 'Rock Gnome',
+    size: 'small',
+    speed: 5,
+    inte_bonus: 2,
+    vision: 'darkvision',
+    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
+    con_bonus: 1,
+    double_proficiencies: ['inte_history'],
+    proficiencies: ['artisan_tools'],
+    tiny_clockwork_device: true,
+    languages: ['common', 'gnomish'],
+  },
+  half_elf: {
+    label: 'Half-Elf',
+    cha_bonus: 2,
+    two_other_bonus: 1,
+    size: 'medium',
+    speed: 6,
+    vision: 'darkvision',
+    saving_throw_advantages: ['charmed'],
+    proficiency_options: ['skill', 'skill'],
+    languages: ['common', 'elvish'],
+    features: ['extra_language'],
+  },
+  half_orc: {
+    label: 'Half-Orc',
+    str_bonus: 2,
+    con_bonus: 1,
+    size: 'medium',
+    speed: 6,
+    vision: 'darkvision',
+    proficiencies: ['intimidation'],
+    features: ['relentless_endurance', 'savage_attacks'],
+    languages: ['common', 'orc'],
+  },
+  tiefling: {
+    label: 'Tiefling',
+    inte_bonus: 1,
+    cha_bonus: 2,
+    size: 'medium',
+    speed: 6,
+    vision: 'darkvision',
+    resistances: ['fire'],
+    infernal_legacy: true, // thaumaturgy, hellish_rebuke @lvl3, darkness @lvl5
+    languages: ['common', 'infernal'],
+  }
 };
