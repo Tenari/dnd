@@ -2,20 +2,23 @@ import { Meteor } from 'meteor/meteor';
 import { ABILITIES, attributeKeyToLabel, ABILITY_SCORE_COST, PROFICIENCIES, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '../../../configs/classes.js';
+import { ITEMS } from '../../../configs/items.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './character-create.html';
 
 import '../../components/dropdown/dropdown.js';
+import '../../components/item/item.js';
 import '../../components/cleric-setup/cleric-setup.js';
 
 Template.Character_create.onCreated(function(){
   this.name = new ReactiveVar(null);
   this.gender = new ReactiveVar('male');
   this.alignment = new ReactiveVar('lg');
-  this.race = new ReactiveVar(null);
+  this.race = new ReactiveVar(_.keys(RACES)[0]);
+  this.klass = new ReactiveVar(_.keys(CLASSES)[0]);
   this.proficiencies = new ReactiveVar([]);
+  this.items = new ReactiveVar([]);
   this.doubleProficiencies = new ReactiveVar([]);
-  this.klass = new ReactiveVar(null);
   this.divineDomain = new ReactiveVar('knowledge'); //cleric only
   this.buyPoints = new ReactiveVar(27);
   this.languages = new ReactiveVar([]);
@@ -123,16 +126,56 @@ Template.Character_create.helpers({
     return _.map(klass.proficiency_options.choices, function(key){
       return {key: key, label: PROFICIENCIES[key] || key};
     })
-  }
+  },
+  remainingWealth() {
+    const instance = Template.instance();
+    return remainingWealth(instance);
+  },
+  itemsWeight(){
+    const instance = Template.instance();
+    let weight = 0;
+    _.each(instance.items.get(), function(itemKey){
+      weight += ITEMS[itemKey].weight;
+    });
+    return weight;
+  },
+  carryingCapacity(){
+    const raceStrBonus = RACES[Template.instance().race.get()].str_bonus || 0;
+    return (Template.instance().str.get() + raceStrBonus) * 15;
+  },
+  myItems() {
+    return _.map(Template.instance().items.get(), function(key){
+      let obj = ITEMS[key];
+      obj.key = key;
+      return obj;
+    });
+  },
+  shopItems() {
+    return _.map(ITEMS, function(obj, key){
+      obj.key = key;
+      return obj;
+    });
+  },
 })
 
+function remainingWealth(instance) {
+  const klass = CLASSES[instance.klass.get()];
+  let wealth = klass.wealth;
+  _.each(instance.items.get(), function(itemKey){
+    wealth -= ITEMS[itemKey].cost;
+  });
+  return wealth;
+}
 function updateProficienciesAndLanguages(instance) {
   const race = RACES[instance.race.curValue];
   const klass = CLASSES[instance.klass.curValue];
   const raceProfs = (race && race.proficiencies) || [];
   const klassProfs = (klass && klass.proficiencies) || [];
   let profs = _.union(raceProfs, klassProfs);
-  instance.proficiencies.set(profs);
+  $('select.proficiency-select').each(function(){
+    profs.push($(this).val());
+  })
+  instance.proficiencies.set(_.uniq(profs));
 
   let dlbProfs = [];
   $('select.double-proficiency-select').each(function(){
@@ -141,7 +184,11 @@ function updateProficienciesAndLanguages(instance) {
   instance.doubleProficiencies.set(_.uniq(dlbProfs));
 
   const raceLangs = (race && race.languages) || [];
-  instance.languages.set(_.uniq(raceLangs));
+  let langs = _.uniq(raceLangs);
+  $('select.language-select').each(function(){
+    langs.push($(this).val());
+  })
+  instance.languages.set(_.uniq(langs));
 }
 
 function extraLanguages() {
@@ -187,23 +234,10 @@ Template.Character_create.events({
     updateProficienciesAndLanguages(instance);
   },
   'change select.language-select'(e, instance){
-    const race = RACES[instance.race.get()];
-    let langs = _.uniq((race && race.languages) || []);
-    $('select.language-select').each(function(){
-      langs.push($(this).val());
-    })
-    instance.languages.set(_.uniq(langs));
+    updateProficienciesAndLanguages(instance);
   },
   'change select.proficiency-select'(e, instance){
-    const race = RACES[instance.race.curValue];
-    const klass = CLASSES[instance.klass.curValue];
-    const raceProfs = (race && race.proficiencies) || [];
-    const klassProfs = (klass && klass.proficiencies) || [];
-    let profs = _.union(raceProfs, klassProfs);
-    $('select.proficiency-select').each(function(){
-      profs.push($(this).val());
-    })
-    instance.proficiencies.set(_.uniq(profs));
+    updateProficienciesAndLanguages(instance);
   },
   'change select.double-proficiency-select'(e, instance){
     let profs = [];
@@ -234,4 +268,66 @@ Template.Character_create.events({
       instance.buyPoints.set(currentPoints-cost);
     }
   },
+  'click .item-list>li'(e, instance) {
+    const key = $(e.currentTarget).data('key');
+    const item = ITEMS[key];
+    if (item && remainingWealth(instance) >= item.cost) {
+      let items = _.map(instance.items.curValue, function(a){return a});
+      items.push(key);
+      instance.items.set(items);
+    }
+  },
+  'click .bought-items>li'(e, instance) {
+    const key = $(e.currentTarget).data('key');
+    let arr = JSON.parse(JSON.stringify(instance.items.curValue));
+    let index = _.indexOf(arr, key);
+    arr.splice(index, 1)
+    instance.items.set(arr);
+  },
+  'click button.submit-character'(e, instance) {
+    e.preventDefault();
+    const gameId = FlowRouter.getParam('_id');
+    const userId = Meteor.userId();
+    const race = RACES[instance.race.curValue];
+    const klass = CLASSES[instance.klass.curValue];
+    let details = {
+      gender: $('select.genders').val(),
+      alignment: $('select.alignments').val(),
+      race: $('select.races').val(),
+      klass: $('select.classes').val(),
+      items: instance.items.curValue,
+    };
+    _.each(_.keys(ABILITIES), function(key, index) {
+      const raceBonus = race[key+'_bonus'] || 0;
+      details[key] = instance[key].curValue + raceBonus;
+    });
+    const raceProfs = (race && race.proficiencies) || [];
+    const klassProfs = (klass && klass.proficiencies) || [];
+    let profs = _.union(raceProfs, klassProfs);
+    $('select.proficiency-select').each(function(){
+      profs.push($(this).val());
+    })
+    details.proficiencies = profs;
+
+    let dlbProfs = [];
+    $('select.double-proficiency-select').each(function(){
+      dlbProfs.push($(this).val());
+    })
+    details.doubleProficiencies = _.uniq(dlbProfs);
+
+    const raceLangs = (race && race.languages) || [];
+    let langs = _.uniq(raceLangs);
+    $('select.language-select').each(function(){
+      langs.push($(this).val());
+    })
+    details.languages = _.uniq(langs);
+
+    Meteor.call('characters.insert', gameId, userId, details, (error) => {
+      if (error) {
+        alert(error.error);
+      } else {
+        FlowRouter.go('Game.details', {_id: gameId});
+      }
+    });
+  }
 })

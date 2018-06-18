@@ -1,7 +1,9 @@
 import { CLASSES } from '../../../configs/classes.js';
 import { PROFICIENCIES } from '../../../configs/general.js';
+import { SPELLS } from '../../../configs/spells.js';
 import './cleric-setup.html';
 
+const cleric = CLASSES.cleric;
 const domains = CLASSES.cleric.divine_domains;
 
 Template.clericSetup.helpers({
@@ -13,7 +15,6 @@ Template.clericSetup.helpers({
   },
   extraDoubleProficiencies() {
     const opts = domains[Template.instance().data.domain].double_proficiency_options;
-    console.log(opts);
     return opts && opts.choose;
   },
   proficiencyChoices() {
@@ -30,5 +31,10 @@ Template.clericSetup.helpers({
       return {label: PROFICIENCIES[key] || key, value: key};
     })
   },
+  availableCantrips() {
+    return _.map(cleric.spellcasting_details.spells[0], function(key) {
+      return {value: key, label: (SPELLS[key] && SPELLS[key].label) || key};
+    })
+  }
   //domains[Template.instance().data.domain]
 })

@@ -1,10 +1,19 @@
 <template name="clericSetup">
-  <p>Clerics has a feature called "Divine Domain" which requires you to choose a domain to specialize in.</p>
+  <p>Clerics have a feature called "Divine Domain" which requires you to choose a domain to specialize in.</p>
   {{> dropdown options=divineDomains className='divine-domain'}}
   <p>Bonus spells at lvl 1: {{spells}}</p>
   {{#if extraDoubleProficiencies}}
-    {{#each prof in proficiencyChoices}}
-      {{> dropdown options=availableProficiencies className='double-proficiency-select'}}
-    {{/each}}
+    <p>
+      Choose extra double proficiencies
+      {{#each prof in proficiencyChoices}}
+        {{> dropdown options=availableProficiencies className='double-proficiency-select'}}
+      {{/each}}
+    </p>
   {{/if}}
+  <p>
+    Cantrips:
+    {{> dropdown options=availableCantrips className='cantrip-select'}}
+    {{> dropdown options=availableCantrips className='cantrip-select'}}
+    {{> dropdown options=availableCantrips className='cantrip-select'}}
+  </p>
 </template>

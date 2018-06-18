@@ -1,48 +1,60 @@
 <template name="Character_create">
   <p>Design your character:</p>
   <form class="character-create-form">
-    <p>What is your name?: <input type="text" name="name" class="character-name"/></p>
-    <p>Gender: {{> dropdown options=genders className='genders'}}</p>
-    <p>Alignment: {{> dropdown options=alignments className='alignments'}}</p>
+    <p>What is your name?: <input type="text" name="name" class="character-name"/> Gender: {{> dropdown options=genders className='genders'}} Alignment: {{> dropdown options=alignments className='alignments'}}</p>
     {{#if reactiveVar 'name'}}
-      <p>Pick a race: {{> dropdown options=races className='races'}}</p>
-      {{#if reactiveVar 'race'}}
-        <p>Racial bonus: {{racialBonus}}</p>
-        <p>Double Proficiencies: {{doubleProficiencies}}</p>
-        <p>Proficiencies: {{proficiencies}}</p>
-        {{#if extraProficiencies}}
-          <p>Choose extra proficiencies</p>
+      <p>Pick a race: {{> dropdown options=races className='races'}} Pick a class: {{> dropdown options=classes className='classes'}}</p>
+      <p>Class description: {{classDescription}}</p>
+      <p>Racial bonus: {{racialBonus}}</p>
+      <ul class="abilities-list">
+        <p>remaining buy points: {{reactiveVar 'buyPoints'}}</p>
+        {{#each ability in abilities}}
+          <li>
+            <span class="ability-label">{{ability.label}}</span>
+            <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
+            {{racialBonusFor ability}}
+          </li>
+        {{/each}}
+      </ul>
+      {{#if classIs 'cleric'}}
+        {{> clericSetup domain=currentDomain}}
+      {{/if}}
+      <p>Double Proficiencies: {{doubleProficiencies}}</p>
+      <p>Proficiencies: {{proficiencies}}</p>
+      {{#if extraProficiencies}}
+        <p>
+          Choose extra proficiencies
           {{#each prof in proficiencyChoices}}
             {{> dropdown options=availableProficiencies className='proficiency-select' key=prof}}
           {{/each}}
-        {{/if}}
-        <p>Languages: {{reactiveVar 'languages'}}</p>
-        {{#if extraLanguages}}
-          <p>Choose extra languages</p>
+        </p>
+      {{/if}}
+      <p>Languages: {{reactiveVar 'languages'}}</p>
+      {{#if extraLanguages}}
+        <p>
+          Choose extra languages
           {{#each lang in languageChoices}}
             {{> dropdown options=languages className='language-select' key=lang}}
           {{/each}}
-        {{/if}}
-        <p>Pick a class: {{> dropdown options=classes className='classes'}}</p>
-        {{#if reactiveVar 'klass'}}
-          <p>Class description: {{classDescription}}</p>
-          <ul class="abilities-list">
-            <p>remaining buy points: {{reactiveVar 'buyPoints'}}</p>
-            {{#each ability in abilities}}
-              <li>
-                <span class="ability-label">{{ability.label}}</span>
-                <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
-                {{racialBonusFor ability}}
-              </li>
-            {{/each}}
-          </ul>
-          {{#unless reactiveVar 'buyPoints'}}
-            {{#if classIs 'cleric'}}
-              {{> clericSetup domain=currentDomain}}
-            {{/if}}
-          {{/unless}}
-        {{/if}}
+        </p>
       {{/if}}
+      <h4>Buy Items</h4>
+      <p>Remaining Wealth: {{remainingWealth}}gp | Total weight: {{itemsWeight}}lbs / {{carryingCapacity}}lbs</p>
+      <div class="items-buy">
+        <ul class="bought-items">
+          {{#each myItems}}
+            <li data-key="{{key}}">{{> item}}</li>
+          {{/each}}
+        </ul>
+        <ul class="item-list">
+          {{#each shopItems}}
+            <li data-key="{{key}}">{{> item}}</li>
+          {{/each}}
+        </ul>
+      </div>
+      {{#unless reactiveVar 'buyPoints'}}
+        <button class="submit-character">CREATE CHARACTER!!!</button>
+      {{/unless}}
     {{/if}}
   </form>
 </template>
