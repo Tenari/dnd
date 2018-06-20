@@ -11,24 +11,33 @@ import '../../components/item/item.js';
 import '../../components/cleric-setup/cleric-setup.js';
 
 Template.Character_create.onCreated(function(){
+  const that = this;
   this.name = new ReactiveVar(null);
   this.gender = new ReactiveVar('male');
   this.alignment = new ReactiveVar('lg');
+
   this.race = new ReactiveVar(_.keys(RACES)[0]);
   this.klass = new ReactiveVar(_.keys(CLASSES)[0]);
+
   this.proficiencies = new ReactiveVar([]);
-  this.items = new ReactiveVar([]);
   this.doubleProficiencies = new ReactiveVar([]);
+  this.languages = new ReactiveVar([]);
+  this.items = new ReactiveVar([]);
+
   this.divineDomain = new ReactiveVar('knowledge'); //cleric only
   this.buyPoints = new ReactiveVar(27);
-  this.languages = new ReactiveVar([]);
-  let that = this;
+  this.itemFilter = new ReactiveVar('');
+  this.itemsTab = new ReactiveVar(null);
+
   _.each(_.keys(ABILITIES), function(key, index) {
     that[key] = new ReactiveVar(8);
   })
 })
 
 Template.Character_create.helpers({
+  itemsTab(key){
+    return Template.instance().itemsTab.get() == key;
+  },
   classIs(compare) {
     return Template.instance().klass.get() == compare;
   },
@@ -124,7 +133,7 @@ Template.Character_create.helpers({
     const instance = Template.instance();
     const klass = CLASSES[instance.klass.get()];
     return _.map(klass.proficiency_options.choices, function(key){
-      return {key: key, label: PROFICIENCIES[key] || key};
+      return {value: key, label: PROFICIENCIES[key] || key};
     })
   },
   remainingWealth() {
@@ -151,10 +160,32 @@ Template.Character_create.helpers({
     });
   },
   shopItems() {
-    return _.map(ITEMS, function(obj, key){
-      obj.key = key;
-      return obj;
-    });
+    const filter = Template.instance().itemFilter.get().toLowerCase();
+    return _.select(
+      _.map(ITEMS, function(obj, key){
+        obj.key = key;
+        return obj;
+      }),
+      function(item){
+        return item.key.indexOf(filter) != -1 ||
+               item.name.toLowerCase().indexOf(filter) != -1 ||
+               item.type.indexOf(filter) != -1;
+      }
+    );
+  },
+  itemChoice() {
+    const instance = Template.instance();
+    const klass = CLASSES[instance.klass.get()];
+    return _.map(klass.item_options, function(choicesArr) {
+      return _.map(choicesArr, function(itemList, index){
+        return {label: _.map(itemList, function(itemKey) {return (ITEMS[itemKey] && ITEMS[itemKey].name) || itemKey;}).join(', '), value: index};
+      })
+    })
+  },
+  freeItems() {
+    return _.map(CLASSES[Template.instance().klass.get()].items, function(itemKey){
+      return (ITEMS[itemKey] && ITEMS[itemKey].name) || itemKey;
+    }).join(', ');
   },
 })
 
@@ -212,8 +243,8 @@ function extraLanguages() {
 }
 
 Template.Character_create.events({
-  'keypress input.character-name'(e, instance){
-    instance.name.set($(e.currentTarget).val());
+  'keyup input.character-name'(e, instance){
+    instance.name.set(e.currentTarget.value);
   },
   'change select.genders'(e, instance){
     instance.gender.set($(e.currentTarget).val());
@@ -269,7 +300,7 @@ Template.Character_create.events({
     }
   },
   'click .item-list>li'(e, instance) {
-    const key = $(e.currentTarget).data('key');
+    const key = $(e.currentTarget).attr('data-key');
     const item = ITEMS[key];
     if (item && remainingWealth(instance) >= item.cost) {
       let items = _.map(instance.items.curValue, function(a){return a});
@@ -278,11 +309,17 @@ Template.Character_create.events({
     }
   },
   'click .bought-items>li'(e, instance) {
-    const key = $(e.currentTarget).data('key');
+    const key = $(e.currentTarget).attr('data-key');
     let arr = JSON.parse(JSON.stringify(instance.items.curValue));
     let index = _.indexOf(arr, key);
     arr.splice(index, 1)
     instance.items.set(arr);
+  },
+  'click a.items-tab'(e, instance){
+    instance.itemsTab.set($(e.currentTarget).data('tab'));
+  },
+  'keyup input.item-filter'(e, instance) {
+    instance.itemFilter.set(e.currentTarget.value);
   },
   'click button.submit-character'(e, instance) {
     e.preventDefault();
@@ -291,12 +328,23 @@ Template.Character_create.events({
     const race = RACES[instance.race.curValue];
     const klass = CLASSES[instance.klass.curValue];
     let details = {
+      name: $('input.character-name').val(),
       gender: $('select.genders').val(),
       alignment: $('select.alignments').val(),
       race: $('select.races').val(),
       klass: $('select.classes').val(),
-      items: instance.items.curValue,
     };
+    if (instance.itemsTab.curValue == 'choose') {
+      let itemsArr = JSON.parse(JSON.stringify(klass.items));
+      let index = 0;
+      $('select.item-choice').each(function(){
+        itemsArr.push(klass.item_options[index][$(this).val()]);
+        index += 1;
+      })
+      details.items = _.flatten(itemsArr);
+    } else {
+      details.items = instance.items.curValue;
+    }
     _.each(_.keys(ABILITIES), function(key, index) {
       const raceBonus = race[key+'_bonus'] || 0;
       details[key] = instance[key].curValue + raceBonus;

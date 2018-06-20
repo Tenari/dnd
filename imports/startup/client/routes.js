@@ -7,6 +7,8 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
+import '../../ui/pages/dm/dm.js';
+import '../../ui/pages/play/play.js';
 import '../../ui/pages/not-found/not-found.js';
 
 // Set up all routes in the app
@@ -32,6 +34,18 @@ FlowRouter.route('/game/:_id/character/create', {
   name: 'Character.create',
   action() {
     BlazeLayout.render('App_body', { main: 'Character_create' });
+  },
+});
+FlowRouter.route('/game/:_id/dm-play', {
+  name: 'Game.dm',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Game_dm' });
+  },
+});
+FlowRouter.route('/game/:_id/play', {
+  name: 'Game.play',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Game_play' });
   },
 });
 

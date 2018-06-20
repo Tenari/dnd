@@ -1,0 +1,14 @@
+<template name="Game_dm">
+  <div>
+    Active encounter: {{activeEncounterName}} | <a href="#">New encounter</a>
+  </div>
+  <ul>
+    Encounters:
+    {{#each encounters}}
+      <li>{{name}} | type {{type}}</li>
+    {{/each}}
+  </ul>
+  <ul>
+    Characters:
+  </ul>
+</template>

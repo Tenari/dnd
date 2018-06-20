@@ -16,8 +16,8 @@ export const CLASSES = {
     },
     wealth: 50,
     item_options: [
-      [['greataxe'],['martial_melee_weapon']],
-      [['handaxe', 'handaxe'], ['simple_weapon']],
+      [['greataxe'],['battleaxe'],['flail'],['glaive'],['greatsword'],['halberd'],['lance'],['longsword'],['maul'],['morningstar'],['pike'],['rapier'],['scimitar'],['shortsword'],['trident'],['war_pick'],['warhammer'],['whip']],
+      [['hand_axe', 'hand_axe'], ['club'],['dagger'],['greatclub'],['javelin'],['light_hammer'],['mace'],['quarterstaff'],['sickle'],['spear'],['dart'],['shortbow'],['sling'],['light_crossbow']],
     ],
     items: ['explorer_pack','javelin', 'javelin', 'javelin', 'javelin'],
     features: {
@@ -49,7 +49,7 @@ export const CLASSES = {
     item_options: [
       [['mace'],['warhammer']],
       [['scale_mail'], ['leather_armor'],['chain_mail']],
-      [['light_crossbow', 'bolt_20'], ['simple_weapon']],
+      [['light_crossbow', 'bolt_20'], ['club'],['dagger'],['greatclub'],['hand_axe'],['javelin'],['light_hammer'],['mace'],['quarterstaff'],['sickle'],['spear'],['dart'],['shortbow'],['sling']],
       [['priest_pack'],['explorer_pack']],
     ],
     items: ['shield','holy_symbol'],
@@ -61,7 +61,6 @@ export const CLASSES = {
       ability: 'wis',
       ritual: true,
       focus: 'holy_symbol',
-      prepare_list: 'wis_level',
       cantrips: {
         1: 3, 2: 3, 3: 3,
         4: 4, 5: 4, 6: 4, 7: 4, 8: 4, 9: 4,

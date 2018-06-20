@@ -1,10 +1,15 @@
 <template name="Game_details">
   {{> loginButtons}}
   <div>
-    {{name}}
+    {{gameName}}
+    <p>{{description}}</p>
+
+    {{#if isDM}}
+      <a href="/game/{{gameId}}/dm-play">Manage game as DM</a>
+    {{/if}}
 
     {{#if hasCharacter}}
-      <a href="/game/play">Play game</a>
+      <a href="/game/{{gameId}}/play">Play game</a>
     {{else}}
       <a href="/game/{{gameId}}/character/create">Create a character to join this game</a>
     {{/if}}

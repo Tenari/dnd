@@ -815,4 +815,31 @@ export const ITEMS = {
     weight: 1,
     quantity: 20,
   },
+  burglar_pack: {
+    name: 'Burglar\'s Pack',
+    type: 'gear_pack',
+    cost: 16,
+    contents: ['backpack','ball_bearing_bag','10_ft_string','bell','candle','candle','candle','candle','candle','crowbar','hammer','piton','piton','piton','piton','piton','piton','piton','piton','piton','piton','hooded_lantern','oil_flask','oil_flask','rations','rations','rations','rations','rations','tinderbox','waterskin','hempen_rope']
+  },
+  diplomat_pack: {
+    name: "Diplomat's Pack",
+    type: 'gear_pack',
+    cost: 39,
+    contents: ['chest','map_scroll_case','map_scroll_case','fine_clothes','ink_bottle','ink_pen','lamp','oil_flask','oil_flask','paper','paper','paper','paper','paper','perfume_vial','sealing_wax','soap']
+  },
+//Dungeoneer’s Pack (12 gp). Includes a backpack, a crowbar, a hammer, 10 pitons, 10 torches, a tinderbox, 10 days of rations, and a waterskin. The pack also has 50 feet of hempen rope strapped to the side of it.
+//Entertainer’s Pack (40 gp). Includes a backpack, a bedroll, 2 costumes, 5 candles, 5 days of rations, a waterskin, and a disguise kit.
+  explorer_pack: {
+    name: "Explorer's Pack",
+    type: 'gear_pack',
+    cost: 10,
+    contents: ['backpack','bedroll','mess_kit','tinderbox','torch','torch','torch','torch','torch','torch','torch','torch','torch','torch','rations','rations','rations','rations','rations','rations','rations','rations','rations','rations','waterskin','hempen_rope']
+  },
+  priest_pack: {
+    name: "Priest's Pack",
+    type: 'gear_pack',
+    cost: 19,
+    contents: ['backpack','blanket','candle','candle','candle','candle','candle','candle','candle','candle','candle','candle','tinderbox','alms_box','incense_block','incense_block','censer','vestments','rations','rations','waterskin']
+  },
+//Scholar’s Pack (40 gp). Includes a backpack, a book of lore, a bottle of ink, an ink pen, 10 sheets of parchment, a little bag of sand, and a small knife.
 };

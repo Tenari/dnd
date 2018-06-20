@@ -10,14 +10,23 @@ Template.Game_details.onCreated(function (){
 
   this.autorun(() => {
     if (games.ready()) {
+      if (Games.findOne(this.gameId) == undefined || Meteor.userId() == null) {
+        FlowRouter.go('/');
+      }
       characters = this.subscribe('game.characters', this.gameId);
     }
   })
 //  this.subscribe('characters.game');
 })
 Template.Game_details.helpers({
-  name() {
+  gameName() {
     return Games.findOne(Template.instance().gameId).name;
+  },
+  description() {
+    return Games.findOne(Template.instance().gameId).description;
+  },
+  isDM() {
+    return Meteor.userId() == Games.findOne(Template.instance().gameId).userId;
   },
   characters(){
     return Characters.find();
@@ -27,5 +36,5 @@ Template.Game_details.helpers({
   },
   gameId() {
     return FlowRouter.getParam('_id');
-  }
+  },
 })
