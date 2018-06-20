@@ -158,6 +158,37 @@ export const CLASSES = {
       [['dungeoneer_pack'],['explorer_pack']],
     ],
   },
+  ranger: {
+    label: "Ranger",
+    key: 'ranger',
+    description: 'Warriors of the wilderness, rangers specialize in hunting the monsters that threaten the edges of civilization--humanoid raiders, rampaging beasts and monstrosities, terrible giants and deadly dragons. They learn to track their quarry as a predator does, moving stealthily through the wilds and hiding themselves in brush and rubble. Rangers focus their combat training on techniques that are particularly useful against their specific favored foes.',
+    hp: {
+      base: 10,
+      gain_per_level: 6,
+    },
+    proficiencies: [
+      'light_armor','medium_armor','shield','simple_weapon','martial_weapon','str_saving_throw','dex_saving_throw'
+    ],
+    proficiency_options: {
+      choose: 3,
+      choices: ['animal_handling','athletics','insight','investigation','nature','perception','stealth','survival'],
+    },
+    wealth: 125,
+    item_options: [
+      [['scale_mail'],['leather_armor']],
+      [['shortsword','shortsword'], ['club','club'],['dagger','dagger'],['greatclub','greatclub'],['hand_axe','hand_axe'],['javelin','javelin'],['light_hammer','light_hammer'],['mace','mace'],['quarterstaff','quarterstaff'],['sickle','sickle'],['spear','spear']],
+      [['dungeoneer_pack'], ['explorer_pack']],
+    ],
+    items: ['longbow','arrow_20'],
+    features: {
+      1: ['favored_enemy', 'natural_explorer'],
+    },
+    ability_score_improvement: {
+      levels: [4, 8, 12, 16, 19],
+      max: 20,
+      points: 2,
+    }
+  },
   rogue: {
     label: "Rogue",
     key: 'rogue',
@@ -174,8 +205,8 @@ export const CLASSES = {
     },
     wealth: 100,
     item_options: [
-      [['rapier'],['short_sword']],
-      [['shortbow','arrow_20'], ['short_sword']],
+      [['rapier'],['shortsword']],
+      [['shortbow','arrow_20'], ['shortsword']],
       [['burglar_pack'], ['dungeoneer_pack'], ['explorer_pack']],
     ],
     items: ['leather_armor','dagger','dagger','theives_tools'],
