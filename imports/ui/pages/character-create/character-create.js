@@ -3,6 +3,7 @@ import { ABILITIES, attributeKeyToLabel, ABILITY_SCORE_COST, PROFICIENCIES, ALIG
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '../../../configs/classes.js';
 import { ITEMS } from '../../../configs/items.js';
+import { BACKGROUNDS } from '../../../configs/backgrounds.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './character-create.html';
 
@@ -23,6 +24,7 @@ Template.Character_create.onCreated(function(){
   this.doubleProficiencies = new ReactiveVar([]);
   this.languages = new ReactiveVar([]);
   this.items = new ReactiveVar([]);
+  this.background = new ReactiveVar(_.keys(BACKGROUNDS)[0]);
 
   this.divineDomain = new ReactiveVar('knowledge'); //cleric only
   this.buyPoints = new ReactiveVar(27);
@@ -35,6 +37,11 @@ Template.Character_create.onCreated(function(){
 })
 
 Template.Character_create.helpers({
+  backgrounds() {
+    return _.map(BACKGROUNDS, function(obj, value){
+      return {value: value, label: obj.label};
+    });
+  },
   itemsTab(key){
     return Template.instance().itemsTab.get() == key;
   },
@@ -183,9 +190,16 @@ Template.Character_create.helpers({
     })
   },
   freeItems() {
-    return _.map(CLASSES[Template.instance().klass.get()].items, function(itemKey){
+    const klassItems = CLASSES[Template.instance().klass.get()].items;
+    const bgItems = BACKGROUNDS[Template.instance().background.get()].items;
+    let arr = _.clone(klassItems);
+    arr.push(bgItems);
+    return _.map(_.flatten(arr), function(itemKey){
       return (ITEMS[itemKey] && ITEMS[itemKey].name) || itemKey;
     }).join(', ');
+  },
+  bgGp() {
+    return BACKGROUNDS[Template.instance().background.get()].wealth;
   },
 })
 
@@ -197,16 +211,21 @@ function remainingWealth(instance) {
   });
   return wealth;
 }
-function updateProficienciesAndLanguages(instance) {
+function computeProficiencies(instance) {
   const race = RACES[instance.race.curValue];
   const klass = CLASSES[instance.klass.curValue];
+  const bg = BACKGROUNDS[instance.background.curValue];
   const raceProfs = (race && race.proficiencies) || [];
   const klassProfs = (klass && klass.proficiencies) || [];
-  let profs = _.union(raceProfs, klassProfs);
+  const bgProfs = (bg && bg.proficiencies) || [];
+  let profs = _.union(raceProfs, klassProfs, bgProfs);
   $('select.proficiency-select').each(function(){
     profs.push($(this).val());
   })
-  instance.proficiencies.set(_.uniq(profs));
+  return _.uniq(profs);
+}
+function updateProficienciesAndLanguages(instance) {
+  instance.proficiencies.set(computeProficiencies(instance));
 
   let dlbProfs = [];
   $('select.double-proficiency-select').each(function(){
@@ -214,6 +233,7 @@ function updateProficienciesAndLanguages(instance) {
   })
   instance.doubleProficiencies.set(_.uniq(dlbProfs));
 
+  const race = RACES[instance.race.curValue];
   const raceLangs = (race && race.languages) || [];
   let langs = _.uniq(raceLangs);
   $('select.language-select').each(function(){
@@ -227,11 +247,17 @@ function extraLanguages() {
   const instance = Template.instance();
   const race = RACES[instance.race.get()];
   const klass = CLASSES[instance.klass.get()];
+  const background = BACKGROUNDS[instance.background.get()];
   _.each(race.features, function(f){
     if (f == 'extra_language') {
       total += 1;
     }
   });
+  _.each(background.features, function(f) {
+    if (f == 'extra_language') {
+      total += 1;
+    }
+  })
   if (klass && klass.key == 'cleric') {
     _.each(klass.divine_domains[instance.divineDomain.get()].features, function(b){
       if (b == 'extra_language') {
@@ -268,6 +294,10 @@ Template.Character_create.events({
     updateProficienciesAndLanguages(instance);
   },
   'change select.proficiency-select'(e, instance){
+    updateProficienciesAndLanguages(instance);
+  },
+  'change select.background-select'(e, instance){
+    instance.background.set($(e.currentTarget).val());
     updateProficienciesAndLanguages(instance);
   },
   'change select.double-proficiency-select'(e, instance){
@@ -336,26 +366,24 @@ Template.Character_create.events({
     };
     if (instance.itemsTab.curValue == 'choose') {
       let itemsArr = JSON.parse(JSON.stringify(klass.items));
+      itemsArr.push(BACKGROUNDS[instance.background.curValue].items);
       let index = 0;
       $('select.item-choice').each(function(){
         itemsArr.push(klass.item_options[index][$(this).val()]);
         index += 1;
       })
       details.items = _.flatten(itemsArr);
+      details.wealth = BACKGROUNDS[instance.background.curValue].wealth;
     } else {
       details.items = instance.items.curValue;
+      details.wealth = remainingWealth(instance);
     }
     _.each(_.keys(ABILITIES), function(key, index) {
       const raceBonus = race[key+'_bonus'] || 0;
       details[key] = instance[key].curValue + raceBonus;
     });
-    const raceProfs = (race && race.proficiencies) || [];
-    const klassProfs = (klass && klass.proficiencies) || [];
-    let profs = _.union(raceProfs, klassProfs);
-    $('select.proficiency-select').each(function(){
-      profs.push($(this).val());
-    })
-    details.proficiencies = profs;
+
+    details.proficiencies = computeProficiencies(instance);
 
     let dlbProfs = [];
     $('select.double-proficiency-select').each(function(){
@@ -369,6 +397,8 @@ Template.Character_create.events({
       langs.push($(this).val());
     })
     details.languages = _.uniq(langs);
+
+    details.background = instance.background.curValue;
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {

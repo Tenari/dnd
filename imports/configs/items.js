@@ -827,7 +827,12 @@ export const ITEMS = {
     cost: 39,
     contents: ['chest','map_scroll_case','map_scroll_case','fine_clothes','ink_bottle','ink_pen','lamp','oil_flask','oil_flask','paper','paper','paper','paper','paper','perfume_vial','sealing_wax','soap']
   },
-//Dungeoneer’s Pack (12 gp). Includes a backpack, a crowbar, a hammer, 10 pitons, 10 torches, a tinderbox, 10 days of rations, and a waterskin. The pack also has 50 feet of hempen rope strapped to the side of it.
+  dungeoneer_pack: {
+    name: "Dungeoneer's Pack",
+    type: 'gear_pack',
+    cost: 12,
+    contents: ['backpack','crowbar','hammer','piton','piton','piton','piton','piton','piton','piton','piton','piton','piton','torch','torch','torch','torch','torch','torch','torch','torch','torch','torch','tinderbox','rations','rations','rations','rations','rations','rations','rations','rations','rations','rations','waterskin','hempen_rope']
+  },
 //Entertainer’s Pack (40 gp). Includes a backpack, a bedroll, 2 costumes, 5 candles, 5 days of rations, a waterskin, and a disguise kit.
   explorer_pack: {
     name: "Explorer's Pack",

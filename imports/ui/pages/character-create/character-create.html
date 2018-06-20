@@ -39,6 +39,9 @@
             {{/each}}
           </p>
         {{/if}}
+        <div class="background-setup">
+          Choose a background: {{> dropdown options=backgrounds className='background-select'}}
+        </div>
         <h4><a href="javascript:void(0)" data-tab="buy" class="items-tab">Buy</a> or <a href="javascript:void(0)" data-tab="choose" class="items-tab">Choose</a> Items</h4>
         {{#if itemsTab 'buy'}}
           <p>Remaining Wealth: {{remainingWealth}}gp | Total weight: {{itemsWeight}}lbs / {{carryingCapacity}}lbs</p>
@@ -56,7 +59,8 @@
             </ul>
           </div>
         {{else if itemsTab 'choose'}}
-          Automatic Items: {{freeItems}}
+          <p>Automatic Items: {{freeItems}}</p>
+          <p>extra gp: {{bgGp}}</p>
           <div>
             {{#each list in itemChoice}}
               {{> dropdown options=list className='item-choice'}}
