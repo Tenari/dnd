@@ -55,6 +55,7 @@ export const CLASSES = {
     items: ['shield','holy_symbol'],
     features: {
       1: ['spellcasting', 'divine_domain'],
+      2: ['channel_divinity'],
     },
     spellcasting_details: {
       prepare: true,
@@ -126,7 +127,7 @@ export const CLASSES = {
           7: ['death_ward', 'guardian_of_faith'],
           9: ['mass_cure_wounds', 'raise_dead'],
         },
-        bonus: ['heavy_armor_proficiency'],
+        proficiencies: ['heavy_armor'],
         features: ['disciple_of_life'],
       }
     },

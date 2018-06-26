@@ -833,7 +833,12 @@ export const ITEMS = {
     cost: 12,
     contents: ['backpack','crowbar','hammer','piton','piton','piton','piton','piton','piton','piton','piton','piton','piton','torch','torch','torch','torch','torch','torch','torch','torch','torch','torch','tinderbox','rations','rations','rations','rations','rations','rations','rations','rations','rations','rations','waterskin','hempen_rope']
   },
-//Entertainer’s Pack (40 gp). Includes a backpack, a bedroll, 2 costumes, 5 candles, 5 days of rations, a waterskin, and a disguise kit.
+  entertainer_pack: {
+    name: "Entertainer's Pack",
+    type: 'gear_pack',
+    cost: 40,
+    contents: ['backpack','bedroll','costume','costume','candle','candle','candle','candle','candle','rations','rations','rations','rations','rations','waterskin','disguise_kit']
+  },
   explorer_pack: {
     name: "Explorer's Pack",
     type: 'gear_pack',

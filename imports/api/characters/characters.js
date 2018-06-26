@@ -2,6 +2,7 @@
 
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { PROFICIENCY_BONUS } from '../../configs/general.js';
 
 export const Characters = new Mongo.Collection('characters');
 
@@ -18,3 +19,10 @@ Characters.schema = new SimpleSchema({
   wix: {type: Number},
   cha: {type: Number},
 })
+
+Characters.helpers({
+  proficiencyBonus() {
+    return PROFICIENCY_BONUS[this.level];
+  },
+})
+

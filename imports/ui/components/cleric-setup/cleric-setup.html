@@ -1,6 +1,5 @@
 <template name="clericSetup">
-  <p>Clerics have a feature called "Divine Domain" which requires you to choose a domain to specialize in.</p>
-  {{> dropdown options=divineDomains className='divine-domain'}}
+  <p>Divine domain choice: {{> dropdown options=divineDomains className='divine-domain'}}</p>
   <p>Bonus spells at lvl 1: {{spells}}</p>
   {{#if extraDoubleProficiencies}}
     <p>

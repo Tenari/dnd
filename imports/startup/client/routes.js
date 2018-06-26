@@ -7,6 +7,7 @@ import '../../ui/pages/home/home.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
+import '../../ui/pages/encounter/encounter.js';
 import '../../ui/pages/dm/dm.js';
 import '../../ui/pages/play/play.js';
 import '../../ui/pages/not-found/not-found.js';
@@ -46,6 +47,12 @@ FlowRouter.route('/game/:_id/play', {
   name: 'Game.play',
   action() {
     BlazeLayout.render('App_body', { main: 'Game_play' });
+  },
+});
+FlowRouter.route('/game/:_id/encounter/:eid', {
+  name: 'Game.encounter',
+  action() {
+    BlazeLayout.render('App_body', { main: 'Encounter' });
   },
 });
 

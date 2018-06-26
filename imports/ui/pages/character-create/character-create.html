@@ -3,11 +3,13 @@
   <form class="character-create-form">
     <p>What is your name?: <input type="text" name="name" class="character-name"/> Gender: {{> dropdown options=genders className='genders'}} Alignment: {{> dropdown options=alignments className='alignments'}}</p>
     {{#if reactiveVar 'name'}}
-      <p>Pick a race: {{> dropdown options=races className='races'}} Pick a class: {{> dropdown options=classes className='classes'}}</p>
+      <p>Pick a race: {{> dropdown options=races className='races'}} Pick a class: {{> dropdown options=classes className='classes'}} Pick a background: {{> dropdown options=backgrounds className='background-select'}}</p>
+      <p>Race description: {{raceDescription}}</p>
       <p>Class description: {{classDescription}}</p>
       <p>Racial bonus: {{racialBonus}}</p>
+      <h4>Pick ability scores:</h4>
       <ul class="abilities-list">
-        <p>remaining buy points: {{reactiveVar 'buyPoints'}}</p>
+        remaining buy points: {{reactiveVar 'buyPoints'}}
         {{#each ability in abilities}}
           <li>
             <span class="ability-label">{{ability.label}}</span>
@@ -17,10 +19,18 @@
         {{/each}}
       </ul>
       {{#unless reactiveVar 'buyPoints'}}
+        <h4>Class features</h4>
+        {{#each feature in classFeatures}}
+          <div>
+            {{feature.label}}
+          </div>
+        {{/each}}
         {{#if classIs 'cleric'}}
           {{> clericSetup domain=currentDomain}}
         {{/if}}
-        <p>Double Proficiencies: {{doubleProficiencies}}</p>
+        {{#if doubleProficiencies}}
+          <p>Double Proficiencies: {{doubleProficiencies}}</p>
+        {{/if}}
         <p>Proficiencies: {{proficiencies}}</p>
         {{#if extraProficiencies}}
           <p>
@@ -39,9 +49,6 @@
             {{/each}}
           </p>
         {{/if}}
-        <div class="background-setup">
-          Choose a background: {{> dropdown options=backgrounds className='background-select'}}
-        </div>
         <h4><a href="javascript:void(0)" data-tab="buy" class="items-tab">Buy</a> or <a href="javascript:void(0)" data-tab="choose" class="items-tab">Choose</a> Items</h4>
         {{#if itemsTab 'buy'}}
           <p>Remaining Wealth: {{remainingWealth}}gp | Total weight: {{itemsWeight}}lbs / {{carryingCapacity}}lbs</p>

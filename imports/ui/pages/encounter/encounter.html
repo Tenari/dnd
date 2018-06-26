@@ -1,0 +1,48 @@
+<template name="Encounter">
+  {{#if isStory}}
+    {{> storyEncounter}}
+  {{else}}
+    {{> combatEncounter}}
+  {{/if}}
+</template>
+
+<template name="storyEncounter">
+  <div class="toolbar">
+    <a href="javascript:void(0)" class="add-graphic">Add graphic</a>
+    <a href="javascript:void(0)" class="end-encounter">End encounter</a>
+  </div>
+  <div class="sample-view" style="background-image: url({{currentGraphic}})">
+    It has been {{gameTime}} hours since you started adventuring.
+  </div>
+</template>
+
+<template name="combatEncounter">
+  <div class="toolbar">
+    height: <input type="number" class="height-input"/>
+    width: <input type="number" class="width-input"/>
+    <a href="javascript:void(0)" class="add-graphic">Add monster</a>
+    <a href="javascript:void(0)" class="end-encounter">End encounter</a>
+  </div>
+  {{#if addingMonster}}
+    <div class="monster-selector">
+      <input type="text" class="monster-filter"/>
+      {{#each monster in monsters}}
+        <div class="add-monster-container">
+          <p>{{monster.name}} CR: {{monster.cr}}</p>
+          x: <input type="number" class="add-monster-x-input"/>
+          y: <input type="number" class="add-monster-y-input"/>
+          <a href="#">Add</a>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+  <div class="sample-view">
+    {{#each row in rows}}
+      <div class="game-row">
+        {{#each col in columns}}
+          <div class="game-col"></div>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+</template>

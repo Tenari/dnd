@@ -1,11 +1,21 @@
 <template name="Game_dm">
   <div>
-    Active encounter: {{activeEncounterName}} | <a href="#">New encounter</a>
+    Active encounter: {{activeEncounterName}} | <a href="#" class="new-encounter">New encounter</a>
   </div>
+  {{#if reactiveVar 'makingNewEncounter'}}
+    <div class="encounter-form">
+      name: <input type="text" class="encounter-name"/> type: {{> dropdown options=encounterTypes className='encounter-type'}} <button class="create-encounter">add</button>
+    </div>
+  {{/if}}
   <ul>
     Encounters:
     {{#each encounters}}
-      <li>{{name}} | type {{type}}</li>
+      <li><a href="/game/{{gameId}}/encounter/{{_id}}">{{name}}</a> | type {{type}} |
+        {{#if activeEncounter _id}}
+          ACTIVE |
+        {{/if}}
+        <button class="activate-encounter" data-id="{{_id}}">make active encounter</button>
+      </li>
     {{/each}}
   </ul>
   <ul>

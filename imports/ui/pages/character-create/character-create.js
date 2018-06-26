@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ABILITIES, attributeKeyToLabel, ABILITY_SCORE_COST, PROFICIENCIES, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '../../../configs/classes.js';
+import { FEATURES } from '../../../configs/features.js';
 import { ITEMS } from '../../../configs/items.js';
 import { BACKGROUNDS } from '../../../configs/backgrounds.js';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -34,9 +35,17 @@ Template.Character_create.onCreated(function(){
   _.each(_.keys(ABILITIES), function(key, index) {
     that[key] = new ReactiveVar(8);
   })
+
+  updateProficienciesAndLanguages(this);
 })
 
 Template.Character_create.helpers({
+  classFeatures() {
+    const lvl1Features = CLASSES[Template.instance().klass.get()].features[1];
+    return _.map(lvl1Features, function(key){
+      return FEATURES[key] || {label: key};
+    })
+  },
   backgrounds() {
     return _.map(BACKGROUNDS, function(obj, value){
       return {value: value, label: obj.label};
@@ -76,7 +85,9 @@ Template.Character_create.helpers({
     }).join(', ');
   },
   doubleProficiencies() {
-    return _.map(Template.instance().doubleProficiencies.get(), function(key) {
+    const dp = Template.instance().doubleProficiencies.get();
+    if (dp.length == 0) return false;
+    return _.map(dp, function(key) {
       return PROFICIENCIES[key] || key;
     }).join(', ');
   },
@@ -105,6 +116,9 @@ Template.Character_create.helpers({
   },
   classDescription() {
     return CLASSES[Template.instance().klass.get()].description;
+  },
+  raceDescription() {
+    return RACES[Template.instance().race.get()].description;
   },
   abilities(){
     return _.map(ABILITIES, function(label, key) {

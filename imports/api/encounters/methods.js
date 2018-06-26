@@ -11,11 +11,17 @@ Meteor.methods({
     const userId = Meteor.userId();
     if (!game || userId != game.userId) return false; //you gotta be the DM to insert an encounter
 
+    const height = 10;
+    const width = 14;
+
     return Encounters.insert({
       gameId,
       name,
       type,
       userId,
+      graphics: [],
+      height,
+      width,
       createdAt: new Date(),
     });
   },
