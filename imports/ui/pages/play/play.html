@@ -1,9 +1,14 @@
 <template name="Game_play">
-  <div>
-    <a href="#">character sheet</a>
-    <a href="#">encounter view</a>
-    <a href="#">chat/log</a>
+  <div class="toolbar">
+    <a href="#" data-tab="character_sheet">character sheet</a>
+    <a href="#" data-tab="play_encounter">encounter view</a>
+    <a href="#" data-tab="game_chat">chat/log</a>
   </div>
   <div class="game-tab-container">
+    {{> Template.dynamic template=tab data=dataBlob}}
   </div>
+</template>
+
+<template name="play_encounter">
+  encounter: {{encounter.name}} | {{encounter.type}}
 </template>

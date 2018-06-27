@@ -8,12 +8,12 @@ import './dm.html';
 Template.Game_dm.onCreated(function(){
   this.gameId = FlowRouter.getParam('_id');
   let encounters = this.subscribe('encounters.game', this.gameId);
+  let characters = this.subscribe('game.characters', this.gameId);
   let games = this.subscribe('games.all');
   this.makingNewEncounter = new ReactiveVar(false);
 
   this.autorun(() => {
     if (encounters.ready()) {
-      
     }
   })
 })
@@ -24,6 +24,9 @@ Template.Game_dm.helpers({
   },
   encounters() {
     return Encounters.find();
+  },
+  characters() {
+    return Characters.find();
   },
   activeEncounterName() {
     const game = Games.findOne(FlowRouter.getParam('_id'));

@@ -815,6 +815,74 @@ export const ITEMS = {
     weight: 1,
     quantity: 20,
   },
+  map_scroll_case: {
+    name: 'Case, map or scroll',
+    type: 'container',
+    cost: 1,
+    weight: 1,
+    quantity: 10,
+  },
+  chain: {
+    name: 'Chain (10 feet)',
+    type: 'gear',
+    cost: 5,
+    weight: 10,
+    hp: 10,
+    destroy_check: {
+      type: 'str',
+      dc: 20
+    }
+  },
+  chalk: {
+    name: 'Chalk (1 piece)',
+    type: 'gear',
+    cost: 0.01,
+    weight: 0,
+  },
+  chest: {
+    name: 'Chest',
+    type: 'container',
+    cost: 5,
+    weight: 25,
+    capacity: 300,
+  },
+  climber_kit: {
+    name: 'Climber\'s kit',
+    type: 'gear',
+    cost: 25,
+    weight: 12,
+    // A climber’s kit includes special pitons, boot tips, gloves, and a harness. You can use the climber’s kit as an action to anchor yourself; when you do, you can’t fall more than 25 feet from the point where you anchored yourself, and you can't climb more than 25 feet away from that point without undoing the anchor.
+  },
+  common_clothes: {
+    name: 'Clothes, common',
+    type: 'gear',
+    cost: 0.5,
+    weight: 3,
+  },
+  costume_clothes: {
+    name: 'Clothes, costume',
+    type: 'gear',
+    cost: 5,
+    weight: 4,
+  },
+  fine_clothes: {
+    name: 'Clothes, common',
+    type: 'gear',
+    cost: 15,
+    weight: 6,
+  },
+  traveler_clothes: {
+    name: 'Clothes, traveler\'s',
+    type: 'gear',
+    cost: 2,
+    weight: 4,
+  },
+  component_pouch: {
+    name: 'Component pouch',
+    type: 'gear',
+    cost: 25,
+    weight: 2,
+  },
   burglar_pack: {
     name: 'Burglar\'s Pack',
     type: 'gear_pack',
@@ -851,5 +919,10 @@ export const ITEMS = {
     cost: 19,
     contents: ['backpack','blanket','candle','candle','candle','candle','candle','candle','candle','candle','candle','candle','tinderbox','alms_box','incense_block','incense_block','censer','vestments','rations','rations','waterskin']
   },
-//Scholar’s Pack (40 gp). Includes a backpack, a book of lore, a bottle of ink, an ink pen, 10 sheets of parchment, a little bag of sand, and a small knife.
+  scholar_pack: {
+    name: "Scholar's Pack",
+    type: 'gear_pack',
+    cost: 40,
+    contents: ['backpack','book','ink_bottle','ink_pen','parchment','parchment','parchment','parchment','parchment','parchment','parchment','parchment','parchment','parchment','bag_of_sand','small_knife'],
+  },
 };

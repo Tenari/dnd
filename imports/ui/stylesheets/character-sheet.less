@@ -1,0 +1,21 @@
+.character-sheet {
+  .header-row {
+    display: flex;
+    .name-box, .class-race-box {
+      width: 50%;
+      border-style: double;
+      padding: 10px;
+    }
+    .name-box {
+      border-right: none;
+    }
+    .class-race-box {
+      .class-level-background-player, .class-level-background-player-label, .race-alignment-xp, .race-alignment-xp-label {
+        display: flex;
+        &>div {
+          width: 33%;
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
 import '../../ui/pages/encounter/encounter.js';
 import '../../ui/pages/dm/dm.js';
+import '../../ui/pages/character/character.js';
 import '../../ui/pages/play/play.js';
 import '../../ui/pages/not-found/not-found.js';
 

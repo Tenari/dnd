@@ -20,5 +20,10 @@
   </ul>
   <ul>
     Characters:
+    {{#each characters}}
+      <li>
+        {{name}} | {{race}} {{klass}} | lvl {{level}}
+      </li>
+    {{/each}}
   </ul>
 </template>

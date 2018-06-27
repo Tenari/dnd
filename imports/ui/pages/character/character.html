@@ -1,0 +1,32 @@
+<template name="character_sheet">
+  <div class="character-sheet">
+    <div class="header-row">
+      <div class="name-box">
+        <div class="name">{{character.name}}</div>
+        <div class="name-label">CHARACTER NAME</div>
+      </div>
+      <div class="class-race-box">
+        <div class="class-level-background-player">
+          <div>{{character.displayClass}} lvl {{character.level}}</div>
+          <div>{{character.background}}</div>
+          <div>{{character.playerName}}</div>
+        </div>
+        <div class="class-level-background-player-label">
+          <div>CLASS & LEVEL</div>
+          <div>BACKGROUND</div>
+          <div>PLAYER NAME</div>
+        </div>
+        <div class="race-alignment-xp">
+          <div>{{character.displayRace}}</div>
+          <div>{{character.displayAlignment}}</div>
+          <div>{{character.xp}}</div>
+        </div>
+        <div class="race-alignment-xp-label">
+          <div>RACE</div>
+          <div>ALIGNMENT</div>
+          <div>EXPERIENCE POINTS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
