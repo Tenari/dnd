@@ -1,9 +1,21 @@
 <template name="map">
+  <div class="map">
   {{#each row in rows}}
     <div class="game-row">
-      {{#each col in columns}}
-        <div class="game-col"></div>
+      {{#each tile in row}}
+        <div class="game-tile">
+          {{#if xy}}
+            ({{tile.x}},{{tile.y}})
+          {{/if}}
+          {{#if tile.character}}
+            <div class="character {{tile.character.img}}"></div>
+          {{/if}}
+          {{#if tile.wall}}
+            wall
+          {{/if}}
+        </div>
       {{/each}}
     </div>
   {{/each}}
+  </div>
 </template>

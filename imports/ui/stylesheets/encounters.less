@@ -1,4 +1,4 @@
-.sample-view {
+.map {
   width: 896px;
   height: 640px;
   overflow: scroll;
@@ -7,11 +7,17 @@
     padding: 0;
     height: 64px;
     display: flex;
-    .game-col {
+    .game-tile {
       width: 63px;
       height: 63px;
       border: 1px solid #555;
+      .character {
+        width: 100%;
+        height: 100%;
+        &.cleric {
+          background-image: url('/img/cleric.png');
+        }
+      }
     }
   }
-
 }

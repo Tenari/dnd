@@ -158,6 +158,7 @@ export const CLASSES = {
       [['light_crossbow', 'bolt_20'], ['handaxe', 'handaxe']],
       [['dungeoneer_pack'],['explorer_pack']],
     ],
+    items: [],
   },
   ranger: {
     label: "Ranger",

@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Encounters } from '/imports/api/encounters/encounters.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Games } from '/imports/api/games/games.js';
+import '../play_encounter/play_encounter.js';
 import './play.html';
 
 Template.Game_play.onCreated(function(){

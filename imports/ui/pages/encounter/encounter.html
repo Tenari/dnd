@@ -2,7 +2,7 @@
   {{#if isStory}}
     {{> storyEncounter}}
   {{else}}
-    {{> combatEncounter}}
+    {{> combatEncounter encounter=encounter}}
   {{/if}}
 </template>
 
@@ -20,10 +20,11 @@
   <div class="toolbar">
     height: <input type="number" class="height-input"/>
     width: <input type="number" class="width-input"/>
-    <a href="javascript:void(0)" class="add-graphic">Add monster</a>
+    <a href="javascript:void(0)" class="add">Add</a>
+    {{> dropdown options=addOptions className='add-options'}}
     <a href="javascript:void(0)" class="end-encounter">End encounter</a>
   </div>
-  {{#if addingMonster}}
+  {{#if reactiveVar 'addingMonster'}}
     <div class="monster-selector">
       <input type="text" class="monster-filter"/>
       {{#each monster in monsters}}
@@ -36,13 +37,12 @@
       {{/each}}
     </div>
   {{/if}}
-  <div class="sample-view">
-    {{#each row in rows}}
-      <div class="game-row">
-        {{#each col in columns}}
-          <div class="game-col"></div>
-        {{/each}}
-      </div>
-    {{/each}}
-  </div>
+  {{#if reactiveVar 'addingWall'}}
+    <div class="wall-placer">
+      x: <input type="number" class="add-monster-x-input"/>
+      y: <input type="number" class="add-monster-y-input"/>
+      <a href="#">Add</a>
+    </div>
+  {{/if}}
+  {{> map rows=rows xy=true}}
 </template>

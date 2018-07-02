@@ -25,5 +25,11 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
+  'encounters.change-val'(eid, newval, key){
+    if (!_.contains(['height','width'], key)) return false;
+    let set = {};
+    set[key] = parseInt(newval);
+    Encounters.update(eid, {$set: set});
+  }
 });
 
