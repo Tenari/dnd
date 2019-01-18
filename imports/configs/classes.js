@@ -160,6 +160,14 @@ export const CLASSES = {
     ],
     items: [],
   },
+  monk: {
+    label: "Monk",
+    key: 'monk',
+    description: "Monks make careful study of a magical energy that most monastic traditions call ki. Monks harness this power within themselves to create magical effects and exceed their bodies' physical capabilities, and some of their special attacks can hinder the flow of ki in their opponents.",
+    hp: {
+      
+    },
+  },
   ranger: {
     label: "Ranger",
     key: 'ranger',

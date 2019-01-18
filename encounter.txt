@@ -1,0 +1,19 @@
+A = Tyler Diamond (orange)
+B = Bryce Mitchell (blue)
+5:00 - open Aleft Bright
+4:59 - A pushK_r_hip_hit
+4:59 - B slide quickK_r_chest_miss
+4:57 - B slide sideK_r_chest_hit
+4:53 - B slide sideK_r_head_miss
+4:52 - A slide_dodge jab_l_head_miss
+4:52 - A slide jab_l_arm_hit B block
+4:51 - A combo cross_r_head_miss B lean
+4:51 - closed Aright Bright
+4:51 - A step jab_r_head_miss
+4:49 - open Aleft Bright
+4:47 - B circle_r A switch_feet | closed Aright Bright
+4:46 - open Aleft Bright
+4:46 - B fake_jab_r A slide_back
+4:45 - B slide fake_sideK
+4:45 - B fake_jab_r A fhook_l_head_miss B lean
+4:44 - B slide_back

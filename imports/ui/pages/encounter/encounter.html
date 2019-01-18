@@ -23,6 +23,11 @@
     <a href="javascript:void(0)" class="add">Add</a>
     {{> dropdown options=addOptions className='add-options'}}
     <a href="javascript:void(0)" class="end-encounter">End encounter</a>
+    <span>{{turnOrder}}</span>
+    <div class="commandline-container">
+      <input type="text" class="commandline"/>
+      <span class="prompt">></span>
+    </div>
   </div>
   {{#if reactiveVar 'addingMonster'}}
     <div class="monster-selector">
@@ -44,5 +49,11 @@
       <a href="#">Add</a>
     </div>
   {{/if}}
-  {{> map rows=rows xy=true}}
+  {{> map rows=rows xy=true mode=mode}}
+  <div>
+    Characters:
+    {{#each character in characters}}
+      <div>{{character._id}}: {{character.name}} [{{character.race}} - {{character.klass}}]: ({{encounterCharLocation character}})</div>
+    {{/each}}
+  </div>
 </template>

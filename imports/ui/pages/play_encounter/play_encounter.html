@@ -3,8 +3,11 @@
   {{#if isCombat}}
     <div class="encounter-status-bar">
       {{turnInfo}}
+      {{#if isMyTurn}}
+        | Move spaces left: {{moveLeft}}
+      {{/if}}
     </div>
-    {{> map rows=viewableRows}}
+    {{> map rows=viewableRows mode=mode}}
   {{else}}
     <div>story encounter view goes here</div>
   {{/if}}
