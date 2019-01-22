@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ABILITIES, attributeKeyToLabel, ABILITY_SCORE_COST, PROFICIENCIES, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
+import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, PROFICIENCIES, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '../../../configs/classes.js';
 import { FEATURES } from '../../../configs/features.js';
@@ -396,6 +396,7 @@ Template.Character_create.events({
       const raceBonus = race[key+'_bonus'] || 0;
       details[key] = instance[key].curValue + raceBonus;
     });
+    details.hp_max = klass.hp.base + abilityModifier(details.con);
 
     details.proficiencies = computeProficiencies(instance);
 
@@ -413,6 +414,8 @@ Template.Character_create.events({
     details.languages = _.uniq(langs);
 
     details.background = instance.background.curValue;
+
+    details.speed = race.speed;
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {

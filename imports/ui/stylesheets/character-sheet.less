@@ -1,5 +1,8 @@
 .character-sheet {
+  text-align: center;
+  font-family: arial;
   .header-row {
+    text-align:left;
     display: flex;
     .name-box, .class-race-box {
       width: 50%;
@@ -16,6 +19,51 @@
           width: 33%;
         }
       }
+    }
+  }
+  .ability-scores {
+    width: 10%;
+    .ability-score {
+      border-style: double;
+      .score { font-size: 30px;}
+      .mod {
+        border: 1px solid black;
+        border-radius: 40%;
+      }
+    }
+  }
+  .ac-hp {
+    .ac-speed-row {display: flex;}
+    .hp {
+      .current-hp {
+        border-style: double;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        .hp-max {
+          color: #555;
+          font-size: 10px;
+        }
+      }
+      .temp-hp{
+        border-style: double;
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+    }
+    .ac {
+      border-style: double;
+      border-bottom-right-radius: 40%;
+      border-bottom-left-radius: 40%;
+    }
+    .score {
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .label {
+      text-transform: uppercase;
+      font-size: 12px;
+      padding-left: 5px;
+      padding-right: 5px;
     }
   }
 }

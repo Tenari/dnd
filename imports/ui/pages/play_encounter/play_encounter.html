@@ -5,6 +5,23 @@
       {{turnInfo}}
       {{#if isMyTurn}}
         | Move spaces left: {{moveLeft}}
+        <button class="end-turn danger-btn">END TURN</button>
+        <button class="action">Action</button>
+        {{#if shouldDisplayActions}}
+          <div>
+            {{#each action in availableActions}}
+              <button class="action-choice" data-type="{{action.type}}">{{action.name}}</button>
+            {{/each}}
+
+            {{#if selectMeleeTarget}}
+              <div>
+                {{#each target in possibleTargets}}
+                  <button class="select-melee-target danger-btn" data-type="{{target._id}}">{{target.name}}</button>
+                {{/each}}
+              </div>
+            {{/if}}
+          </div>
+        {{/if}}
       {{/if}}
     </div>
     {{> map rows=viewableRows mode=mode}}

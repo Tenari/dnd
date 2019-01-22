@@ -15,7 +15,9 @@
     {{/if}}
     <ul>
       {{#each characters}}
-        <li>{{name}}, Race: {{race}}, Class: {{klass}}</li>
+        {{#if userId}}
+          <li>{{name}}, Race: {{race}}, Class: {{klass}}</li>
+        {{/if}}
       {{/each}}
     </ul>
   </div>

@@ -1,5 +1,38 @@
 import { ITEMS } from './items.js';
 
+export function roll(diceStr) {
+  let tokens = diceStr.split('d');
+  let total = 0;
+  for (let i = 0; i < parseInt(tokens[0]); i+= 1) {
+    total += (parseInt(Math.random()*parseInt(tokens[1]))+1)
+  }
+  return total;
+}
+
+export function calculateAC(character, items) {
+  // AC is calculated as 
+  // worn_armor_base_ac + shield_base_ac + dex mod (if applicable)
+  // OR
+  // 10 + Dex mod if not wearing armor or a shield
+  if (_.isString(items[0])) throw "incorrect method signature, items should be array of objects";
+
+  let armor = _.find(items, function(item) {return item.equipment_category == "Armor" && item.armor_category != 'Shield';});
+  let shield = _.find(items, function(item) {return item.equipment_category == "Armor" && item.armor_category == 'Shield';});
+  if (armor || shield) {
+    let dexBonus = abilityModifier(character.dex);
+    if (armor) {
+      if (armor.armor_class.dex_bonus == false) {
+        dexBonus = 0;
+      } else if (armor.armor_class.max_bonus) {
+        dexBonus = _.min([armor.armor_class.max_bonus, dexBonus]);
+      }
+    }
+    return (armor && armor.armor_class.base || 0) + (shield && shield.armor_class.base || 0) + dexBonus;
+  } else {
+    return 10 + abilityModifier(character.dex);
+  }
+}
+
 export function attributeKeyToLabel(key) {
   let shortKey = key.split('_bonus')[0];
   if (_.keys(ABILITIES).indexOf(shortKey) != -1) {
@@ -20,6 +53,10 @@ export const ABILITIES = {
   inte: 'Intelligence',
   wis: 'Wisdom',
   cha: 'Charisma',
+}
+
+export function abilityModifier(score) {
+  return parseInt((score - 10) / 2);
 }
 
 export const ALIGNMENTS = [

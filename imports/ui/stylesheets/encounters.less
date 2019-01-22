@@ -1,12 +1,24 @@
+.dm-map {
+  display: flex;
+  .map {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 .map {
   width: 896px;
   height: 640px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: scroll;
   &.grass {
     .game-tile {
       background-color: green;
       .character.wall {
         background-image: url('/img/tree.png');
+      }
+      .character.door {
+        background-image: url('/img/door.png');
       }
     }
   }
@@ -19,7 +31,7 @@
     height: 64px;
     display: flex;
     .game-tile {
-      width: 63px;
+      min-width: 63px;
       height: 63px;
       border: 1px solid #555;
       position: relative;
@@ -40,6 +52,12 @@
         }
         &.fighter {
           background-image: url('/img/fighter.png');
+        }
+        &.acolyte {
+          background-image: url('/img/acolyte.png');
+        }
+        &.goblin {
+          background-image: url('/img/goblin.png');
         }
       }
     }

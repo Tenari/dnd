@@ -1,11 +1,13 @@
 import { Games } from '/imports/api/games/games.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Encounters } from '/imports/api/encounters/encounters.js';
+import { MonsterTemplates } from '/imports/api/monsterTemplates/monsterTemplates.js';
 import './encounter.html';
 
 
 Template.Encounter.onCreated(function(){
   var games = this.subscribe('games.all');
+  this.subscribe('monsterTemplates.all');
   this.gameId = FlowRouter.getParam('_id');
   var encounters, characters;
   this.autorun(() => {
@@ -36,9 +38,14 @@ Template.combatEncounter.onCreated(function(){
   this.addingWall = new ReactiveVar(false);
   this.commandHistory = new ReactiveVar([]);
   this.commandHistoryLocation = new ReactiveVar(1);
+  this.monsterFilter = new ReactiveVar(null);
+  this.ls = new ReactiveVar(null);
 });
 
 Template.combatEncounter.helpers({
+  ls(key) {
+    return Template.instance().ls.get() == key;
+  },
   rows(){
     const e = Template.instance().data.encounter;
     if (!e) return [];
@@ -69,6 +76,13 @@ Template.combatEncounter.helpers({
   characters(){
     return Characters.find();
   },
+  monsterTemplates(){
+    let filter = Template.instance().monsterFilter.get();
+    if (filter) {
+      return MonsterTemplates.find({$or: [{name: { $regex: filter, $options: 'i' }}, {challenge_rating: parseFloat(filter)}]});
+    } 
+    return MonsterTemplates.find();
+  },
   encounterCharLocation(character) {
     let charLocations = Template.instance().data.encounter.characterLocations;
     let loc = _.find(charLocations, function(loc){ return loc.characterId == character._id;});
@@ -80,6 +94,10 @@ Template.combatEncounter.helpers({
   },
   turnOrder() {
     return Template.instance().data.encounter.turnOrder || 'no turn order yet';
+  },
+  isTurn(id) {
+    let e = Template.instance().data.encounter;
+    return e && e.turnOrder[e.currentTurn] == id;
   }
 })
 
@@ -102,7 +120,11 @@ Template.combatEncounter.events({
       history.push(command);
       instance.commandHistory.set(history);
       instance.commandHistoryLocation.set(1);
-      Meteor.call('encounters.command', FlowRouter.getParam('eid'), command, function(error) {});
+      if (command.split(' ')[0] == 'ls') {
+        instance.ls.set(command.split(' ')[1]);
+      } else {
+        Meteor.call('encounters.command', FlowRouter.getParam('eid'), command, function(error) {});
+      }
       $(e.currentTarget).val('');
     } else if (e.keyCode == 38) { // ArrowUp
       const index = instance.commandHistory.curValue.length - instance.commandHistoryLocation.curValue;
@@ -116,5 +138,7 @@ Template.combatEncounter.events({
       instance.commandHistoryLocation.set(instance.commandHistoryLocation.curValue - 1);
     }
   },
-
+  'change input.monster-filter'(e,instance) {
+    instance.monsterFilter.set($(e.currentTarget).val());
+  },
 })

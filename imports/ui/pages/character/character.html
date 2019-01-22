@@ -28,5 +28,77 @@
         </div>
       </div>
     </div>
+    <div class="columns">
+      <div class="ability-scores">
+        <div class="ability-score">
+          <div>Strength</div>
+          <div class="score">{{character.str}}</div>
+          <div class="mod">{{mod character.str}}</div>
+        </div>
+        <div class="ability-score">
+          <div>Dexterity</div>
+          <div class="score">{{character.dex}}</div>
+          <div class="mod">{{mod character.dex}}</div>
+        </div>
+        <div class="ability-score">
+          <div>Constitution</div>
+          <div class="score">{{character.con}}</div>
+          <div class="mod">{{mod character.con}}</div>
+        </div>
+        <div class="ability-score">
+          <div>Intelligence</div>
+          <div class="score">{{character.inte}}</div>
+          <div class="mod">{{mod character.inte}}</div>
+        </div>
+        <div class="ability-score">
+          <div>Wisdom</div>
+          <div class="score">{{character.wis}}</div>
+          <div class="mod">{{mod character.wis}}</div>
+        </div>
+        <div class="ability-score">
+          <div>Charisma</div>
+          <div class="score">{{character.cha}}</div>
+          <div class="mod">{{mod character.cha}}</div>
+        </div>
+      </div>
+      <div class="proficiencies"></div>
+      <div class="ac-hp">
+        <div class="ac-speed-row">
+          <div class="ac">
+            <div class="score">{{character.ac}}</div>
+            <div class="label"><div>Armor</div><div>Class</div></div>
+          </div>
+          <div class="initiative"></div>
+          <div class="speed">
+            <div class="score">{{character.speed}}</div>
+            <div class="label">speed</div>
+          </div>
+        </div>
+        <div class="hp">
+          <div class="current-hp">
+            <div class="hp-max">Hit Point Maximum: {{character.hp_max}}</div>
+            <div class="score">{{character.hp}}</div>
+            <div class="label">current hit points</div>
+          </div>
+          <div class="temp-hp">
+            <div class="score">{{character.temp_hp}}</div>
+            <div class="label">temporary hit points</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="equipment">
+        Items:
+        {{#each item in characterItems}}
+          <div>
+            {{item.name}} ({{item.equipment_category}})
+            {{#if item.equipped character}}
+              [Equipped]
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
   </div>
 </template>

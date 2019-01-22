@@ -3,6 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { Encounters } from '/imports/api/encounters/encounters.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Games } from '/imports/api/games/games.js';
+import { Items } from '/imports/api/items/items.js';
 import '../play_encounter/play_encounter.js';
 import './play.html';
 
@@ -11,6 +12,7 @@ Template.Game_play.onCreated(function(){
   let encounters = this.subscribe('encounters.game', this.gameId);
   let characters = this.subscribe('game.myCharacter', this.gameId);
   let games = this.subscribe('games.all');
+  this.subscribe('items.all');
   this.tab = new ReactiveVar('play_encounter');
 
   this.autorun(() => {

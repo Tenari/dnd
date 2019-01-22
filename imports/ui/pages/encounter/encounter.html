@@ -49,11 +49,27 @@
       <a href="#">Add</a>
     </div>
   {{/if}}
-  {{> map rows=rows xy=true mode=mode}}
-  <div>
-    Characters:
-    {{#each character in characters}}
-      <div>{{character._id}}: {{character.name}} [{{character.race}} - {{character.klass}}]: ({{encounterCharLocation character}})</div>
-    {{/each}}
+  <div class="dm-map">
+    {{> map rows=rows xy=true mode=mode}}
+    <div class="sidebar">
+      <div class="character-list">
+        Characters:
+        {{#each character in characters}}
+          <div>
+            {{#if isTurn character._id}}
+              ==>
+            {{/if}}
+            {{character._id}}: {{character.name}} [{{character.race}} - {{character.klass}}]: ({{encounterCharLocation character}})</div>
+        {{/each}}
+      </div>
+      <div class="object-template-list">
+        {{#if ls 'monster'}}
+          CR or name search: <input type="text" class="monster-filter"/>
+          {{#each monster in monsterTemplates}}
+            <div>{{monster._id}}: {{monster.name}} ({{monster.challenge_rating}})</div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
   </div>
 </template>
