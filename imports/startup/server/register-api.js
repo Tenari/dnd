@@ -12,3 +12,6 @@ import '../../api/characters/server/publications.js';
 import '../../api/monsterTemplates/publications.js';
 
 import '../../api/items/publications.js';
+
+import '../../api/eventNotices/methods.js';
+import '../../api/eventNotices/publications.js';

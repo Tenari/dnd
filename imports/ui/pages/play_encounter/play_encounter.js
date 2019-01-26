@@ -1,9 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { EventNotices } from '/imports/api/eventNotices/eventNotices.js';
 import '../../components/map/map.js';
 import './play_encounter.html';
 
 Template.play_encounter.onCreated(function(){
+  this.subscribe('eventNotices.me', FlowRouter.getParam('_id'));
   this.displayActions = new ReactiveVar(false);
   this.selectMeleeTarget = new ReactiveVar(false);
   var needToSet = true;
@@ -25,7 +27,16 @@ Template.play_encounter.onCreated(function(){
   })
 })
 
+function adjacentTo(a, b) { //allows diagonals
+  let xDiff = a.x - b.x;
+  let yDiff = a.y - b.y;
+  return xDiff <=1 && xDiff >= -1 && yDiff <= 1 && yDiff >= -1;
+}
+
 Template.play_encounter.helpers({
+  currentEventNotice() {
+    return EventNotices.findOne();
+  },
   shouldDisplayActions() {
     return Template.instance().displayActions.get();
   },
@@ -36,10 +47,11 @@ Template.play_encounter.helpers({
     const encounter = Template.instance().data.encounter;
     const character = Template.instance().data.character;
     if (!encounter) return null;
+    if (encounter.moveStats.hasActed) return null;
     let actions = [];
     let characterLocations = _.reject(encounter.characterLocations, function(loc) { return loc.characterId == character._id});
     let myLocation = _.find(encounter.characterLocations, function(loc) { return loc.characterId == character._id});
-    if (_.find(characterLocations, function(loc){ let xDiff = loc.x - myLocation.x; let yDiff = loc.y - myLocation.y; return xDiff <=1 && xDiff >= -1 && yDiff <= 1 && yDiff >= -1;})) { // if there is someone to melee attack
+    if (_.find(characterLocations, function(loc){ return adjacentTo(loc, myLocation);})) { // if there is someone to melee attack
       actions.push({name: 'Melee Attack', type: 'melee_attack'});
     }
     return actions;
@@ -49,7 +61,10 @@ Template.play_encounter.helpers({
     return data.encounter && data.encounter.type == 'combat';
   },
   viewableRows(){
-    const encounter = Template.instance().data.encounter;
+    const instance = Template.instance();
+    const encounter = instance.data.encounter;
+    const character = instance.data.character;
+    const characterLocation = _.find(encounter.characterLocations, function(loc) { return loc.characterId == character._id});
     let objects = _.flatten([encounter.objects || [], encounter.characterLocations || []]);
     var result = [];
     for (let i = 0; i< encounter.height; i++) {
@@ -58,6 +73,11 @@ Template.play_encounter.helpers({
         var tile = {};
         var object = _.find(objects, function(o){return o.x == j && o.y == i;});
         if (object) {
+          if (instance.selectMeleeTarget.get()) {
+            if (adjacentTo(object, characterLocation) && object.characterId !== character._id) {
+              object.selectable = true;
+            }
+          }
           tile[object.type] = object;
         }
         result[i].push(tile);
@@ -114,4 +134,13 @@ Template.play_encounter.events({
       instance.selectMeleeTarget.set(true);
     }
   },
+  'click .event-notice>button'(e,instance) {
+    Meteor.call('eventNotice.viewed', $(e.currentTarget).attr('data-eid'));
+  },
+  'click .character.selectable'(e,instance) {
+    if (instance.selectMeleeTarget.curValue) {
+      instance.selectMeleeTarget.set(false);
+      Meteor.call('encounters.meleeAttack', instance.data.encounter._id, instance.data.character._id, $(e.currentTarget).attr('data-id'))
+    }
+  }
 })

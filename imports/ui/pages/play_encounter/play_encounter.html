@@ -28,4 +28,13 @@
   {{else}}
     <div>story encounter view goes here</div>
   {{/if}}
+
+  {{#if currentEventNotice}}
+    <div class="event-notice-container">
+      <div class="event-notice">
+        <div class="message">{{currentEventNotice.message}}</div>
+        <button data-eid="{{currentEventNotice._id}}">Close</button>
+      </div>
+    </div>
+  {{/if}}
 </template>

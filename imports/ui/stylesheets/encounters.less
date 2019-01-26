@@ -47,6 +47,14 @@
         top:0;
         background-size: contain;
         z-index: 1;
+        &.selectable {
+          border: 3px solid red;
+          cursor: pointer;
+          &:hover {
+            border: 3px solid #00ff00;
+          }
+        }
+
         &.cleric {
           background-image: url('/img/cleric.png');
         }

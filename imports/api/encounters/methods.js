@@ -5,6 +5,7 @@ import { check } from 'meteor/check';
 import { Encounters } from './encounters.js';
 import { Characters } from '../characters/characters.js';
 import { MonsterTemplates } from '../monsterTemplates/monsterTemplates.js';
+import { EventNotices } from '../eventNotices/eventNotices.js';
 import { Games } from '../games/games.js';
 import { roll, abilityModifier } from '../../configs/general.js';
 
@@ -25,6 +26,8 @@ Meteor.methods({
       graphics: [],
       height,
       width,
+      objects: [],
+      characterLocations: [],
       createdAt: new Date(),
     });
   },
@@ -94,10 +97,15 @@ Meteor.methods({
       }
     } else if (tokens[0] == 'remove') {
       if (tokens[1] == 'wall' && tokens[2] && tokens[3]) {
-        var x = parseInt(tokens[2]);
-        var y = parseInt(tokens[3]);
+        const x = parseInt(tokens[2]);
+        const y = parseInt(tokens[3]);
         var objects = _.reject(encounter.objects || [], function(object) { return object.x == x && object.y == y && object.type == 'wall'});
         Encounters.update(eid, {$set: {objects: objects}});
+      } else if (tokens[1] == 'character' && tokens[2] && tokens[3]) {
+        const x = parseInt(tokens[2]);
+        const y = parseInt(tokens[3]);
+        var characterLocations = _.reject(encounter.characterLocations || [], function(loc) { return loc.x == x && loc.y == y});
+        Encounters.update(eid, {$set: {characterLocations: characterLocations}});
       }
     } else if (tokens[0] == 'set') {
       if (tokens[1] == 'mode' && tokens[2]) {
@@ -114,6 +122,19 @@ Meteor.methods({
           .value();
         let firstCharacter = Characters.findOne(turns[0]);
         Encounters.update(eid, {$set: {currentTurn: 0, turnOrder: turns, moveStats: {movesLeft: firstCharacter.speed, hasActed: false}}});
+        Characters.find({_id: {$in: turns}, userId: {$exists: true}}).forEach(function(character){
+          let index = _.indexOf(turns, character._id) + 1;
+          if (index == 1) {
+            index += 'st';
+          } else if (index == 2) {
+            index += 'nd';
+          } else if (index == 3) {
+            index += 'rd';
+          } else {
+            index += 'th';
+          }
+          EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'Initiative rolled, you are '+index+ ' to go.'});
+        })
       }
     }
   },
@@ -123,6 +144,51 @@ Meteor.methods({
     let nextTurn = encounter.currentTurn + 1;
     if (nextTurn >= encounter.turnOrder.length) nextTurn = 0;
     Encounters.update(eid, {$set: {currentTurn: nextTurn, moveStats: {movesLeft: character.speed, hasActed: false}}})
+  },
+  'encounters.meleeAttack'(eid, cid, opponentId) {
+    const encounter = Encounters.findOne(eid);
+    const character = Characters.findOne(cid);
+    const opponent = Characters.findOne(opponentId);
+    if(encounter.gameId != character.gameId) throw 'wtf';
+    if(character.userId != this.userId) throw 'wtf';
+
+    // advantage/disadvantage ?
+    // spells/special abilities/other effects ?
+    // attack roll
+    let hit = false;
+    let crit = false;
+    let attackRoll = roll('1d20');
+    if (attackRoll == 20) { // crit!
+      hit = true;
+      crit = true;
+      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled a natural 20. You crit! Nice.'});
+    } else if (attackRoll == 1) { // auto-miss
+      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled a natural 1. You miss. Noob.'});
+      hit = false;
+    } else {
+      attackRoll += character.meleeAbilityModifier();
+      attackRoll += character.meleeProficiencyBonus();
+      if (attackRoll >= opponent.ac) {
+        hit = true;
+        EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You hit with a modified '+attackRoll+'.'});
+      } else {
+        EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You missed with a modified '+attackRoll+'.'});
+      }
+    }
+
+    let damage = 0;
+    if (hit) {
+      if (crit) {
+        damage += (character.rollDamage() + character.rollDamage() + character.meleeAbilityModifier());
+      } else {
+        damage += (character.rollDamage() + character.meleeAbilityModifier());
+      }
+      const weapon = character.equippedWeapon();
+      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled '+damage+' '+weapon.damage.damage_type.name+' damage.'});
+      Characters.update(opponentId, {$set: {hp: opponent.hp - damage}});
+    }
+
+    Encounters.update(eid, {$set: {moveStats: {hasActed: true}}});
   }
 });
 
