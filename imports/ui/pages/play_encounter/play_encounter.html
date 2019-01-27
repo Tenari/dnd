@@ -6,7 +6,9 @@
       {{#if isMyTurn}}
         | Move spaces left: {{moveLeft}}
         <button class="end-turn danger-btn">END TURN</button>
-        <button class="action">Action</button>
+        {{#if canAct}}
+          <button class="action">Action</button>
+        {{/if}}
         {{#if shouldDisplayActions}}
           <div>
             {{#each action in availableActions}}

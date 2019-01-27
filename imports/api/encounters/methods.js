@@ -23,7 +23,6 @@ Meteor.methods({
       name,
       type,
       userId,
-      graphics: [],
       height,
       width,
       objects: [],
@@ -188,7 +187,9 @@ Meteor.methods({
       Characters.update(opponentId, {$set: {hp: opponent.hp - damage}});
     }
 
-    Encounters.update(eid, {$set: {moveStats: {hasActed: true}}});
+    let moveStats = encounter.moveStats;
+    moveStats.hasActed = true;
+    Encounters.update(eid, {$set: {moveStats: moveStats}});
   }
 });
 

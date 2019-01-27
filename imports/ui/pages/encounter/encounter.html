@@ -23,7 +23,7 @@
     <a href="javascript:void(0)" class="add">Add</a>
     {{> dropdown options=addOptions className='add-options'}}
     <a href="javascript:void(0)" class="end-encounter">End encounter</a>
-    <span>{{turnOrder}}</span>
+    <div>Active player moves left: {{encounter.moveStats.movesLeft}} | hasActed: {{encounter.moveStats.hasActed}}</div>
     <div class="commandline-container">
       <input type="text" class="commandline"/>
       <span class="prompt">></span>
@@ -50,7 +50,7 @@
     </div>
   {{/if}}
   <div class="dm-map">
-    {{> map rows=rows xy=true mode=mode}}
+    {{> map rows=rows xy=true mode=encounter.mode}}
     <div class="sidebar">
       <div class="character-list">
         Characters:
@@ -68,6 +68,53 @@
           {{#each monster in monsterTemplates}}
             <div>{{monster._id}}: {{monster.name}} ({{monster.challenge_rating}})</div>
           {{/each}}
+        {{/if}}
+        {{#if activeMonster}}
+          <p>Active monster info:</p>
+          <div class="active-monster-info">
+            <div class="name">{{activeMonster.name}}</div>
+            <div class="size-line">{{activeMonster.size}} {{activeMonster.type}} ({{activeMonster.subtype}}), {{activeMonster.alignment}}</div>
+            <div class="ac-line"><strong>Armor Class</strong> {{activeMonster.armor_class}}</div>
+            <div class="hp-line"><strong>Hit Points</strong> {{activeMonster.hit_points}} ({{activeMonster.hit_dice}})</div>
+            <div class="speed-line"><strong>Speed</strong> {{activeMonster.speed}}</div>
+            <div class="ability-scores">
+              <div>
+                <div class="score-name">STR</div>
+                <div class="score">{{activeMonster.strength}} ({{abilityModifier activeMonster.strength}})</div>
+              </div>
+              <div>
+                <div class="score-name">DEX</div>
+                <div class="score">{{activeMonster.dexterity}} ({{abilityModifier activeMonster.dexterity}})</div>
+              </div>
+              <div>
+                <div class="score-name">CON</div>
+                <div class="score">{{activeMonster.constitution}} ({{abilityModifier activeMonster.constitution}})</div>
+              </div>
+              <div>
+                <div class="score-name">INT</div>
+                <div class="score">{{activeMonster.intelligence}} ({{abilityModifier activeMonster.intelligence}})</div>
+              </div>
+              <div>
+                <div class="score-name">WIS</div>
+                <div class="score">{{activeMonster.wisdom}} ({{abilityModifier activeMonster.wisdom}})</div>
+              </div>
+              <div>
+                <div class="score-name">CHA</div>
+                <div class="score">{{activeMonster.charisma}} ({{abilityModifier activeMonster.charisma}})</div>
+              </div>
+            </div>
+            <div class="skills-line"><strong>Skills</strong> {{activeMonster.skills}}</div>
+            <div class="senses-line"><strong>Senses</strong> {{activeMonster.senses}}</div>
+            <div class="langs-line"><strong>Languages</strong> {{activeMonster.languages}}</div>
+            <div class="cr-line"><strong>Challenge</strong> {{activeMonster.challenge_rating}} ({{xpForCR activeMonster.challenge_rating}}XP)</div>
+            {{#each ability in activeMonster.special_abilities }}
+              <div class="special-ability"><strong>{{ability.name}}</strong> {{ability.desc}}</div>
+            {{/each}}
+            <div class="actions-divider">Actions</div>
+            {{#each action in activeMonster.actions }}
+              <div class="action"><strong>{{action.name}}.</strong> {{action.desc}}</div>
+            {{/each}}
+          </div>
         {{/if}}
       </div>
     </div>

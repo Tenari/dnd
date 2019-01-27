@@ -40,6 +40,9 @@ Template.play_encounter.helpers({
   shouldDisplayActions() {
     return Template.instance().displayActions.get();
   },
+  canAct() {
+    return !Template.instance().data.encounter.moveStats.hasActed;
+  },
   selectMeleeTarget() {
     return Template.instance().selectMeleeTarget.get();
   },

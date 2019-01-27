@@ -2,6 +2,7 @@ import { Games } from '/imports/api/games/games.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Encounters } from '/imports/api/encounters/encounters.js';
 import { MonsterTemplates } from '/imports/api/monsterTemplates/monsterTemplates.js';
+import { abilityModifier, CR_TO_XP } from '/imports/configs/general.js';
 import './encounter.html';
 
 
@@ -43,13 +44,15 @@ Template.combatEncounter.onCreated(function(){
 });
 
 Template.combatEncounter.helpers({
+  abilityModifier(score) {return abilityModifier(score)},
+  xpForCR(cr) {return CR_TO_XP[""+cr];},
   ls(key) {
     return Template.instance().ls.get() == key;
   },
   rows(){
     const e = Template.instance().data.encounter;
     if (!e) return [];
-    let objects = _.flatten([e.objects || [], e.characterLocations || []]);
+    let objects = _.flatten([e.objects, e.characterLocations]);
     var result = [];
     for (let i = 0; i< e.height; i++) {
       result.push([]);
@@ -57,6 +60,9 @@ Template.combatEncounter.helpers({
         var tile = {x: j, y: i};
         var object = _.find(objects, function(o){return o.x == j && o.y == i;});
         if (object) {
+          if (object.characterId == e.turnOrder[e.currentTurn]) { // if this thing is the active player
+            object.active = true;
+          }
           tile[object.type] = object;
         }
         result[i].push(tile);
@@ -64,8 +70,9 @@ Template.combatEncounter.helpers({
     }
     return result;
   },
-  mode() {
-    return Template.instance().data.encounter.mode;
+  encounter() {
+    const e = Template.instance().data.encounter;
+    return e || {};
   },
   addOptions() {
     return [{value: 'Monster', label: 'Monster'},{value: 'Wall', label: 'Wall'}];
@@ -74,7 +81,8 @@ Template.combatEncounter.helpers({
     return Template.instance()[k].get();
   },
   characters(){
-    return Characters.find();
+    const e = Template.instance().data.encounter;
+    return _.sortBy(Characters.find().fetch(), function(c){ return (e && _.indexOf(e.turnOrder, c._id)) || 0;});
   },
   monsterTemplates(){
     let filter = Template.instance().monsterFilter.get();
@@ -92,13 +100,16 @@ Template.combatEncounter.helpers({
       return "not placed";
     }
   },
-  turnOrder() {
-    return Template.instance().data.encounter.turnOrder || 'no turn order yet';
-  },
   isTurn(id) {
     let e = Template.instance().data.encounter;
     return e && e.turnOrder[e.currentTurn] == id;
-  }
+  },
+  activeMonster() {
+    const e = Template.instance().data.encounter;
+    const id = e.turnOrder[e.currentTurn];
+    const character = Characters.findOne(id);
+    return character.userId ? false : MonsterTemplates.findOne({name: character.name});
+  },
 })
 
 Template.combatEncounter.events({
