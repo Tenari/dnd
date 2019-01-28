@@ -3,6 +3,7 @@ import { Characters } from '/imports/api/characters/characters.js';
 import { Encounters } from '/imports/api/encounters/encounters.js';
 import { MonsterTemplates } from '/imports/api/monsterTemplates/monsterTemplates.js';
 import { abilityModifier, CR_TO_XP } from '/imports/configs/general.js';
+import '/imports/ui/components/monsterInfo/monsterInfo.js';
 import './encounter.html';
 
 
@@ -45,7 +46,6 @@ Template.combatEncounter.onCreated(function(){
 
 Template.combatEncounter.helpers({
   abilityModifier(score) {return abilityModifier(score)},
-  xpForCR(cr) {return CR_TO_XP[""+cr];},
   ls(key) {
     return Template.instance().ls.get() == key;
   },
