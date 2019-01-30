@@ -8,3 +8,9 @@ Meteor.publish('eventNotices.me', function (gameId) {
 
   return EventNotices.find({gameId, userId: this.userId});
 });
+
+Meteor.publish('eventNotices.game', function (gameId) {
+  if (!this.userId) return this.ready();
+
+  return EventNotices.find({gameId});
+});

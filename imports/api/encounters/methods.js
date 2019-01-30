@@ -6,8 +6,101 @@ import { Encounters } from './encounters.js';
 import { Characters } from '../characters/characters.js';
 import { MonsterTemplates } from '../monsterTemplates/monsterTemplates.js';
 import { EventNotices } from '../eventNotices/eventNotices.js';
+import { EventLogs } from '../eventLogs/eventLogs.js';
 import { Games } from '../games/games.js';
 import { roll, abilityModifier } from '../../configs/general.js';
+
+function meleeAttack(eid, cid, opponentId) {
+  const encounter = Encounters.findOne(eid);
+  const character = Characters.findOne(cid);
+  const opponent = Characters.findOne(opponentId);
+  if(encounter.gameId != character.gameId ||
+    character.userId && character.userId != this.userId ||
+    !opponent)
+    throw 'wtf';
+  const weapon = character.equippedWeapon();
+
+  // advantage/disadvantage ?
+  // spells/special abilities/other effects ?
+  // attack roll
+  let hit = false;
+  let crit = false;
+  let autoMiss = false;
+  let attackRoll = roll('1d20');
+  let logMessage = 'Natural 20! Critical Hit! ';
+  if (attackRoll == 20) { // crit!
+    hit = true;
+    crit = true;
+  } else if (attackRoll == 1) { // auto-miss
+    autoMiss = true;
+    hit = false;
+    logMessage = 'Natural 1! Automatic miss! ';
+  } else {
+    logMessage = ''+attackRoll+' + '+character.meleeAbilityModifier()+' + '+character.meleeProficiencyBonus()+': ';
+    attackRoll += character.meleeAbilityModifier();
+    attackRoll += character.meleeProficiencyBonus();
+    if (attackRoll >= opponent.ac) {
+      hit = true;
+    }
+  }
+
+  EventLogs.insert({encounterId: encounter._id, message: character.name+' attacks '+opponent.name});
+  logMessage += hit ? 'hit' : 'missed';
+  EventLogs.insert({encounterId: encounter._id, message: logMessage});
+
+  let damage = 0;
+  if (hit) {
+    let dmgRoll = character.rollDamage();
+    let mod = character.meleeAbilityModifier();
+    damage += (dmgRoll + mod);
+    if (crit) {
+      let dmgRoll2 = character.rollDamage();
+      damage += dmgRoll2;
+      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+dmgRoll2+' + '+mod+' = '+damage+' '+weapon.damage.damage_type+' damage.'});
+    } else {
+      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+mod+' = '+damage+' '+weapon.damage.damage_type+' damage.'});
+    }
+    Characters.update(opponentId, {$set: {hp: opponent.hp - damage}});
+  }
+
+  if (character.userId) {
+    let message = 'You '+(hit ? 'hit' : 'missed')+' with a modified '+attackRoll+'.';
+    if (hit && crit) {
+      message = 'You rolled a natural 20. You crit! Nice.';
+    } else if (autoMiss) {
+      message = 'You rolled a natural 1. You miss. Noob.';
+    }
+    EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: message});
+
+    if (hit) {
+      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled '+damage+' '+weapon.damage.damage_type.name+' damage.'});
+    }
+  }
+  if (opponent.userId) {
+    let message = character.name+(hit ? ' hit' : ' missed')+' you with a modified '+attackRoll+'.';
+    if (hit && crit) {
+      message = character.name+' rolled a natural 20 and crit on you!';
+    } else if (autoMiss) {
+      message = character.name+' rolled a natural 1 and missed you!';
+    }
+    EventNotices.insert({gameId: encounter.gameId, userId: opponent.userId, message: message});
+
+    if (hit) {
+      EventNotices.insert({gameId: encounter.gameId, userId: opponent.userId, message: character.name+' rolled '+damage+' '+weapon.damage.damage_type.name+' damage on you.'});
+    }
+  }
+  let moveStats = encounter.moveStats;
+  moveStats.hasActed = true;
+  Encounters.update(eid, {$set: {moveStats: moveStats}});
+}
+
+function endTurn(eid) {
+  const encounter = Encounters.findOne(eid);
+  let nextTurn = encounter.currentTurn + 1;
+  if (nextTurn >= encounter.turnOrder.length) nextTurn = 0;
+  const character = Characters.findOne(encounter.turnOrder[nextTurn]);
+  Encounters.update(eid, {$set: {currentTurn: nextTurn, moveStats: {movesLeft: character.speed, hasActed: false}}})
+}
 
 Meteor.methods({
   'encounters.insert'(gameId, name, type) {
@@ -45,6 +138,7 @@ Meteor.methods({
          ls monster
          ls characters
          mv [thing] [place]
+         move [x] [y]
          add monster [monster id] [x] [y]
          add wall [x] [y]
          add character [_id] [x] [y]
@@ -135,61 +229,24 @@ Meteor.methods({
           EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'Initiative rolled, you are '+index+ ' to go.'});
         })
       }
+    } else if (tokens[0] == 'attack') {
+      const x = parseInt(tokens[1]);
+      const y = parseInt(tokens[2]);
+      const cid = encounter.turnOrder[encounter.currentTurn];
+      const opponentId = _.find(encounter.characterLocations, function(loc){ return loc.x == x && loc.y == y}).characterId;
+
+      meleeAttack(encounter._id, cid, opponentId);
+    } else if (tokens[0] == 'end' && tokens[1] == 'turn') {
+      endTurn(eid);
+    } else if (tokens[0] == 'move') {
+      let currentLocation = encounter.currentCharacterLocation();
+      currentLocation.x = parseInt(tokens[1]);
+      currentLocation.y = parseInt(tokens[2]);
+      let otherLocations = _.reject(encounter.characterLocations, function(loc){return loc.characterId == currentLocation.characterId});
+      otherLocations.push(currentLocation);
+      Encounters.update(eid, {$set: {characterLocations: otherLocations}});
     }
   },
-  'encounters.endTurn'(eid) {
-    const encounter = Encounters.findOne(eid);
-    const character = Characters.findOne(encounter.turnOrder[encounter.currentTurn]);
-    let nextTurn = encounter.currentTurn + 1;
-    if (nextTurn >= encounter.turnOrder.length) nextTurn = 0;
-    Encounters.update(eid, {$set: {currentTurn: nextTurn, moveStats: {movesLeft: character.speed, hasActed: false}}})
-  },
-  'encounters.meleeAttack'(eid, cid, opponentId) {
-    const encounter = Encounters.findOne(eid);
-    const character = Characters.findOne(cid);
-    const opponent = Characters.findOne(opponentId);
-    if(encounter.gameId != character.gameId) throw 'wtf';
-    if(character.userId != this.userId) throw 'wtf';
-
-    // advantage/disadvantage ?
-    // spells/special abilities/other effects ?
-    // attack roll
-    let hit = false;
-    let crit = false;
-    let attackRoll = roll('1d20');
-    if (attackRoll == 20) { // crit!
-      hit = true;
-      crit = true;
-      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled a natural 20. You crit! Nice.'});
-    } else if (attackRoll == 1) { // auto-miss
-      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled a natural 1. You miss. Noob.'});
-      hit = false;
-    } else {
-      attackRoll += character.meleeAbilityModifier();
-      attackRoll += character.meleeProficiencyBonus();
-      if (attackRoll >= opponent.ac) {
-        hit = true;
-        EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You hit with a modified '+attackRoll+'.'});
-      } else {
-        EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You missed with a modified '+attackRoll+'.'});
-      }
-    }
-
-    let damage = 0;
-    if (hit) {
-      if (crit) {
-        damage += (character.rollDamage() + character.rollDamage() + character.meleeAbilityModifier());
-      } else {
-        damage += (character.rollDamage() + character.meleeAbilityModifier());
-      }
-      const weapon = character.equippedWeapon();
-      EventNotices.insert({gameId: encounter.gameId, userId: character.userId, message: 'You rolled '+damage+' '+weapon.damage.damage_type.name+' damage.'});
-      Characters.update(opponentId, {$set: {hp: opponent.hp - damage}});
-    }
-
-    let moveStats = encounter.moveStats;
-    moveStats.hasActed = true;
-    Encounters.update(eid, {$set: {moveStats: moveStats}});
-  }
+  'encounters.endTurn': endTurn,
+  'encounters.meleeAttack': meleeAttack,
 });
-

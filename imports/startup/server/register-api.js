@@ -15,3 +15,5 @@ import '../../api/items/publications.js';
 
 import '../../api/eventNotices/methods.js';
 import '../../api/eventNotices/publications.js';
+
+import '../../api/eventLogs/publications.js';

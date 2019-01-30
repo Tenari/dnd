@@ -59,7 +59,7 @@
             {{#if isTurn character._id}}
               ==>
             {{/if}}
-            {{character._id}}: {{character.name}} [{{character.race}} - {{character.klass}}]: ({{encounterCharLocation character}})</div>
+            <a href="/game/{{gameId}}/character/{{character._id}}">{{character._id}}: {{character.name}}</a> [{{character.race}} - {{character.klass}}]: ({{encounterCharLocation character}})</div>
         {{/each}}
       </div>
       <div class="object-template-list">
@@ -75,5 +75,10 @@
         {{/if}}
       </div>
     </div>
+  </div>
+  <div>
+    {{#each log in eventLogs}}
+      <p>{{log.message}}</p>
+    {{/each}}
   </div>
 </template>

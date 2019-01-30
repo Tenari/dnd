@@ -1,6 +1,7 @@
 import { Games } from '/imports/api/games/games.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Encounters } from '/imports/api/encounters/encounters.js';
+import { EventLogs } from '/imports/api/eventLogs/eventLogs.js';
 import { MonsterTemplates } from '/imports/api/monsterTemplates/monsterTemplates.js';
 import { abilityModifier, CR_TO_XP } from '/imports/configs/general.js';
 import '/imports/ui/components/monsterInfo/monsterInfo.js';
@@ -11,6 +12,7 @@ Template.Encounter.onCreated(function(){
   var games = this.subscribe('games.all');
   this.subscribe('monsterTemplates.all');
   this.gameId = FlowRouter.getParam('_id');
+  this.subscribe('eventNotices.game', this.gameId);
   var encounters, characters;
   this.autorun(() => {
     if (games.ready()) {
@@ -42,9 +44,13 @@ Template.combatEncounter.onCreated(function(){
   this.commandHistoryLocation = new ReactiveVar(1);
   this.monsterFilter = new ReactiveVar(null);
   this.ls = new ReactiveVar(null);
+  this.subscribe('eventLogs.encounter', FlowRouter.getParam('eid'));
 });
 
 Template.combatEncounter.helpers({
+  eventLogs() {
+    return EventLogs.find();
+  },
   abilityModifier(score) {return abilityModifier(score)},
   ls(key) {
     return Template.instance().ls.get() == key;
@@ -109,6 +115,9 @@ Template.combatEncounter.helpers({
     const id = e.turnOrder[e.currentTurn];
     const character = Characters.findOne(id);
     return character.userId ? false : MonsterTemplates.findOne({name: character.name});
+  },
+  gameId() {
+    return FlowRouter.getParam('_id');
   },
 })
 

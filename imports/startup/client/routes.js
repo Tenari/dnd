@@ -38,6 +38,12 @@ FlowRouter.route('/game/:_id/character/create', {
     BlazeLayout.render('App_body', { main: 'Character_create' });
   },
 });
+FlowRouter.route('/game/:_id/character/:cid', {
+  name: 'Character.details',
+  action() {
+    BlazeLayout.render('App_body', { main: 'character_sheet' });
+  },
+});
 FlowRouter.route('/game/:_id/dm-play', {
   name: 'Game.dm',
   action() {
