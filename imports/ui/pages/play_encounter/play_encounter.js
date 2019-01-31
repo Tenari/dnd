@@ -4,15 +4,18 @@ import { EventNotices } from '/imports/api/eventNotices/eventNotices.js';
 import '../../components/map/map.js';
 import './play_encounter.html';
 
-function keyMove(e) {
-  /*  key codes
-      w = 119
-      s = 115
-      d = 100
-      a = 97
-  */
-  const direction = {119: 'north', 115: 'south', 100: 'east', 97: 'west'}[e.keyCode];
-  Meteor.call('characters.move', cid, direction);
+function keyMove(cid){
+  return function(e) {
+    /*  key codes
+        w = 119
+        s = 115
+        d = 100
+        a = 97
+    */
+    const direction = {119: 'north', 115: 'south', 100: 'east', 97: 'west'}[e.keyCode];
+    console.log(direction);
+    Meteor.call('characters.move', cid, direction);
+  }
 }
 
 Template.play_encounter.onCreated(function(){
@@ -24,12 +27,13 @@ Template.play_encounter.onCreated(function(){
     if (Template.currentData().character && needToSet) {
       needToSet = false;
       const cid = Template.currentData().character._id;
-      $('body').on('keypress', keyMove);
+      $('body').on('keypress', keyMove(cid));
     }
   })
 })
 Template.play_encounter.onDestroyed(function(){
-  $('body').off('keypress', keyMove)
+  const cid = Template.currentData().character._id;
+  $('body').off('keypress', keyMove(cid))
 })
 
 function adjacentTo(a, b) { //allows diagonals

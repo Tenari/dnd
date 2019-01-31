@@ -66,7 +66,10 @@
         {{#if ls 'monster'}}
           CR or name search: <input type="text" class="monster-filter"/>
           {{#each monster in monsterTemplates}}
-            <div>{{monster._id}}: {{monster.name}} ({{monster.challenge_rating}})</div>
+            <div>{{monster._id}}: <a href="#" class="expand-monster" data-id="{{monster._id}}">{{monster.name}}</a> ({{monster.challenge_rating}})</div>
+            {{#if expandedMonster monster._id}}
+              {{> monsterInfo monster=monster}}
+            {{/if}}
           {{/each}}
         {{/if}}
         {{#if activeMonster}}

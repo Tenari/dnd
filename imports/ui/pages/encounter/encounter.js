@@ -43,11 +43,15 @@ Template.combatEncounter.onCreated(function(){
   this.commandHistory = new ReactiveVar([]);
   this.commandHistoryLocation = new ReactiveVar(1);
   this.monsterFilter = new ReactiveVar(null);
+  this.expandedMonsters = new ReactiveVar([]);
   this.ls = new ReactiveVar(null);
   this.subscribe('eventLogs.encounter', FlowRouter.getParam('eid'));
 });
 
 Template.combatEncounter.helpers({
+  expandedMonster(mid) {
+    return _.find(Template.instance().expandedMonsters.get(), function(id) {return id == mid;});
+  },
   eventLogs() {
     return EventLogs.find();
   },
@@ -66,7 +70,7 @@ Template.combatEncounter.helpers({
         var tile = {x: j, y: i};
         var object = _.find(objects, function(o){return o.x == j && o.y == i;});
         if (object) {
-          if (object.characterId == e.turnOrder[e.currentTurn]) { // if this thing is the active player
+          if (e.turnOrder && object.characterId == e.turnOrder[e.currentTurn]) { // if this thing is the active player
             object.active = true;
           }
           tile[object.type] = object;
@@ -108,10 +112,11 @@ Template.combatEncounter.helpers({
   },
   isTurn(id) {
     let e = Template.instance().data.encounter;
-    return e && e.turnOrder[e.currentTurn] == id;
+    return e && e.turnOrder &&  e.turnOrder[e.currentTurn] == id;
   },
   activeMonster() {
     const e = Template.instance().data.encounter;
+    if (!e || !e.turnOrder) return null;
     const id = e.turnOrder[e.currentTurn];
     const character = Characters.findOne(id);
     return character.userId ? false : MonsterTemplates.findOne({name: character.name});
@@ -160,5 +165,15 @@ Template.combatEncounter.events({
   },
   'change input.monster-filter'(e,instance) {
     instance.monsterFilter.set($(e.currentTarget).val());
+  },
+  'click a.expand-monster'(e,instance) {
+    let arr = instance.expandedMonsters.curValue;
+    const id = $(e.currentTarget).attr('data-id');
+    if (_.contains(arr, id)) {
+      arr = _.reject(arr, function(mid) {return mid == id;});
+    } else {
+      arr.push(id);
+    }
+    instance.expandedMonsters.set(arr);
   },
 })
