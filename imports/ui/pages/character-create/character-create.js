@@ -398,13 +398,10 @@ Template.Character_create.events({
     });
     details.hp_max = klass.hp.base + abilityModifier(details.con);
 
-    details.proficiencies = computeProficiencies(instance);
-
-    let dlbProfs = [];
+    details.proficiencies = _.object(_.map(computeProficiencies(instance), function(key){return [key, 1]}));
     $('select.double-proficiency-select').each(function(){
-      dlbProfs.push($(this).val());
+      details.proficiencies[$(this).val()] = 2;
     })
-    details.doubleProficiencies = _.uniq(dlbProfs);
 
     const raceLangs = (race && race.languages) || [];
     let langs = _.uniq(raceLangs);

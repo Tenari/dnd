@@ -36,11 +36,13 @@ Meteor.methods({
         gender: details.gender,
         wealth: details.wealth,
         klass_details: details.klass_details,
-        proficiencies: details.proficiencies,
-        doubleProficiencies: details.doubleProficiencies,
+        proficiencies: details.proficiencies, // object of key: proficiency multiplier, so like {stealth: 1, history: 2, athletics: 1} etc
         languages: details.languages,
         items: defaultItems,
         equippedItems: defaultItems,
+        activeEffects: [],
+        death_save_success: [],
+        death_save_fail: [],
       });
     } else {
       return false;

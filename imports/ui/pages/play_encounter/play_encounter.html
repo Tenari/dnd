@@ -27,6 +27,11 @@
       {{/if}}
     </div>
     {{> map rows=viewableRows mode=mode}}
+    <div>
+      {{#each log in eventLogs}}
+        <p>{{log.message}}</p>
+      {{/each}}
+    </div>
   {{else}}
     <div>story encounter view goes here</div>
   {{/if}}

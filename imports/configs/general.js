@@ -9,6 +9,21 @@ export function roll(diceStr) {
   return total;
 }
 
+export function advantageRoll(advantageKey) {
+  let secondRoll = null;
+  let originalRoll = roll('1d20');
+  let finalRoll = originalRoll;
+  if (advantageKey != 'normal') {
+    secondRoll = roll('1d20');
+    if (advantageKey == 'advantage') {
+      finalRoll = _.max([originalRoll, secondRoll]);
+    } else {
+      finalRoll = _.min([originalRoll, secondRoll]);
+    }
+  }
+  return {finalRoll, originalRoll, secondRoll};
+}
+
 export function calculateAC(character, items) {
   // AC is calculated as 
   // worn_armor_base_ac + shield_base_ac + dex mod (if applicable)
@@ -48,8 +63,8 @@ export function attributeKeyToLabel(key) {
 
 export const ABILITIES = {
   str: 'Strength',
-  con: 'Consitution',
   dex: 'Dexterity',
+  con: 'Consitution',
   inte: 'Intelligence',
   wis: 'Wisdom',
   cha: 'Charisma',

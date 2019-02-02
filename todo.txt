@@ -1,0 +1,8 @@
+death mechanics
+items during character creation
+bloodied indicator on monsters
+character sheet
+abilities use for monsters
+ranged attacks
+engaged
+game time passing

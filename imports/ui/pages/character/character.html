@@ -30,45 +30,43 @@
     </div>
     <div class="columns">
       <div class="ability-scores">
-        <div class="ability-score">
-          <div>Strength</div>
-          <div class="score">{{character.str}}</div>
-          <div class="mod">{{mod character.str}}</div>
+        {{#each abilityScore in abilityScores}}
+          {{> character_abilityScore abilityScore}}
+        {{/each}}
+      </div>
+      <div class="proficiencies">
+        <div class="horizontal-block">
+          <div class="detail"></div>
+          <div class="label">Inspiration</div>
         </div>
-        <div class="ability-score">
-          <div>Dexterity</div>
-          <div class="score">{{character.dex}}</div>
-          <div class="mod">{{mod character.dex}}</div>
+        <div class="horizontal-block">
+          <div class="detail">{{character.proficiencyBonus}}</div>
+          <div class="label">Proficiency bonus</div>
         </div>
-        <div class="ability-score">
-          <div>Constitution</div>
-          <div class="score">{{character.con}}</div>
-          <div class="mod">{{mod character.con}}</div>
+        <div class="saving-throws">
+          <div class="saving-throw-row">{{#if character.proficiencies.str_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'str'}} Strength</div>
+          <div class="saving-throw-row">{{#if character.proficiencies.dex_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'dex'}} Dexterity</div>
+          <div class="saving-throw-row">{{#if character.proficiencies.con_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'con'}} Constitution</div>
+          <div class="saving-throw-row">{{#if character.proficiencies.inte_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'inte'}} Intelligence</div>
+          <div class="saving-throw-row">{{#if character.proficiencies.wis_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'wis'}} Wisdom</div>
+          <div class="saving-throw-row">{{#if character.proficiencies.cha_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.saving_throw_bonus 'cha'}} Charisma</div>
         </div>
-        <div class="ability-score">
-          <div>Intelligence</div>
-          <div class="score">{{character.inte}}</div>
-          <div class="mod">{{mod character.inte}}</div>
-        </div>
-        <div class="ability-score">
-          <div>Wisdom</div>
-          <div class="score">{{character.wis}}</div>
-          <div class="mod">{{mod character.wis}}</div>
-        </div>
-        <div class="ability-score">
-          <div>Charisma</div>
-          <div class="score">{{character.cha}}</div>
-          <div class="mod">{{mod character.cha}}</div>
+        <div class="skill-list">
+          {{#each skill in skills}}
+            <div class="skill-row">{{#if character.proficientInSkill skill.key}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
+          {{/each}}
         </div>
       </div>
-      <div class="proficiencies"></div>
       <div class="ac-hp">
         <div class="ac-speed-row">
           <div class="ac">
             <div class="score">{{character.ac}}</div>
             <div class="label"><div>Armor</div><div>Class</div></div>
           </div>
-          <div class="initiative"></div>
+          <div class="initiative">
+            <div class="score">{{mod character.dex}}</div>
+            <div class="label">Initiative</div>
+          </div>
           <div class="speed">
             <div class="score">{{character.speed}}</div>
             <div class="label">speed</div>
@@ -85,6 +83,43 @@
             <div class="label">temporary hit points</div>
           </div>
         </div>
+        <div class="hit-dice-and-death-saves">
+          <div class="hit-dice">
+          </div>
+          <div class="death-saves">
+            <div class="successes">
+              <div class="little-label">Successes</div>
+              <div class="death-success">{{#if character.deathSave 'success' 0}}&#10004;{{/if}}</div>
+              <div class="death-success">{{#if character.deathSave 'success' 1}}&#10004;{{/if}}</div>
+              <div class="death-success">{{#if character.deathSave 'success' 2}}&#10004;{{/if}}</div>
+            </div>
+            <div class="failures">
+              <div class="little-label">Failures</div>
+              <div class="death-fail">{{#if character.deathSave 'fail' 0}}&#10004;{{/if}}</div>
+              <div class="death-fail">{{#if character.deathSave 'fail' 1}}&#10004;{{/if}}</div>
+              <div class="death-fail">{{#if character.deathSave 'fail' 2}}&#10004;{{/if}}</div>
+            </div>
+            <div class="label">Death saves</div>
+          </div>
+        </div>
+      </div>
+      <div class="flavor">
+        <div class="flavor-box">
+          <div class="text">{{character.personality_traits}}</div>
+          <div class="label">personality traits</div>
+        </div>
+        <div class="flavor-box">
+          <div class="text">{{character.ideals}}</div>
+          <div class="label">ideals</div>
+        </div>
+        <div class="flavor-box">
+          <div class="text">{{character.bonds}}</div>
+          <div class="label">bonds</div>
+        </div>
+        <div class="flavor-box">
+          <div class="text">{{character.flaws}}</div>
+          <div class="label">flaws</div>
+        </div>
       </div>
     </div>
     <div class="columns">
@@ -100,5 +135,13 @@
         {{/each}}
       </div>
     </div>
+  </div>
+</template>
+
+<template name="character_abilityScore">
+  <div class="ability-score">
+    <div>{{name}}</div>
+    <div class="score">{{#if positive}}+{{else}}-{{/if}}{{mod}}</div>
+    <div class="mod">{{score}}</div>
   </div>
 </template>

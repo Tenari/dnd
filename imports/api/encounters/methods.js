@@ -8,7 +8,7 @@ import { MonsterTemplates } from '../monsterTemplates/monsterTemplates.js';
 import { EventNotices } from '../eventNotices/eventNotices.js';
 import { EventLogs } from '../eventLogs/eventLogs.js';
 import { Games } from '../games/games.js';
-import { roll, abilityModifier } from '../../configs/general.js';
+import { roll, abilityModifier, advantageRoll } from '../../configs/general.js';
 
 function meleeAttack(eid, cid, opponentId) {
   const encounter = Encounters.findOne(eid);
@@ -21,12 +21,14 @@ function meleeAttack(eid, cid, opponentId) {
   const weapon = character.equippedWeapon();
 
   // advantage/disadvantage ?
+  let adv = character.hasAdvantageOrDisadvantage('attack_roll');
+  let advRolls = advantageRoll(adv);
   // spells/special abilities/other effects ?
   // attack roll
+  let attackRoll = advRolls.finalRoll;
   let hit = false;
   let crit = false;
   let autoMiss = false;
-  let attackRoll = roll('1d20');
   let logMessage = 'Natural 20! Critical Hit! ';
   if (attackRoll == 20) { // crit!
     hit = true;
@@ -53,12 +55,13 @@ function meleeAttack(eid, cid, opponentId) {
     let dmgRoll = character.rollDamage();
     let mod = character.meleeAbilityModifier();
     damage += (dmgRoll + mod);
+    const dmgType = weapon && weapon.damage.damage_type.name;
     if (crit) {
       let dmgRoll2 = character.rollDamage();
       damage += dmgRoll2;
-      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+dmgRoll2+' + '+mod+' = '+damage+' '+weapon.damage.damage_type+' damage.'});
+      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+dmgRoll2+' + '+mod+' = '+damage+' '+dmgType+' damage.'});
     } else {
-      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+mod+' = '+damage+' '+weapon.damage.damage_type+' damage.'});
+      EventLogs.insert({encounterId: encounter._id, message: 'Rolling damage: '+dmgRoll+' + '+mod+' = '+damage+' '+dmgType+' damage.'});
     }
     Characters.update(opponentId, {$set: {hp: opponent.hp - damage}});
   }
@@ -97,7 +100,10 @@ function meleeAttack(eid, cid, opponentId) {
 function endTurn(eid) {
   const encounter = Encounters.findOne(eid);
   let nextTurn = encounter.currentTurn + 1;
-  if (nextTurn >= encounter.turnOrder.length) nextTurn = 0;
+  if (nextTurn >= encounter.turnOrder.length) {
+    Games.update(encounter.gameId, {$inc: {time: 6}}); // time progresses 6 seconds
+    nextTurn = 0;
+  }
   const character = Characters.findOne(encounter.turnOrder[nextTurn]);
   Encounters.update(eid, {$set: {currentTurn: nextTurn, moveStats: {movesLeft: character.speed, hasActed: false}}})
 }
@@ -157,6 +163,7 @@ Meteor.methods({
         Encounters.update(eid, {$set: {characterLocations: characterLocations}});
       } else if (tokens[1] == 'monster' && tokens[2] && tokens[3] && tokens[4]) {
         let monsterTemplate = MonsterTemplates.findOne(tokens[2]);
+        if (!monsterTemplate) throw 'wtf';
         let klass = monsterTemplate.name.toLowerCase().split(' ').join('-');
         let monsterCharacterId = Characters.insert({
           gameId: encounter.gameId,
@@ -178,11 +185,12 @@ Meteor.methods({
           speed: parseInt(monsterTemplate.speed) / 5,
           gender: "male",
           wealth: 1,
-          proficiencies: [ ],
-          doubleProficiencies: [ ],
+          proficiencies: {},
           languages: [ "common" ],
           items: [ ],
           equippedItems: [],
+          activeEffects: [],
+          monsterTemplateId: tokens[2],
         })
         var characterLocations = encounter.characterLocations || [];
         characterLocations.push({characterId: monsterCharacterId, x: parseInt(tokens[3]), y: parseInt(tokens[4]), type: 'character', img: klass});
@@ -209,7 +217,7 @@ Meteor.methods({
         let turns = _.chain(encounter.characterLocations)
           .map(function(loc){ return Characters.findOne(loc.characterId)})
           .select(function(character) {return character;})
-          .map(function(character){return {_id: character._id, roll: -1*(roll('1d20') + abilityModifier(character.dex))}})
+          .map(function(character){return {_id: character._id, roll: -1 * character.rollInitiative()}})
           .sortBy('roll')
           .pluck('_id')
           .value();
@@ -236,6 +244,12 @@ Meteor.methods({
       const opponentId = _.find(encounter.characterLocations, function(loc){ return loc.x == x && loc.y == y}).characterId;
 
       meleeAttack(encounter._id, cid, opponentId);
+    } else if (tokens[0] == 'npcaction') {
+      const action = tokens[1];
+      const cid = encounter.turnOrder[encounter.currentTurn];
+      const monster = Characters.findOne(cid);
+      const monsterTemplate = MonsterTemplates.findOne(monster.monsterTemplateId);
+
     } else if (tokens[0] == 'end' && tokens[1] == 'turn') {
       endTurn(eid);
     } else if (tokens[0] == 'move') {

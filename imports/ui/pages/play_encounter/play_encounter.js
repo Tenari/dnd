@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { EventNotices } from '/imports/api/eventNotices/eventNotices.js';
+import { EventLogs } from '/imports/api/eventLogs/eventLogs.js';
 import '../../components/map/map.js';
 import './play_encounter.html';
 
@@ -28,6 +29,9 @@ Template.play_encounter.onCreated(function(){
       needToSet = false;
       const cid = Template.currentData().character._id;
       $('body').on('keypress', keyMove(cid));
+    }
+    if (Template.currentData().encounter){
+      this.subscribe('eventLogs.encounter', Template.currentData().encounter._id);
     }
   })
 })
@@ -85,7 +89,8 @@ Template.play_encounter.helpers({
         var tile = {};
         var object = _.find(objects, function(o){return o.x == j && o.y == i;});
         if (object) {
-          if (instance.selectMeleeTarget.get()) {
+          object = JSON.parse(JSON.stringify(object));
+          if (instance.selectMeleeTarget.get() === true) {
             if (adjacentTo(object, characterLocation) && object.characterId !== character._id) {
               object.selectable = true;
             }
@@ -127,6 +132,9 @@ Template.play_encounter.helpers({
   },
   moveLeft() {
     return Template.instance().data.encounter.moveStats.movesLeft;
+  },
+  eventLogs() {
+    return EventLogs.find();
   }
 })
 
@@ -143,7 +151,7 @@ Template.play_encounter.events({
     const action = $(e.currentTarget).attr('data-type');
 
     if (action == 'melee_attack') {
-      instance.selectMeleeTarget.set(true);
+      instance.selectMeleeTarget.set(!instance.selectMeleeTarget.curValue);
     }
   },
   'click .event-notice>button'(e,instance) {

@@ -1,6 +1,17 @@
 .character-sheet {
   text-align: center;
-  font-family: arial;
+  font-family: Tahoma, Geneva, sans-serif;
+  .label {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: bold;
+  }
+  .columns>div {
+    margin-top: 20px;
+  }
+
   .header-row {
     text-align:left;
     display: flex;
@@ -33,9 +44,20 @@
     }
   }
   .ac-hp {
-    .ac-speed-row {display: flex;}
+    background-color: #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 0px;
+    margin-left: 10px;
+    .ac-speed-row {
+      display: flex;
+      & > div {
+        background-color:white;
+      }
+    }
     .hp {
       .current-hp {
+        background-color:white;
         border-style: double;
         border-top-right-radius: 10px;
         border-top-left-radius: 10px;
@@ -45,9 +67,11 @@
         }
       }
       .temp-hp{
+        background-color:white;
         border-style: double;
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
+        .score { min-height: 50px; }
       }
     }
     .ac {
@@ -55,15 +79,79 @@
       border-bottom-right-radius: 40%;
       border-bottom-left-radius: 40%;
     }
+    .initiative, .speed {
+      border-style: double;
+      border-radius: 10px;
+    }
     .score {
       font-size: 30px;
       font-weight: bold;
     }
-    .label {
-      text-transform: uppercase;
-      font-size: 12px;
-      padding-left: 5px;
-      padding-right: 5px;
+    .hit-dice-and-death-saves {
+      .death-saves {
+        border-style: double;
+        border-radius: 10px;
+        background-color: white;
+        .little-label {
+          font-size: 11px;
+          text-transform: uppercase;
+          line-height: 20px;
+          min-width: 70px;
+          text-align: right;
+          margin-right: 10px;
+        }
+        .successes, .failures {
+          display: flex;
+          .death-success, .death-fail {
+            height: 20px;
+            width: 20px;
+            line-height: 20px;
+            border-radius: 50%;
+            border: 1px solid black;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+  .flavor {
+    background-color: #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    padding-bottom: 0px;
+    width: 25%;
+    margin-left: 10px;
+    .flavor-box {
+      min-height: 100px;
+      background-color: white;
+      border: 1px solid black;
+      margin-bottom: 10px;
+      .text {
+        min-height: 80px;
+      }
+    }
+  }
+  .proficiencies {
+    margin-left: 10px;
+    .horizontal-block {
+      display: flex;
+      line-height: 30px;
+      margin-bottom: 10px;
+      .detail {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 2px solid black;
+      }
+      .label {
+        border: 2px solid black;
+        border-left: 0;
+        padding-left: 15px;
+        margin-left: -11px;
+      }
+    }
+    .skill-row, .saving-throw-row {
+      text-align: left;
     }
   }
 }

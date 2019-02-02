@@ -36,9 +36,13 @@
       height: 63px;
       border: 1px solid #555;
       position: relative;
+      font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+      font-size: 10px;
       span.xy-marker {
         position: relative;
         z-index: 2;
+        background-color: black;
+        color: white;
       }
       .character {
         width: 100%;
@@ -56,7 +60,7 @@
           }
         }
         &.active {
-          border-bottom: 3px solid red;
+          border-bottom: 3px solid blue;
         }
 
         &.cleric {
@@ -65,6 +69,13 @@
         &.fighter {
           background-image: url('/img/fighter.png');
         }
+        &.rogue {
+          background-image: url('/img/rogue.png');
+        }
+        &.ranger {
+          background-image: url('/img/ranger.png');
+        }
+
         &.acolyte {
           background-image: url('/img/acolyte.png');
         }
