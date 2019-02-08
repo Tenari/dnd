@@ -30,13 +30,13 @@ Template.character_sheet.onCreated(function(){
 Template.character_sheet.helpers({
   mod: abilityModifier,
   characterItems: function(){
-    if (Template.instance().data.character) {
-      return Items.find({_id: { $in: Template.instance().data.character.items} });
-    } else if (Template.instance().character.get()) {
-      return Items.find({_id: { $in: Template.instance().character.get().items} });
-    } else {
-      return [];
-    }
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+
+    return _.map(character.items, function(item){
+      return Items.findOne(item);
+    });
   },
   character: function(){
     const instance = Template.instance();
@@ -59,5 +59,32 @@ Template.character_sheet.helpers({
         mod: modded,
       };
     })
+  },
+  attacks(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+
+    let items =  _.select(_.map(character.items, function(item){
+      return Items.findOne(item);
+    }), function(item){
+      return item.equipment_category == "Weapon";
+    });
+
+    return _.map(items, function(weapon){
+      let range = weapon.range.normal;
+      if (weapon.range.long) {
+        range += '/'+weapon.range.long;
+      }
+      const bonus = weapon.attackBonus(character);
+      return {
+        name: weapon.name,
+        range: range,
+        positive: bonus >= 0,
+        bonus: bonus,
+        damage: weapon.damage.dice_count+'d'+weapon.damage.dice_value,
+        damage_type: weapon.damage.damage_type.name,
+      }
+    });
   }
 })

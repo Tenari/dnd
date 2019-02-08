@@ -1,13 +1,18 @@
 <template name="Character_create">
-  <p>Design your character:</p>
   <form class="character-create-form">
-    <p>What is your name?: <input type="text" name="name" class="character-name"/> Gender: {{> dropdown options=genders className='genders'}} Alignment: {{> dropdown options=alignments className='alignments'}}</p>
+    <p class="character-name-row">
+      What is your name?: <input type="text" name="name" class="character-name"/>
+    </p>
+    <p class="gender-alignment">
+      <div>Gender: {{> dropdown options=genders className='genders'}}</div>
+      <div>Alignment: {{> dropdown options=alignments className='alignments'}}</div>
+    </p>
     {{#if reactiveVar 'name'}}
       <p>Pick a race: {{> dropdown options=races className='races'}} Pick a class: {{> dropdown options=classes className='classes'}} Pick a background: {{> dropdown options=backgrounds className='background-select'}}</p>
       <p>Race description: {{raceDescription}}</p>
       <p>Class description: {{classDescription}}</p>
+      <h4>Ability scores:</h4>
       <p>Racial bonus: {{racialBonus}}</p>
-      <h4>Pick ability scores:</h4>
       <ul class="abilities-list">
         remaining buy points: {{reactiveVar 'buyPoints'}}
         {{#each ability in abilities}}
@@ -22,7 +27,10 @@
         <h4>Class features</h4>
         {{#each feature in classFeatures}}
           <div>
-            {{feature.label}}
+            <div><strong>{{feature.name}}:</strong></div>
+            {{#each line in feature.desc}}
+              <div>{{line}}</div>
+            {{/each}}
           </div>
         {{/each}}
         {{#if classIs 'cleric'}}
@@ -36,7 +44,10 @@
           <p>
             Choose extra proficiencies
             {{#each prof in proficiencyChoices}}
-              {{> dropdown options=availableProficiencies className='proficiency-select' key=prof}}
+              <div>
+                Choose {{prof.max}}
+                {{> multiselect options=prof.options max=prof.max name=prof.name className='proficiency-select'}}
+              </div>
             {{/each}}
           </p>
         {{/if}}

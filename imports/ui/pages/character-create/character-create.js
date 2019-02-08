@@ -1,13 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, PROFICIENCIES, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
+import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
+import { PROFICIENCIES } from '../../../configs/proficiencies';
 import { RACES } from '../../../configs/races.js';
-import { CLASSES } from '../../../configs/classes.js';
-import { FEATURES } from '../../../configs/features.js';
+import { CLASSES } from '/imports/configs/db-classes.js';
+import { CLASS_FEATURES } from '../../../configs/features.js';
 import { ITEMS } from '../../../configs/items.js';
 import { BACKGROUNDS } from '../../../configs/backgrounds.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './character-create.html';
 
+import '../../components/multiselect/multiselect.js';
 import '../../components/dropdown/dropdown.js';
 import '../../components/item/item.js';
 import '../../components/cleric-setup/cleric-setup.js';
@@ -41,9 +43,9 @@ Template.Character_create.onCreated(function(){
 
 Template.Character_create.helpers({
   classFeatures() {
-    const lvl1Features = CLASSES[Template.instance().klass.get()].features[1];
-    return _.map(lvl1Features, function(key){
-      return FEATURES[key] || {label: key};
+    const className = CLASSES[Template.instance().klass.get()].name;
+    return _.select(CLASS_FEATURES, function(feature){
+      return feature.level == 1 && feature.class.name == className;
     })
   },
   backgrounds() {
@@ -72,24 +74,20 @@ Template.Character_create.helpers({
     })
   },
   classes(){
-    return _.map(CLASSES, function(obj, key){
-      return {value: key, label: obj.label};
+    return _.map(CLASSES, function(obj, index){
+      return {value: index, label: obj.name};
     })
   },
   reactiveVar(varname){
     return Template.instance()[varname].get();
   },
   proficiencies() {
-    return _.map(Template.instance().proficiencies.get(), function(key) {
-      return PROFICIENCIES[key] || key;
-    }).join(', ');
+    return _.map(Template.instance().proficiencies.get(), function(index){return PROFICIENCIES[index].name;}).join(', ');
   },
   doubleProficiencies() {
     const dp = Template.instance().doubleProficiencies.get();
     if (dp.length == 0) return false;
-    return _.map(dp, function(key) {
-      return PROFICIENCIES[key] || key;
-    }).join(', ');
+    return dp.join(', ');
   },
   racialBonus() {
     let str = [];
@@ -139,23 +137,21 @@ Template.Character_create.helpers({
   extraProficiencies() {
     const klass = CLASSES[Template.instance().klass.get()];
     if (!klass) return 0;
-    return klass.proficiency_options.choose;
+    return klass.proficiency_choices.length;
   },
   proficiencyChoices() {
     const klass = CLASSES[Template.instance().klass.get()];
-    const choicesPossible = klass.proficiency_options.choose;
-    let arr = [];
-    for (let i =0; i < choicesPossible ; i++) {
-      arr.push(i);
-    }
-    return arr;
-  },
-  availableProficiencies() {
-    const instance = Template.instance();
-    const klass = CLASSES[instance.klass.get()];
-    return _.map(klass.proficiency_options.choices, function(key){
-      return {value: key, label: PROFICIENCIES[key] || key};
-    })
+    const race = RACES[Template.instance().race.get()];
+    const list = _.union(klass.proficiency_choices, race.starting_proficiency_options || []);
+    return _.map(list, function(obj, index){
+      return {
+        name: index,
+        max: obj.choose,
+        options: _.map(obj.from, function(prof){
+          return {name: prof.name, value: indexFromUrl(prof)}
+        }),
+      }
+    });
   },
   remainingWealth() {
     const instance = Template.instance();
@@ -230,11 +226,18 @@ function computeProficiencies(instance) {
   const klass = CLASSES[instance.klass.curValue];
   const bg = BACKGROUNDS[instance.background.curValue];
   const raceProfs = (race && race.proficiencies) || [];
-  const klassProfs = (klass && klass.proficiencies) || [];
+  const klassProfs = (klass && _.map(klass.proficiencies, indexFromUrl)) || [];
   const bgProfs = (bg && bg.proficiencies) || [];
   let profs = _.union(raceProfs, klassProfs, bgProfs);
   $('select.proficiency-select').each(function(){
-    profs.push($(this).val());
+    let val = $(this).val();
+    if (_.isArray(val)) {
+      _.each(val, function(index){
+        profs.push(parseInt(index));
+      })
+    } else if (val != null) {
+      profs.push(val);
+    }
   })
   return _.uniq(profs);
 }
@@ -423,3 +426,7 @@ Template.Character_create.events({
     });
   }
 })
+function indexFromUrl(obj){
+  const splitted = obj.url.split('/');
+  return parseInt(splitted[splitted.length-1]);
+}

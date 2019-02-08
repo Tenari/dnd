@@ -2,33 +2,65 @@ export const RACES = {
   mountain_dwarf: {
     label: 'Mountain Dwarf',
     description: 'Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk.',
+		"alignment": "Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.",
+		"age": "Dwarves mature at the same rate as humans, but they’re considered young until they reach the age of 50. On average, they live about 350 years.",
     size: 'medium',
+		"size_description": "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.",
     speed: 5,
     con_bonus: 2,
     str_bonus: 2,
-    vision: 'darkvision', // Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can’t discern color in darkness, only shades of gray.
-    proficiencies: ['light_armor', 'medium_armor', 'battleaxe', 'handaxe', 'light_hammer', 'warhammer'],
-    resistances: ['poison'],
-    saving_throw_advantages: ['poison'],
+    proficiencies: [1, 2, 35, 24, 26, 51],
+		"starting_proficiency_options": {
+			"choose": 1,
+			"type": "proficiencies",
+			"from": [
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/71",
+					"name": "Smith's tools"
+				},
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/59",
+					"name": "Brewer's supplies"
+				},
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/68",
+					"name": "Mason's tools"
+				}
+			]
+		},
+		"traits": ["darkvision_dwarf", "dwarven_resilience", "stonecunning"],
     languages: ['common', 'dwarvish'],
- //   extra_feature: 'dwarven_armor_training', // You have profciency with light and medium armor.
-// Dwarven Resilience. You have advantage on saving throws against poison, and you have resistance against poison damage (explained in chapter 9).
-//Dwarven Combat Training. You have profciency with the battleaxe, handaxe, light hammer, and warhammer.
   },
   hill_dwarf: {
     label: 'Hill Dwarf',
     description: 'Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk.',
+		"alignment": "Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.",
+		"age": "Dwarves mature at the same rate as humans, but they’re considered young until they reach the age of 50. On average, they live about 350 years.",
     size: 'medium',
+		"size_description": "Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.",
     speed: 5,
     con_bonus: 2,
     wis_bonus: 1,
-    vision: 'darkvision', // Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can’t discern color in darkness, only shades of gray.
-    hp_max_bonus: 1,
-    hp_gain_bonus: 1,
-//    extra_feature: 'dwarven_toughness', // Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.
-    resistances: ['poison'],
-    saving_throw_advantages: ['poison'],
-    proficiencies: [],
+    proficiencies: [35, 24, 26, 51],
+		"starting_proficiency_options": {
+			"choose": 1,
+			"type": "proficiencies",
+			"from": [
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/71",
+					"name": "Smith's tools"
+				},
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/59",
+					"name": "Brewer's supplies"
+				},
+				{
+					"url": "http://www.dnd5eapi.co/api/proficiencies/68",
+					"name": "Mason's tools"
+				}
+			]
+		},
+		"traits": ["darkvision_dwarf", "dwarven_resilience", "stonecunning", "dwarven_toughness"],
     languages: ['common', 'dwarvish'],
   },
   high_elf: {
@@ -38,7 +70,7 @@ export const RACES = {
     speed: 6,
     dex_bonus: 2,
     vision: 'darkvision',
-    proficiencies: ['perception', 'longsword', 'shortsword', 'shortbow', 'longbow'],
+    proficiencies: [116, 42, 48, 33, 56],
     saving_throw_advantages: ['charmed'],
     sleep: 'trance',
     inte_bonus: 1,
@@ -53,7 +85,7 @@ export const RACES = {
     speed: 7,
     dex_bonus: 2,
     vision: 'darkvision',
-    proficiencies: ['perception', 'longsword', 'shortsword', 'shortbow', 'longbow'],
+    proficiencies: [116, 42, 48, 33, 56],
     saving_throw_advantages: ['charmed'],
     sleep: 'trance',
     wis_bonus: 1,

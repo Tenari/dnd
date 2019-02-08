@@ -44,13 +44,16 @@
     }
   }
   .ac-hp {
-    background-color: #ddd;
-    border-radius: 10px;
-    padding: 10px;
-    padding-bottom: 0px;
     margin-left: 10px;
+    width: 25%;
+    .just-ac-hp {
+      padding: 10px;
+      background-color: #ddd;
+      border-radius: 10px;
+    }
     .ac-speed-row {
       display: flex;
+      justify-content: space-between;
       & > div {
         background-color:white;
       }
@@ -88,10 +91,13 @@
       font-weight: bold;
     }
     .hit-dice-and-death-saves {
-      .death-saves {
+      display: flex;
+      .hit-dice, .death-saves {
         border-style: double;
         border-radius: 10px;
         background-color: white;
+      }
+      .death-saves {
         .little-label {
           font-size: 11px;
           text-transform: uppercase;
@@ -152,6 +158,39 @@
     }
     .skill-row, .saving-throw-row {
       text-align: left;
+    }
+    .saving-throws, .skill-list {
+      border-radius: 10px;
+      border-style: double;
+      margin-bottom: 10px;
+    }
+  }
+  .attacks-and-spellcasting {
+    background-color: white;
+    padding: 10px;
+    border-style: double;
+    margin-top: 10px;
+  }
+  .attack-row {
+    display: flex;
+    justify-content: space-between;
+    &>div {
+      background-color: #eee;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      text-overflow: hidden;
+    }
+    .name {
+      width: 20%;
+    }
+    .range {
+      width: 10%;
+    }
+    .bonus {
+      width: 10%;
+    }
+    .damage {
+      width: 50%;
     }
   }
 }

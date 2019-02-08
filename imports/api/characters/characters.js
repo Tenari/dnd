@@ -38,8 +38,10 @@ Characters.helpers({
     return CLASSES[this.klass].label;
   },
   meleeAbilityModifier() {
-    if (false) { // equipped melee weapon has finesse or thrown property
-      return abilityModifier(this.dex);
+    const weapon = this.equippedWeapon();
+
+    if (weapon) {
+      return weapon.attackAbilityModifier(this);
     }
 
     return abilityModifier(this.str);
@@ -87,14 +89,21 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
     return 'normal';
   },
   rollInitiative() {
-    return roll('1d20') + abilityModifier(this.dex);
+    return roll('1d20') + this.initiativeBonus();
+  },
+  initiativeBonus(){
+    return abilityModifier(this.dex); // + any other initiative bonuses
   },
   savingThrowBonus(key) {
-    let bonus = abilityModifier(key);
+    let bonus = abilityModifier(this[key]);
     if (this.proficiencies[key+"_saving_throw"]) {
-      bonus += this.proficiencyBonus();
+      bonus += (this.proficiencies[key+"_saving_throw"] * this.proficiencyBonus());
     }
     return bonus;
+  },
+  displaySavingThrowBonus(key) {
+    const bonus = this.savingThrowBonus(key);
+    return bonus >= 0 ? "+"+bonus : "-"+bonus;
   },
   proficientInSkill(skill) {
     return !!this.proficiencies[skill];

@@ -1,0 +1,7 @@
+<template name="multiselect">
+  <select name="{{ name }}" class="{{className}}" multiple="multiple">
+    {{#each opt in options}}
+      <option value="{{opt.value}}">{{opt.name}}</option>
+    {{/each}}
+  </select>
+</template>
