@@ -164,6 +164,9 @@ Template.Character_create.helpers({
   classDescription() {
     return CLASSES[Template.instance().klass.get()].description;
   },
+  classKey() {
+    return CLASSES[Template.instance().klass.get()].name.toLowerCase();
+  },
   raceDescription() {
     return RACES[Template.instance().race.get()].description;
   },

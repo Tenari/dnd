@@ -33,7 +33,10 @@
     <div class="character-create-row">
       <div class="header-section">
         <div class="section-title">Class</div>
-        <div class="section-detail">{{> dropdown options=classes className='classes'}}</div>
+        <div class="section-detail">
+          <div>{{> dropdown options=classes className='classes'}}</div>
+          <div><img src="/img/{{classKey}}.png"/></div>
+        </div>
       </div>
       <div class="content-section">
         <div>{{classDescription}}</div>
