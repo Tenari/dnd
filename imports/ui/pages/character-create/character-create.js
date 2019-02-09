@@ -3,6 +3,9 @@ import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, AL
 import { PROFICIENCIES } from '../../../configs/proficiencies';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
+import { TRAITS } from '/imports/configs/traits.js';
+import { SPELLCASTING } from '/imports/configs/spellcasting.js';
+import { SPELLS } from '/imports/configs/spells.js';
 import { CLASS_FEATURES } from '../../../configs/features.js';
 import { ITEMS } from '../../../configs/items.js';
 import { BACKGROUNDS } from '../../../configs/backgrounds.js';
@@ -42,11 +45,54 @@ Template.Character_create.onCreated(function(){
 })
 
 Template.Character_create.helpers({
+  choosesSpells() {
+    return CLASSES[Template.instance().klass.get()].spellcasting;
+  },
+  spellcastingInfo() {
+    const klass = CLASSES[Template.instance().klass.get()];
+    const spellcasting = SPELLCASTING[klass.spellcasting];
+    return spellcasting.info;
+  },
+  cantripCount(){
+    const klass = CLASSES[Template.instance().klass.get()];
+    const spellcasting = SPELLCASTING[klass.spellcasting];
+    return spellcasting.details_per_level[1].cantrips;
+  },
+  cantripOptions() {
+    const klass = CLASSES[Template.instance().klass.get()];
+    return _.chain(SPELLS).select(function(spell){
+      return spell.level == 0 && _.pluck(spell.classes, 'name').includes(klass.name);
+    }).map(function(spell){
+      return {name: spell.name, value: spell.name};
+    }).value();
+  },
+  spellCount(){
+    const klass = CLASSES[Template.instance().klass.get()];
+    const spellcasting = SPELLCASTING[klass.spellcasting];
+    return spellcasting.details_per_level[1].spells;
+  },
+  spellOptions() {
+    const klass = CLASSES[Template.instance().klass.get()];
+    return _.chain(SPELLS).select(function(spell){
+      return spell.level == 1 && _.pluck(spell.classes, 'name').includes(klass.name);
+    }).map(function(spell){
+      return {name: spell.name, value: spell.name};
+    }).value();
+  },
   classFeatures() {
     const className = CLASSES[Template.instance().klass.get()].name;
     return _.select(CLASS_FEATURES, function(feature){
       return feature.level == 1 && feature.class.name == className;
     })
+  },
+  raceTraits(){
+    const race = RACES[Template.instance().race.get()];
+    return _.map(race.traits, function(key){
+      return TRAITS[key];
+    })
+  },
+  background() {
+    return BACKGROUNDS[Template.instance().background.get()];
   },
   backgrounds() {
     return _.map(BACKGROUNDS, function(obj, value){
@@ -81,8 +127,11 @@ Template.Character_create.helpers({
   reactiveVar(varname){
     return Template.instance()[varname].get();
   },
-  proficiencies() {
-    return _.map(Template.instance().proficiencies.get(), function(index){return PROFICIENCIES[index].name;}).join(', ');
+  proficiencies(list) {
+    if (!list) {
+      list = Template.instance().proficiencies.get();
+    }
+    return _.map(list, function(index){return PROFICIENCIES[index].name;}).join(', ');
   },
   doubleProficiencies() {
     const dp = Template.instance().doubleProficiencies.get();
@@ -231,18 +280,22 @@ function computeProficiencies(instance) {
   let profs = _.union(raceProfs, klassProfs, bgProfs);
   $('select.proficiency-select').each(function(){
     let val = $(this).val();
-    if (_.isArray(val)) {
-      _.each(val, function(index){
-        profs.push(parseInt(index));
-      })
-    } else if (val != null) {
-      profs.push(val);
-    }
+    _.each(val, function(index){
+      profs.push(parseInt(index));
+    })
   })
   return _.uniq(profs);
 }
 function updateProficienciesAndLanguages(instance) {
   instance.proficiencies.set(computeProficiencies(instance));
+
+  let proficienciesArePicked = true;
+  $('select.proficiency-select').each(function(){
+    let val = $(this).val();
+    if(!_.isArray(val) || val.length != parseInt($(this).attr('data-max'))) {
+      proficienciesArePicked = false;
+    }
+  })
 
   let dlbProfs = [];
   $('select.double-proficiency-select').each(function(){

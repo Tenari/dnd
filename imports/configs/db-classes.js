@@ -82,14 +82,12 @@ export const CLASSES = [
 				"name": "Berserker"
 			}
 		],
-		"spellcasting": {
-			
-		},
 		"url": "http://www.dnd5eapi.co/api/classes/1"
 	},
 	{
 		"index": 2,
 		"name": "Bard",
+    "description": "In the worlds of D&D, words and music are not just vibrations of air, but vocalizations with power all their own. The bard is a master of song, speech, and the magic they contain. Bards say that the multiverse was spoken into existence, that the words of the gods gave it shape, and that echoes of these primordial Words of Creation still resound throughout the cosmos. The music of bards is an attempt to snatch and harness those echoes, subtly woven into their spells and powers.",
 		"hit_die": 8,
 		"proficiency_choices": [
 			{
@@ -267,10 +265,7 @@ export const CLASSES = [
 				"name": "Lore"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/1",
-			"class": "Bard"
-		},
+		"spellcasting": 'bard',
 		"url": "http://www.dnd5eapi.co/api/classes/2"
 	},
 	{
@@ -357,6 +352,7 @@ export const CLASSES = [
 	{
 		"index": 4,
 		"name": "Druid",
+    "description": "Druids revere nature above all, gaining their spells and other magical powers either from the force of nature itself or from a nature deity. Many druids pursue a mystic spirituality of transcendent union with nature rather than devotion to a divine entity, while others serve gods of wild nature, animals, or elemental forces. The ancient druidic traditions are sometimes called the Old Faith, in contrast to the worship of gods in temples and shrines.",
 		"hit_die": 8,
 		"proficiency_choices": [
 			{
@@ -489,6 +485,7 @@ export const CLASSES = [
 	{
 		"index": 5,
 		"name": "Fighter",
+    "description": "Questing knights, conquering overlords, royal champions, elite foot soldiers, hardened mercenaries, and bandit kings—as fighters, they all share an unparalleled mastery with weapons and armor, and a thorough knowledge of the skills of combat. And they are well acquainted with death, both meting it out and staring it defiantly in the face.",
 		"hit_die": 10,
 		"proficiency_choices": [
 			{
@@ -784,6 +781,7 @@ export const CLASSES = [
 	{
 		"index": 7,
 		"name": "Paladin",
+    "description":"A paladin swears to uphold justice and righteousness, to stand with the good things of the world against the encroaching darkness, and to hunt the forces of evil wherever they lurk.",
 		"hit_die": 10,
 		"proficiency_choices": [
 			{
@@ -965,6 +963,7 @@ export const CLASSES = [
 	{
 		"index": 9,
 		"name": "Rogue",
+    "description":"Rogues devote as much effort to mastering the use of a variety of skills as they do to perfecting their combat abilities, giving them a broad expertise that few other characters can match. Many rogues focus on stealth and deception, while others refine the skills that help them in a dungeon environment, such as climbing, finding and disarming traps, and opening locks.",
 		"hit_die": 8,
 		"proficiency_choices": [
 			{
@@ -1080,6 +1079,7 @@ export const CLASSES = [
 	{
 		"index": 10,
 		"name": "Sorcerer",
+    "description":"Magic is a part of every sorcerer, suffusing body, mind, and spirit with a latent power that waits to be tapped. Some sorcerers wield magic that springs from an ancient bloodline infused with the magic of dragons. Others carry a raw, uncontrolled magic within them, a chaotic storm that manifests in unexpected ways.",
 		"hit_die": 6,
 		"proficiency_choices": [
 			{
@@ -1164,6 +1164,7 @@ export const CLASSES = [
 	{
 		"index": 11,
 		"name": "Warlock",
+    "description":"Warlocks are seekers of the knowledge that lies hidden in the fabric of the multiverse. Through pacts made with mysterious beings of supernatural power, warlocks unlock magical effects both subtle and spectacular.",
 		"hit_die": 8,
 		"proficiency_choices": [
 			{
@@ -1244,6 +1245,7 @@ export const CLASSES = [
 	{
 		"index": 12,
 		"name": "Wizard",
+    "description":"Wizards are supreme magic-users, defined and united as a class by the spells they cast. Drawing on the subtle weave of magic that permeates the cosmos, wizards cast spells of explosive fire, arcing lightning, subtle deception, and brute-force mind control.",
 		"hit_die": 6,
 		"proficiency_choices": [
 			{

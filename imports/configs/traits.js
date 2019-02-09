@@ -4,7 +4,7 @@ export const TRAITS = {
     name: "Darkvision (Dwarf)",
     desc: "You have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You cannot discern color in darkness, only shades of gray.",
   },
-  dwarven_resiliance: {
+  dwarven_resilience: {
     key: "dwarven_resiliance",
     "name": "Dwarven Resilience",
     desc: "You have advantage on saving throws against poison, and you have resistance against poison damage.",

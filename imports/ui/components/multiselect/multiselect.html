@@ -1,5 +1,5 @@
 <template name="multiselect">
-  <select name="{{ name }}" class="{{className}}" multiple="multiple">
+  <select name="{{ name }}" class="{{className}}" multiple="multiple" data-max="{{max}}">
     {{#each opt in options}}
       <option value="{{opt.value}}">{{opt.name}}</option>
     {{/each}}

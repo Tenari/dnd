@@ -4,6 +4,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 // Import needed templates
 import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
+import '../../ui/pages/spells/spells.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
@@ -18,6 +19,12 @@ FlowRouter.route('/', {
   name: 'App.home',
   action() {
     BlazeLayout.render('App_body', { main: 'App_home' });
+  },
+});
+FlowRouter.route('/spells', {
+  name: 'spells_page',
+  action() {
+    BlazeLayout.render('App_body', { main: 'spells_page' });
   },
 });
 FlowRouter.route('/game/create', {

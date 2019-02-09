@@ -1,20 +1,62 @@
 <template name="Character_create">
   <form class="character-create-form">
-    <p class="character-name-row">
-      What is your name?: <input type="text" name="name" class="character-name"/>
-    </p>
-    <p class="gender-alignment">
-      <div>Gender: {{> dropdown options=genders className='genders'}}</div>
-      <div>Alignment: {{> dropdown options=alignments className='alignments'}}</div>
-    </p>
-    {{#if reactiveVar 'name'}}
-      <p>Pick a race: {{> dropdown options=races className='races'}} Pick a class: {{> dropdown options=classes className='classes'}} Pick a background: {{> dropdown options=backgrounds className='background-select'}}</p>
-      <p>Race description: {{raceDescription}}</p>
-      <p>Class description: {{classDescription}}</p>
-      <h4>Ability scores:</h4>
-      <p>Racial bonus: {{racialBonus}}</p>
+    <div class="character-create-row">
+      <div class="header-section"></div>
+      <div class="content-section">
+        <p class="character-name-row">
+          Name <input type="text" name="name" class="character-name"/>
+        </p>
+        <p class="gender-alignment">
+          <div>Gender: {{> dropdown options=genders className='genders'}}</div>
+          <div>Alignment: {{> dropdown options=alignments className='alignments'}}</div>
+        </p>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Race</div>
+        <div class="section-detail">{{> dropdown options=races className='races'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{raceDescription}}</div>
+        <p>Racial bonus: {{racialBonus}}</p>
+        {{#each trait in raceTraits}}
+          <div class="character-create-row">
+            <div class="header-section"><strong>{{trait.name}}</strong></div>
+            <div class="content-section">{{trait.desc}}</div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Class</div>
+        <div class="section-detail">{{> dropdown options=classes className='classes'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{classDescription}}</div>
+        <h4>Class features</h4>
+        {{#each feature in classFeatures}}
+          <div class="character-create-row">
+            <div class="header-section"><strong>{{feature.name}}</strong></div>
+            <div class="content-section">
+              {{#each line in feature.desc}}
+                <div>{{line}}</div>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Ability Scores</div>
+        <div class="section-detail">Points Left: {{reactiveVar 'buyPoints'}}</div>
+      </div>
       <ul class="abilities-list">
-        remaining buy points: {{reactiveVar 'buyPoints'}}
         {{#each ability in abilities}}
           <li>
             <span class="ability-label">{{ability.label}}</span>
@@ -23,26 +65,42 @@
           </li>
         {{/each}}
       </ul>
-      {{#unless reactiveVar 'buyPoints'}}
-        <h4>Class features</h4>
-        {{#each feature in classFeatures}}
-          <div>
-            <div><strong>{{feature.name}}:</strong></div>
-            {{#each line in feature.desc}}
-              <div>{{line}}</div>
-            {{/each}}
-          </div>
-        {{/each}}
-        {{#if classIs 'cleric'}}
-          {{> clericSetup domain=currentDomain}}
-        {{/if}}
-        {{#if doubleProficiencies}}
-          <p>Double Proficiencies: {{doubleProficiencies}}</p>
-        {{/if}}
-        <p>Proficiencies: {{proficiencies}}</p>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Background</div>
+        <div class="section-detail">{{> dropdown options=backgrounds className='background-select'}}</div>
+      </div>
+      <div class="content-section">
+        <div>Background bonuses:</div>
+        <div class="character-create-row">
+          <div class="header-section"><strong>Proficiencies</strong></div>
+          <div class="content-section">{{proficiencies background.proficiencies}}</div>
+        </div>
+        <div class="character-create-row">
+          <div class="header-section"><strong>Features</strong></div>
+          <div class="content-section">{{background.features}}</div>
+        </div>
+        <div class="character-create-row">
+          <div class="header-section"><strong>Items</strong></div>
+          <div class="content-section">{{background.items}}</div>
+        </div>
+        <div class="character-create-row">
+          <div class="header-section"><strong>Wealth</strong></div>
+          <div class="content-section">{{background.wealth}}gp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Proficiencies</div>
+      </div>
+      <div class="content-section">
+        <div>{{proficiencies}}</div>
         {{#if extraProficiencies}}
           <p>
-            Choose extra proficiencies
             {{#each prof in proficiencyChoices}}
               <div>
                 Choose {{prof.max}}
@@ -51,7 +109,43 @@
             {{/each}}
           </p>
         {{/if}}
-        <p>Languages: {{reactiveVar 'languages'}}</p>
+        {{#if doubleProficiencies}}
+          <p>Double Proficiencies: {{doubleProficiencies}}</p>
+        {{/if}}
+      </div>
+    </div>
+
+    {{#if choosesSpells}}
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Spells/Abilities</div>
+      </div>
+      <div class="content-section">
+        {{#each item in spellcastingInfo}}
+          <div class="character-create-row">
+            <div class="header-section">
+              <strong>{{item.name}}</strong>
+            </div>
+            <div class="content-section">
+              {{#each line in item.desc}}
+                <div>{{line}}</div>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+        <div><a href="/spells" target="_blank">Spell info page</a></div>
+        <div>Choose {{cantripCount}} cantrips {{> multiselect options=cantripOptions max=cantripCount name='cantrips' className='cantrips-select'}}</div>
+        <div>Choose {{spellCount}} 1st-level Spells {{> multiselect options=spellOptions max=spellCount name='cantrips' className='cantrips-select'}}</div>
+      </div>
+    </div>
+    {{/if}}
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Languages</div>
+      </div>
+      <div class="content-section">
+        <div>{{reactiveVar 'languages'}}</div>
         {{#if extraLanguages}}
           <p>
             Choose extra languages
@@ -60,6 +154,14 @@
             {{/each}}
           </p>
         {{/if}}
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Items</div>
+      </div>
+      <div class="content-section">
         <h4><a href="javascript:void(0)" data-tab="buy" class="items-tab">Buy</a> or <a href="javascript:void(0)" data-tab="choose" class="items-tab">Choose</a> Items</h4>
         {{#if itemsTab 'buy'}}
           <p>Remaining Wealth: {{remainingWealth}}gp | Total weight: {{itemsWeight}}lbs / {{carryingCapacity}}lbs</p>
@@ -85,8 +187,13 @@
             {{/each}}
           </div>
         {{/if}}
-        <div><button class="submit-character">CREATE CHARACTER!!!</button></div>
-      {{/unless}}
+      </div>
+    </div>
+
+    {{#if canCreateCharacter}}
+      <div><button class="submit-character">CREATE CHARACTER!!!</button></div>
+    {{else}}
+      <div>[Form not filled out]</div>
     {{/if}}
   </form>
 </template>

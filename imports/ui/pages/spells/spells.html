@@ -1,0 +1,6 @@
+<template name="spells_page">
+  <p>Search for spell: <input type="text" name="spell-search"/></p>
+  {{#each s in spells}}
+    {{> spell spell=s}}
+  {{/each}}
+</template>
