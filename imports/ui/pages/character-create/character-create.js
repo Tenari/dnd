@@ -6,8 +6,8 @@ import { CLASSES } from '/imports/configs/db-classes.js';
 import { TRAITS } from '/imports/configs/traits.js';
 import { SPELLCASTING } from '/imports/configs/spellcasting.js';
 import { SPELLS } from '/imports/configs/spells.js';
+import { STARTING_EQUIPMENT } from '/imports/configs/starting-equipment.js';
 import { CLASS_FEATURES } from '../../../configs/features.js';
-import { ITEMS } from '../../../configs/items.js';
 import { BACKGROUNDS } from '../../../configs/backgrounds.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './character-create.html';
@@ -239,27 +239,43 @@ Template.Character_create.helpers({
       }
     );
   },
-  itemChoice() {
+  itemChoices() {
     const instance = Template.instance();
     const klass = CLASSES[instance.klass.get()];
-    return _.map(klass.item_options, function(choicesArr) {
-      return _.map(choicesArr, function(itemList, index){
-        return {label: _.map(itemList, function(itemKey) {return (ITEMS[itemKey] && ITEMS[itemKey].name) || itemKey;}).join(', '), value: index};
+    const klassItems = STARTING_EQUIPMENT[klass.name];
+    let list = [];
+    for (let i =1; i <= klassItems.choices_to_make; i+=1) {
+      let choices = klassItems["choice_"+i];
+      let options = [];
+      _.each(choices, function(choice, index){
+        if (choice.choose == choice.from.length) { // not a real choice, just one option
+          options.push({label: _.map(choice.from, function(itemObj){return itemObj.item.name + " ("+itemObj.quantity+")";}).join(", "), value: index})
+        } else {
+          _.each(choice.from, function(itemObj){
+            options.push({label: itemObj.item.name + " ("+itemObj.quantity+")", value: ""+index+'-'+itemObj.item.index});
+          })
+        }
       })
-    })
+      list.push(options)
+    }
+    return list;
   },
   freeItems() {
-    const klassItems = CLASSES[Template.instance().klass.get()].items;
+    const klass = CLASSES[Template.instance().klass.get()];
+    const klassItems = STARTING_EQUIPMENT[klass.name];
     const bgItems = BACKGROUNDS[Template.instance().background.get()].items;
-    let arr = _.clone(klassItems);
-    arr.push(bgItems);
-    return _.map(_.flatten(arr), function(itemKey){
-      return (ITEMS[itemKey] && ITEMS[itemKey].name) || itemKey;
+    return _.map(_.union(klassItems.starting_equipment, bgItems), function(equipmentBlock){
+      return equipmentBlock.item.name +" ("+ equipmentBlock.quantity+")"; 
     }).join(', ');
   },
   bgGp() {
     return BACKGROUNDS[Template.instance().background.get()].wealth;
   },
+  backgroundItems() {
+    return _.map(BACKGROUNDS[Template.instance().background.get()].items, function(item){
+      return item.item.name + " ("+item.quantity+")";
+    }).join(", ");
+  }
 })
 
 function remainingWealth(instance) {

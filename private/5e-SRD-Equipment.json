@@ -4087,8 +4087,7 @@
 	"speed": {
 		"quantity": 2,
 		"unit": "mph"
-	},
-	"url": "http://www.dnd5eapi.co/api/equipment/255"
+	}
 }, {
 	"index": 256,
 	"name": "Warship",
@@ -4101,6 +4100,25 @@
 	"speed": {
 		"quantity": 2.5,
 		"unit": "mph"
+	}
+}, {
+	"index": 257,
+	"name": "Stick of Incense",
+	"equipment_category": "Adventuring Gear",
+	"gear_category": "Standard Gear",
+	"cost": {
+		"quantity": 5,
+		"unit": "sp"
 	},
-	"url": "http://www.dnd5eapi.co/api/equipment/256"
+  "weight": 0
+}, {
+	"index": 258,
+	"name": "Pedigree scroll",
+	"equipment_category": "Adventuring Gear",
+	"gear_category": "Standard Gear",
+	"cost": {
+		"quantity": 1,
+		"unit": "gp"
+	},
+  "weight": 0
 }]

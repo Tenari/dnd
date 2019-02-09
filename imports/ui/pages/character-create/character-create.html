@@ -84,7 +84,7 @@
         </div>
         <div class="character-create-row">
           <div class="header-section"><strong>Items</strong></div>
-          <div class="content-section">{{background.items}}</div>
+          <div class="content-section">{{backgroundItems}}</div>
         </div>
         <div class="character-create-row">
           <div class="header-section"><strong>Wealth</strong></div>
@@ -162,31 +162,19 @@
         <div class="section-title">Items</div>
       </div>
       <div class="content-section">
-        <h4><a href="javascript:void(0)" data-tab="buy" class="items-tab">Buy</a> or <a href="javascript:void(0)" data-tab="choose" class="items-tab">Choose</a> Items</h4>
-        {{#if itemsTab 'buy'}}
-          <p>Remaining Wealth: {{remainingWealth}}gp | Total weight: {{itemsWeight}}lbs / {{carryingCapacity}}lbs</p>
-          <div class="items-buy">
-            <ul class="bought-items">
-              {{#each myItems}}
-                <li data-key="{{key}}">{{> item}}</li>
-              {{/each}}
-            </ul>
-            <ul class="item-list">
-              <input class="item-filter" type="text"/>
-              {{#each shopItems}}
-                <li data-key="{{key}}">{{> item}}</li>
-              {{/each}}
-            </ul>
-          </div>
-        {{else if itemsTab 'choose'}}
-          <p>Automatic Items: {{freeItems}}</p>
-          <p>extra gp: {{bgGp}}</p>
-          <div>
-            {{#each list in itemChoice}}
-              {{> dropdown options=list className='item-choice'}}
+        <div class="character-create-row">
+          <div class="header-section"><strong>Automatic Items</strong></div>
+          <div class="content-section">{{freeItems}}</div>
+        </div>
+        <p>extra gp: {{bgGp}}</p>
+        <div class="character-create-row">
+          <div class="header-section"><strong>Item Choices</strong></div>
+          <div class="content-section">
+            {{#each list in itemChoices}}
+              <div>{{> dropdown options=list className='item-choice'}}</div>
             {{/each}}
           </div>
-        {{/if}}
+        </div>
       </div>
     </div>
 

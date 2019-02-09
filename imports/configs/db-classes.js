@@ -68,10 +68,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/3"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/1",
-			"class": "Barbarian"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/barbarian/levels",
 			"class": "Barbarian"
@@ -251,10 +247,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/2",
-			"class": "Bard"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/bard/levels",
 			"class": "Bard"
@@ -329,10 +321,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/3",
-			"class": "Cleric"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/cleric/levels",
 			"class": "Cleric"
@@ -462,10 +450,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/5"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/4",
-			"class": "Druid"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/druid/levels",
 			"class": "Druid"
@@ -555,10 +539,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/3"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/5",
-			"class": "Fighter"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/fighter/levels",
 			"class": "Fighter"
@@ -759,10 +739,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/2"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/6",
-			"class": "Monk"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/monk/levels",
 			"class": "Monk"
@@ -843,10 +819,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/7",
-			"class": "Paladin"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/paladin/levels",
 			"class": "Paladin"
@@ -940,10 +912,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/2"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/8",
-			"class": "Ranger"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/ranger/levels",
 			"class": "Ranger"
@@ -1057,10 +1025,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/4"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/9",
-			"class": "Rogue"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/rogue/levels",
 			"class": "Rogue"
@@ -1141,10 +1105,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/10",
-			"class": "Sorcerer"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/sorcerer/levels",
 			"class": "Sorcerer"
@@ -1222,10 +1182,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/11",
-			"class": "Warlock"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/warlock/levels",
 			"class": "Warlock"
@@ -1307,10 +1263,6 @@ export const CLASSES = [
 				"url": "http://www.dnd5eapi.co/api/ability-scores/5"
 			}
 		],
-		"starting_equipment": {
-			"url": "http://www.dnd5eapi.co/api/startingequipment/12",
-			"class": "Wizard"
-		},
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/wizard/levels",
 			"class": "Wizard"
