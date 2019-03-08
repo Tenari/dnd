@@ -15,10 +15,10 @@ Meteor.methods({
       name,
       password,
       description,
-      userId,
+      userId, // owner of the game
       activeEncounter: '',
-      time: 0, // integer number of seconds in game-time since the adventure started.
-      createdAt: new Date(),
+      time: 0, // integer number of seconds in game-time since the adventure started. +6 seconds for one round
+      createdAt: new Date(), //real time that the game was started
     });
     const initialEncounter = Encounters.insert({
       gameId: game,
@@ -32,6 +32,8 @@ Meteor.methods({
     return game;
   },
   'games.changeActiveEncounter'(gameId, newId) {
+    const game = Games.findOne(gameId);
+    if (Meteor.userId() != game.userId) throw 'go away';
     Games.update(gameId, {$set: {activeEncounter: newId}});
   }
 });

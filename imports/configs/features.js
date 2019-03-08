@@ -17,7 +17,34 @@ export const CLASS_FEATURES = [
       "Your rage lasts for 1 minute. It ends early if you are knocked Unconscious or if Your Turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on Your Turn as a Bonus Action.",
       "Once you have raged the maximum number of times for your barbarian level, you must finish a Long Rest before you can rage again. You may rage 2 times at 1st level, 3 at 3rd, 4 at 6th, 5 at 12th, and 6 at 17th."
     ],
-    "url": "http://www.dnd5eapi.co/api/features/1"
+    action: {
+      key: 'barbarian_rage',
+      size: 'bonus',
+      uses_per_day: {
+        1: 2, 2: 2,
+        3: 3, 4: 3, 5: 3,
+        6: 4, 7: 4, 8: 4, 9: 4, 10: 4, 11: 4,
+        12: 5, 13: 5, 14: 5, 15: 5, 16: 5,
+        17: 6, 18: 6, 19: 6, 20: 10000000,
+      },
+      produced_effect: {
+        conditions: ['no_heavy_armor'],
+        grantsAdvantage: {'str_check':true, 'str_saving_throw':true},
+        endable: true,
+        can_cast_spells: false,
+        ends: {
+          unconscious: true,
+          no_attack_or_damage_taken_since_last_turn: true,
+        },
+        level_based_damage_bonus: {
+          1: 2, 2: 2, 3: 2, 4: 2, 5: 2, 6: 2, 7: 2, 8: 2,
+          9: 3, 10: 3, 11: 3, 12: 3, 13: 3, 14: 3, 15: 3,
+          16: 4, 17: 4, 18: 4, 19: 4, 20: 4
+        },
+        resistances: ['bludgeoning','piercing','slashing'],
+        duration: 60, // seconds
+      }
+    },
   },
   {
     "index": 2,

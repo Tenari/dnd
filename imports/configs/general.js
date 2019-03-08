@@ -1,4 +1,13 @@
-import { ITEMS } from './items.js';
+import { CLASS_FEATURES } from './features.js';
+
+export function indexFromUrl(obj){
+  const splitted = obj.url.split('/');
+  return parseInt(splitted[splitted.length-1]);
+}
+
+export function performAction(key, character, params){
+  if (character.canPerformAction(key, params)) throw ('you cannot perform this action '+key);
+}
 
 export function roll(diceStr) {
   let tokens = diceStr.split('d');
@@ -9,6 +18,7 @@ export function roll(diceStr) {
   return total;
 }
 
+// advantageKey is either 'normal' 'advantage' or 'disadvantage'
 export function advantageRoll(advantageKey) {
   let secondRoll = null;
   let originalRoll = roll('1d20');
@@ -132,3 +142,11 @@ export const CR_TO_XP = {
   18: 20000, 19: 22000, 20: 25000, 21: 33000, 22: 41000,
   23: 50000, 24: 62000, 30: 155000
 }
+
+// a list of keys representing all possible actions a user can take. This list will be filtered based on character race, klass, stats, location, effects, etc.
+export const ALL_ACTIONS = _.union(
+  ['unarmed_melee_attack','melee_weapon_attack','ranged_weapon_attack','grapple','dodge','disengage','dash','hide','ready','cast_spell'],
+  _.map(_.select(CLASS_FEATURES, function(feature){
+    return feature.action && feature.action.key;
+  }), function(feature){ return feature.action.key; }),
+);

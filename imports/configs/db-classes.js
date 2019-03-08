@@ -549,9 +549,6 @@ export const CLASSES = [
 				"name": "Champion"
 			}
 		],
-		"spellcasting": {
-			
-		},
 		"url": "http://www.dnd5eapi.co/api/classes/5"
 	},
 	{
@@ -749,9 +746,6 @@ export const CLASSES = [
 				"name": "Open Hand"
 			}
 		],
-		"spellcasting": {
-			
-		},
 		"url": "http://www.dnd5eapi.co/api/classes/6"
 	},
 	{
@@ -1035,9 +1029,6 @@ export const CLASSES = [
 				"name": "Thief"
 			}
 		],
-		"spellcasting": {
-			
-		},
 		"url": "http://www.dnd5eapi.co/api/classes/9"
 	},
 	{

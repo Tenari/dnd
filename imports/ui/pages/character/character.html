@@ -44,17 +44,17 @@
           <div class="label">Proficiency bonus</div>
         </div>
         <div class="saving-throws">
-          <div class="saving-throw-row">{{#if character.proficiencies.str_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
-          <div class="saving-throw-row">{{#if character.proficiencies.dex_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
-          <div class="saving-throw-row">{{#if character.proficiencies.con_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
-          <div class="saving-throw-row">{{#if character.proficiencies.inte_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
-          <div class="saving-throw-row">{{#if character.proficiencies.wis_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
-          <div class="saving-throw-row">{{#if character.proficiencies.cha_saving_throw}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
+          <div class="saving-throw-row">{{#if character.proficiencies "99"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 100}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 101}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 102}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 103}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 104}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
           <div class="label">saving throws</div>
         </div>
         <div class="skill-list">
           {{#each skill in skills}}
-            <div class="skill-row">{{#if character.proficientInSkill skill.key}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
+            <div class="skill-row">{{#if character.proficientInSkill skill.name}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
           {{/each}}
           <div class="label">skills</div>
         </div>
@@ -88,7 +88,7 @@
           </div>
           <div class="hit-dice-and-death-saves">
             <div class="hit-dice">
-              <div class="hit-dice-total">Total: {{character.hitDieMax}}d{{character.hitDie}}</div>
+              <div class="hit-dice-total">Total: {{character.hitDieMax}}d{{character.hitDieType}}</div>
               <div class="score">{{character.hitDieRemaining}}</div>
               <div class="label">hit dice</div>
             </div>
@@ -154,7 +154,7 @@
 <template name="character_abilityScore">
   <div class="ability-score">
     <div>{{name}}</div>
-    <div class="score">{{#if positive}}+{{else}}-{{/if}}{{mod}}</div>
+    <div class="score">{{#if positive}}+{{/if}}{{mod}}</div>
     <div class="mod">{{score}}</div>
   </div>
 </template>

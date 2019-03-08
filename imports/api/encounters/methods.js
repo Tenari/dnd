@@ -8,7 +8,7 @@ import { MonsterTemplates } from '../monsterTemplates/monsterTemplates.js';
 import { EventNotices } from '../eventNotices/eventNotices.js';
 import { EventLogs } from '../eventLogs/eventLogs.js';
 import { Games } from '../games/games.js';
-import { roll, abilityModifier, advantageRoll } from '../../configs/general.js';
+import { CR_TO_XP, roll, abilityModifier, advantageRoll } from '../../configs/general.js';
 
 function meleeAttack(eid, cid, opponentId) {
   const encounter = Encounters.findOne(eid);
@@ -173,7 +173,7 @@ Meteor.methods({
           alignment: monsterTemplate.alignment,
           hp: monsterTemplate.hit_points,
           hp_max: monsterTemplate.hit_points,
-          xp: 0,
+          xp: CR_TO_XP[""+monsterTemplate.challenge_rating],
           str: monsterTemplate.strength,
           con: monsterTemplate.constitution,
           dex: monsterTemplate.dexterity,
@@ -189,7 +189,7 @@ Meteor.methods({
           languages: [ "common" ],
           items: [ ],
           equippedItems: [],
-          activeEffects: [],
+          effects: [],
           monsterTemplateId: tokens[2],
         })
         var characterLocations = encounter.characterLocations || [];

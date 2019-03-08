@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, ALIGNMENTS, LANGUAGES } from '../../../configs/general.js';
+import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, ALIGNMENTS, LANGUAGES, indexFromUrl } from '../../../configs/general.js';
 import { PROFICIENCIES } from '../../../configs/proficiencies';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
@@ -20,14 +20,13 @@ import '../../components/cleric-setup/cleric-setup.js';
 Template.Character_create.onCreated(function(){
   const that = this;
   this.name = new ReactiveVar(null);
-  this.gender = new ReactiveVar('male');
-  this.alignment = new ReactiveVar('lg');
 
   this.race = new ReactiveVar(_.keys(RACES)[0]);
   this.klass = new ReactiveVar(_.keys(CLASSES)[0]);
 
   this.proficiencies = new ReactiveVar([]);
   this.doubleProficiencies = new ReactiveVar([]);
+  this.proficienciesArePicked = new ReactiveVar(false);
   this.languages = new ReactiveVar([]);
   this.items = new ReactiveVar([]);
   this.background = new ReactiveVar(_.keys(BACKGROUNDS)[0]);
@@ -45,6 +44,11 @@ Template.Character_create.onCreated(function(){
 })
 
 Template.Character_create.helpers({
+  canCreateCharacter(){
+    const instance = Template.instance();
+    const name = instance.name.get();
+    return name.length > 0 && instance.buyPoints.get() == 0 && instance.proficienciesArePicked.get();
+  },
   choosesSpells() {
     return CLASSES[Template.instance().klass.get()].spellcasting;
   },
@@ -254,8 +258,8 @@ Template.Character_create.helpers({
         if (choice.choose == choice.from.length) { // not a real choice, just one option
           options.push({label: _.map(choice.from, function(itemObj){return itemObj.item.name + " ("+itemObj.quantity+")";}).join(", "), value: index})
         } else {
-          _.each(choice.from, function(itemObj){
-            options.push({label: itemObj.item.name + " ("+itemObj.quantity+")", value: ""+index+'-'+itemObj.item.index});
+          _.each(choice.from, function(itemObj, itemIndex){
+            options.push({label: itemObj.item.name + " ("+itemObj.quantity+")", value: ""+index+'-'+itemIndex});
           })
         }
       })
@@ -315,6 +319,7 @@ function updateProficienciesAndLanguages(instance) {
       proficienciesArePicked = false;
     }
   })
+  instance.proficienciesArePicked.set(proficienciesArePicked);
 
   let dlbProfs = [];
   $('select.double-proficiency-select').each(function(){
@@ -360,12 +365,6 @@ function extraLanguages() {
 Template.Character_create.events({
   'keyup input.character-name'(e, instance){
     instance.name.set(e.currentTarget.value);
-  },
-  'change select.genders'(e, instance){
-    instance.gender.set($(e.currentTarget).val());
-  },
-  'change select.alignments'(e, instance){
-    instance.alignment.set($(e.currentTarget).val());
   },
   'change select.races'(e, instance){
     instance.race.set($(e.currentTarget).val());
@@ -446,48 +445,55 @@ Template.Character_create.events({
     const userId = Meteor.userId();
     const race = RACES[instance.race.curValue];
     const klass = CLASSES[instance.klass.curValue];
+    const klassItems = STARTING_EQUIPMENT[klass.name];
+
     let details = {
       name: $('input.character-name').val(),
       gender: $('select.genders').val(),
       alignment: $('select.alignments').val(),
-      race: $('select.races').val(),
-      klass: $('select.classes').val(),
+      race: instance.race.curValue,
+      klass: instance.klass.curValue,
+      background: instance.background.curValue,
     };
-    if (instance.itemsTab.curValue == 'choose') {
-      let itemsArr = JSON.parse(JSON.stringify(klass.items));
-      itemsArr.push(BACKGROUNDS[instance.background.curValue].items);
-      let index = 0;
-      $('select.item-choice').each(function(){
-        itemsArr.push(klass.item_options[index][$(this).val()]);
-        index += 1;
-      })
-      details.items = _.flatten(itemsArr);
-      details.wealth = BACKGROUNDS[instance.background.curValue].wealth;
-    } else {
-      details.items = instance.items.curValue;
-      details.wealth = remainingWealth(instance);
-    }
+    // ability scores
     _.each(_.keys(ABILITIES), function(key, index) {
       const raceBonus = race[key+'_bonus'] || 0;
       details[key] = instance[key].curValue + raceBonus;
     });
-    details.hp_max = klass.hp.base + abilityModifier(details.con);
-
-    details.proficiencies = _.object(_.map(computeProficiencies(instance), function(key){return [key, 1]}));
+    // chosen proficiencies
+    details.proficiencies = {};
+    $('select.proficiency-select').each(function(){
+      _.each($(this).val(), function(prof){
+        details.proficiencies[parseInt(prof)] = 1;
+      })
+    })
     $('select.double-proficiency-select').each(function(){
       details.proficiencies[$(this).val()] = 2;
     })
-
-    const raceLangs = (race && race.languages) || [];
-    let langs = _.uniq(raceLangs);
+    // chosen languages
+    details.languages = [];
     $('select.language-select').each(function(){
-      langs.push($(this).val());
+      details.languages.push($(this).val());
     })
-    details.languages = _.uniq(langs);
-
-    details.background = instance.background.curValue;
-
-    details.speed = race.speed;
+    details.languages = _.uniq(details.languages);
+    // TODO chosen items
+    details.items = [];
+    let i =1;
+    $('.item-choice').each(function(){
+      let choice = $(this).val();
+      if (choice.split("-").length > 1) {
+        let first = choice.split("-")[0];
+        let last = choice.split("-")[1];
+        let chosenObj = klassItems["choice_"+i][first].from[last];
+        details.items.push(JSON.parse(JSON.stringify(chosenObj)))
+      } else {
+        let chosenObj = klassItems["choice_"+i][choice];
+        _.each(chosenObj.from, function(choiceObj) {
+          details.items.push(JSON.parse(JSON.stringify(choiceObj)))
+        })
+      }
+      i += 1;
+    })
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {
@@ -498,7 +504,3 @@ Template.Character_create.events({
     });
   }
 })
-function indexFromUrl(obj){
-  const splitted = obj.url.split('/');
-  return parseInt(splitted[splitted.length-1]);
-}

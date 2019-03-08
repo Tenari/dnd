@@ -1,10 +1,14 @@
 // Definition of the Characters collection
+// a Character record stores the current state of a character. This includes stats, hp, items, effects, actions, etc. The game logic is responsible for mutating this data correctly. The character object does not know when to remove an effect like blindness. The character will remain blind until some other aspect of the game un-blinds it.
+// monsters/npcs are just character objects without a userId set
 
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { roll, abilityModifier, ALIGNMENTS, PROFICIENCY_BONUS } from '../../configs/general.js';
 import { RACES } from '../../configs/races.js';
-import { CLASSES } from '../../configs/classes.js';
+import { PROFICIENCIES } from '../../configs/proficiencies.js';
+import { CLASSES } from '../../configs/db-classes.js';
+import { CLASS_FEATURES } from '../../configs/features.js';
 import { Items } from '/imports/api/items/items.js';
 
 export const Characters = new Mongo.Collection('characters');
@@ -35,7 +39,7 @@ Characters.helpers({
     return RACES[this.race].label;
   },
   displayClass() {
-    return CLASSES[this.klass].label;
+    return CLASSES[this.klass].name;
   },
   meleeAbilityModifier() {
     const weapon = this.equippedWeapon();
@@ -81,8 +85,8 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   // returns 'advantage' 'disadvantage' or 'normal'
   hasAdvantageOrDisadvantage(rollType) {
     // const rollTypes = {'attack_roll':true, 'ability_check':true, 'saving_throw':true};
-    let advantage = _.find(this.activeEffects || [], function(effect){return effect.grantsAdvantage && effect.grantsAdvantage[rollType];});
-    let disadvantage = _.find(this.activeEffects || [], function(effect){return effect.disadvantage && effect.disadvantage[rollType];});
+    let advantage = _.find(this.effects || [], function(effect){return effect.grantsAdvantage && effect.grantsAdvantage[rollType];});
+    let disadvantage = _.find(this.effects || [], function(effect){return effect.disadvantage && effect.disadvantage[rollType];});
     if (advantage && disadvantage) return 'normal';
     if (advantage) return 'advantage';
     if (disadvantage) return 'disadvantage';
@@ -103,13 +107,27 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   },
   displaySavingThrowBonus(key) {
     const bonus = this.savingThrowBonus(key);
-    return bonus >= 0 ? "+"+bonus : "-"+bonus;
+    return bonus >= 0 ? "+"+bonus : bonus;
   },
   proficientInSkill(skill) {
-    return !!this.proficiencies[skill];
+    const prof = _.find(_.values(PROFICIENCIES), function(prof){return prof.name.match(skill);});
+    return !!this.proficiencies[prof && prof.index];
   },
   deathSave(direction, index) {
     return (this['death_save_'+direction] || [])[index];
   },
+  availableActions(params) {
+    let actions = [];
+    const klass = CLASSES[this.klass];
+    const level = this.level;
+    _.each(_.select(CLASS_FEATURES, function(feature){
+      return feature.class.level <= level && feature.class.name == klass.name && feature.action && feature.action.key;
+    }), function(feature){
+      actions.push(feature.action.key);
+    })
+    return actions;
+  },
+  canPerformAction(key, params) {
+    return this.availableActions(params)
+  }
 })
-
