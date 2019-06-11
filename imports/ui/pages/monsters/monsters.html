@@ -1,0 +1,6 @@
+<template name="monsters_page">
+  <p>Search for monster by name or CR: <input type="text" name="monster-search"/></p>
+  {{#each monster in monsters}}
+    {{> monsterInfo monster=monster}}
+  {{/each}}
+</template>
