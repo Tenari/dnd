@@ -148,54 +148,134 @@ export const RACES = {
   },
   forest_gnome: {
     label: 'Forest Gnome',
-    description: 'A gnome’s energy and enthusiasm for living shines through every inch of his or her tiny body. Gnomes average slightly over 3 feet tall and weigh 40 to 45 pounds. As a forest gnome, you have a natural knack for illusion and inherent quickness and stealth.',
+    description: 'A gnome’s energy and enthusiasm for living shines through every inch of his or her tiny body. As a forest gnome, you have a natural knack for illusion and inherent quickness and stealth.',
     size: 'small',
+    size_description: "Gnomes are between 3 and 4 feet tall and average about 40 pounds.",
     speed: 5,
     inte_bonus: 2,
-    vision: 'darkvision',
-    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
     dex_bonus: 1,
+    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
     spells: ['minor_illusion'],
-    features: ['speak_with_small_beasts'],
+    features: [],
+    traits: ["darkvision_gnome","gnome_cunning", "natural_illusionist","speak_with_small_beasts"],
     languages: ['common', 'gnomish'],
   },
   rock_gnome: {
     label: 'Rock Gnome',
-    description: 'A gnome’s energy and enthusiasm for living shines through every inch of his or her tiny body. Gnomes average slightly over 3 feet tall and weigh 40 to 45 pounds. As a rock gnome, you have a natural inventiveness and hardiness beyond that of other gnomes.',
+    description: 'A gnome’s energy and enthusiasm for living shines through every inch of his or her tiny body. As a rock gnome, you have a natural inventiveness and hardiness beyond that of other gnomes.',
     size: 'small',
+    size_description: "Gnomes are between 3 and 4 feet tall and average about 40 pounds.",
     speed: 5,
     inte_bonus: 2,
-    vision: 'darkvision',
-    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
     con_bonus: 1,
+    saving_throw_advantages: ['inte_saving_throw_vs_magic', 'wis_saving_throw_vs_magic', 'cha_saving_throw_vs_magic'],
     double_proficiencies: ['inte_history'],
-    proficiencies: ['artisan_tools'],
-    tiny_clockwork_device: true,
+    proficiencies: [72],
     languages: ['common', 'gnomish'],
+    traits: ["darkvision_gnome","gnome_cunning","artificers_lore", "tinker", "clockwork_toy","fire_starter","music_box"],
   },
   half_elf: {
     label: 'Half-Elf',
     description: 'Walking in two worlds but truly belonging to neither, half-elves combine what some say are the best qualities of their elf and human parents: human curiosity, inventiveness, and ambition tempered by the refined senses, love of nature, and artistic tastes of the elves.',
+    size: 'medium',
+    size_description: "Half-elves are about the same size as humans, ranging from 5 to 6 feet tall.",
+    speed: 6,
     cha_bonus: 2,
     two_other_bonus: 1,
-    size: 'medium',
-    speed: 6,
-    vision: 'darkvision',
     saving_throw_advantages: ['charmed'],
-    proficiency_options: ['skill', 'skill'],
+		"starting_proficiency_options": {
+			"choose": 2,
+			"type": "proficiencies",
+			"from": [
+        {
+          "index": 105,
+          "name": "Skill: Acrobatics",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/105"
+        }, {
+          "index": 106,
+          "name": "Skill: Animal Handling",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/106"
+        }, {
+          "index": 107,
+          "name": "Skill: Arcana",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/107"
+        }, {
+          "index": 108,
+          "name": "Skill: Athletics",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/108"
+        }, {
+          "index": 109,
+          "name": "Skill: Deception",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/109"
+        }, {
+          "index": 110,
+          "name": "Skill: History",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/110"
+        }, {
+          "index": 111,
+          "name": "Skill: Insight",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/111"
+        }, {
+          "index": 112,
+          "name": "Skill: Intimidation",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/112"
+        }, {
+          "index": 113,
+          "name": "Skill: Investigation",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/113"
+        }, {
+          "index": 114,
+          "name": "Skill: Medicine",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/114"
+        }, {
+          "index": 115,
+          "name": "Skill: Nature",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/115"
+        }, {
+          "index": 116,
+          "name": "Skill: Perception",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/116"
+        }, {
+          "index": 117,
+          "name": "Skill: Performance",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/117"
+        }, {
+          "index": 118,
+          "name": "Skill: Persuasion",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/118"
+        }, {
+          "index": 119,
+          "name": "Skill: Religion",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/119"
+        }, {
+          "index": 120,
+          "name": "Skill: Sleight of Hand",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/120"
+        }, {
+          "index": 121,
+          "name": "Skill: Stealth",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/121"
+        }, {
+          "index": 122,
+          "name": "Skill: Survival",
+          "url": "http://www.dnd5eapi.co/api/proficiencies/122"
+        }
+			]
+		},
     languages: ['common', 'elvish'],
     features: ['extra_language'],
+    traits: ["darkvision_half_elf","fey_ancestry","skill_versatility"],
   },
   half_orc: {
     label: 'Half-Orc',
     description: 'Half-orcs’ grayish pigmentation, sloping foreheads, jutting jaws, prominent teeth, and towering builds make their orcish heritage plain for all to see. Half-orcs stand between 6 and 7 feet tall and usually weigh between 180 and 250 pounds.',
+    size: 'medium',
+    size_description: "Half-orcs are somewhat larger and bulkier than humans, and they range from 5 to well over 6 feet tall.",
+    speed: 6,
     str_bonus: 2,
     con_bonus: 1,
-    size: 'medium',
-    speed: 6,
-    vision: 'darkvision',
-    proficiencies: ['intimidation'],
-    features: ['relentless_endurance', 'savage_attacks'],
+    proficiencies: [112],
+    traits: ["darkvision_half_orc","menacing",'relentless_endurance', 'savage_attacks'],
     languages: ['common', 'orc'],
   },
   tiefling: {
@@ -204,10 +284,10 @@ export const RACES = {
     inte_bonus: 1,
     cha_bonus: 2,
     size: 'medium',
+    size_description: "Tieflings are about the same size and build as humans.",
     speed: 6,
-    vision: 'darkvision',
     resistances: ['fire'],
-    infernal_legacy: true, // thaumaturgy, hellish_rebuke @lvl3, darkness @lvl5
     languages: ['common', 'infernal'],
+    traits: ["darkvision_tiefling", "hellish_resistance","infernal_legacy"]
   }
 };

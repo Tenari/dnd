@@ -99,4 +99,94 @@ export const TRAITS = {
     name: "Damage Resistance",
     desc: "You have resistance to the damage type associated with your draconic ancestry.",
   },
+  darkvision_gnome: {
+    key: "darkvision_gnome",
+    name: "Darkvision",
+    desc: "Accustomed to life underground, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+  },
+  gnome_cunning: {
+    key: "gnome_cunning",
+    name: "Gnome Cunning",
+    desc: "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
+  },
+  natural_illusionist: {
+    key: "natural_illusionist",
+    name: "Natural Illusionist",
+    desc: "You know the minor illusion cantrip. Intelligence is your spellcasting ability for it.",
+  },
+  speak_with_small_beasts: {
+    key: "speak_with_small_beasts",
+    name: "Speak with Small Beasts",
+    desc: "Through sounds and gestures, you can communicate simple ideas with Small or smaller beasts. Forest gnomes love animals and often keep squirrels, badgers, rabbits, moles, woodpeckers, and other creatures as beloved pets.",
+  },
+  artificers_lore: {
+    key: "artificers_lore",
+    name: "Artificer's Lore",
+    desc: "Whenever you make an Intelligence (History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you normally apply.",
+  },
+  tinker: {
+    key: "tinker",
+    name: "Tinker",
+    desc: "You have proficiency with artisan's tools (tinker's tools). Using those tools, you can spend 1 hour and 10 gp worth of materials to construct a Tiny clockwork device (AC 5, 1 hp). The device ceases to function after 24 hours (unless you spend 1 hour repairing it to keep the device functioning), or when you use your action to dismantle it; at that time, you can reclaim the materials used to create it. You can have up to three such devices active at a time. When you create a device, choose one of the following options:",
+  },
+  clockwork_toy: {
+    key: "clockwork_toy",
+    name: "Clockwork Toy",
+    desc: "This toy is a clockwork animal, monster, or person, such as a frog, mouse, bird, dragon, or soldier. When placed on the ground, the toy moves 5 feet across the ground on each of your turns in a random direction. It makes noises as appropriate to the creature it represents.",
+  },
+  fire_starter: {
+    key: "fire_starter",
+    name: "Fire Starter",
+    desc: "The device produces a miniature flame, which you can use to light a candle, torch, or campfire. Using the device requires your action.",
+  },
+  music_box: {
+    key: "music_box",
+    name: "Music Box",
+    desc: "When opened, this music box plays a single song at a moderate volume. The box stops playing when it reaches the song's end or when it is closed.",
+  },
+  darkvision_half_elf: {
+    key: "darkvision_half_elf",
+    name: "Darkvision",
+    desc: "Thanks to your elf blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+  },
+  skill_versatility: {
+    key: "skill_versatility",
+    name: "Skill Versatility",
+    desc: "You gain proficiency in two skills of your choice.",
+  },
+  darkvision_half_orc: {
+    key: "darkvision_half_orc",
+    name: "Darkvision",
+    desc: "Thanks to your orc blood, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+  },
+  menacing: {
+    key: "menacing",
+    name: "Menacing",
+    desc: "You gain proficiency in the Intimidation skill.",
+  },
+  relentless_endurance: {
+    key: "relentless_endurance",
+    name: "Relentless endurance",
+    desc: "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.",
+  },
+  savage_attacks: {
+    key: "savage_attacks",
+    name: "Savage Attacks",
+    desc: "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.",
+  },
+  darkvision_tiefling: {
+    key: "darkvision_tiefling",
+    name: "Darkvision",
+    desc: "Thanks to your infernal heritage, you have superior vision in dark and dim conditions. You can see in dim light within 60 feet of you as if it were bright light, and in darkness as if it were dim light. You can't discern color in darkness, only shades of gray.",
+  },
+  hellish_resistance: {
+    key: "hellish_resistance",
+    name: "Hellish Resistance",
+    desc: "You have resistance to fire damage.",
+  },
+  infernal_legacy: {
+    key: "infernal_legacy",
+    name: "Infernal Legacy",
+    desc: "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell as a 2nd-level spell; you must finish a long rest in order to cast the spell again using this trait. Once you reach 5th level, you can also cast the darkness spell; you must finish a long rest in order to cast the spell again using this trait. Charisma is your spellcasting ability for these spells.",
+  },
 };
