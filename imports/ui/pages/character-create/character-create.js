@@ -174,6 +174,9 @@ Template.Character_create.helpers({
   raceDescription() {
     return RACES[Template.instance().race.get()].description;
   },
+  raceSize() {
+    return "("+RACES[Template.instance().race.get()].size + ") "+RACES[Template.instance().race.get()].size_description;
+  },
   abilities(){
     return _.map(ABILITIES, function(label, key) {
       return {key: key, label: label};
