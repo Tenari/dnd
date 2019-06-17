@@ -327,14 +327,35 @@ export const CLASSES = [
 		},
 		"subclasses": [
 			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/3",
-				"name": "Life"
+				"value": 'cleric_knowledge',
+				"label": "Knowledge"
+			},
+			{
+				"value": 'cleric_life',
+				"label": "Life"
+			},
+			{
+				"value": 'cleric_light',
+				"label": "Light"
+			},
+			{
+				"value": 'cleric_nature',
+				"label": "Nature"
+			},
+			{
+				"value": 'cleric_tempest',
+				"label": "Tempest"
+			},
+			{
+				"value": 'cleric_trickery',
+				"label": "Trickery"
+			},
+			{
+				"value": 'cleric_war',
+				"label": "War"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/2",
-			"class": "Cleric"
-		},
+		"spellcasting": 'cleric',
 		"url": "http://www.dnd5eapi.co/api/classes/3"
 	},
 	{

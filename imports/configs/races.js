@@ -181,7 +181,10 @@ export const RACES = {
     size_description: "Half-elves are about the same size as humans, ranging from 5 to 6 feet tall.",
     speed: 6,
     cha_bonus: 2,
-    two_other_bonus: 1,
+    choose_bonus: {
+      count: 2,
+      amount: 1,
+    },
     saving_throw_advantages: ['charmed'],
 		"starting_proficiency_options": {
 			"choose": 2,

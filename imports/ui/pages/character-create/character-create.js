@@ -23,6 +23,7 @@ Template.Character_create.onCreated(function(){
 
   this.race = new ReactiveVar(_.keys(RACES)[0]);
   this.klass = new ReactiveVar(_.keys(CLASSES)[0]);
+  this.subclass = new ReactiveVar(null);
 
   this.proficiencies = new ReactiveVar([]);
   this.doubleProficiencies = new ReactiveVar([]);
@@ -30,6 +31,7 @@ Template.Character_create.onCreated(function(){
   this.languages = new ReactiveVar([]);
   this.items = new ReactiveVar([]);
   this.background = new ReactiveVar(_.keys(BACKGROUNDS)[0]);
+  this.selectedRacialBonuses = new ReactiveVar(['str', 'dex']);
 
   this.divineDomain = new ReactiveVar('knowledge'); //cleric only
   this.buyPoints = new ReactiveVar(27);
@@ -72,8 +74,19 @@ Template.Character_create.helpers({
   },
   spellCount(){
     const klass = CLASSES[Template.instance().klass.get()];
+    const race = RACES[Template.instance().race.get()];
     const spellcasting = SPELLCASTING[klass.spellcasting];
-    return spellcasting.details_per_level[1].spells;
+    let ability = Template.instance()[spellcasting.spellcasting_ability].get();
+    if (race[spellcasting.spellcasting_ability+'_bonus']) {
+      ability += race[spellcasting.spellcasting_ability+'_bonus'];
+    }
+    const hasMatchingChosenBonus = _.find(Template.instance().selectedRacialBonuses.get(), function(key){
+      return key == spellcasting.spellcasting_ability;
+    })
+    if (race.choose_bonus && hasMatchingChosenBonus) {
+      ability += 1;
+    }
+    return spellcasting.details_per_level[1].spells || (1 + abilityModifier(ability));
   },
   spellOptions() {
     const klass = CLASSES[Template.instance().klass.get()];
@@ -86,14 +99,38 @@ Template.Character_create.helpers({
   classFeatures() {
     const className = CLASSES[Template.instance().klass.get()].name;
     return _.select(CLASS_FEATURES, function(feature){
-      return feature.level == 1 && feature.class.name == className;
+      return feature.level == 1 && feature.class.name == className && (!feature.subclass.key || feature.subclass.key == Template.instance().subclass.get());
     })
+  },
+  subclasses() {
+    const klass = CLASSES[Template.instance().klass.get()];
+    return klass.subclasses;
   },
   raceTraits(){
     const race = RACES[Template.instance().race.get()];
     return _.map(race.traits, function(key){
       return TRAITS[key];
     })
+  },
+  hasRacialAbilityChoice(){
+    const race = RACES[Template.instance().race.get()];
+    return race.choose_bonus;
+  },
+  racialAbilityChoices(){
+    const race = RACES[Template.instance().race.get()];
+    const selected = Template.instance().selectedRacialBonuses.get();
+    let arr = [];
+    _.times(race.choose_bonus.count, function(i){
+      arr.push(
+        _.select(_.map(ABILITIES,function(obj, val){return {value: val, label: obj}}),function(ability){
+          var modifiedSelected = _.clone(selected);
+          modifiedSelected[i] = undefined;
+          return !_.contains(modifiedSelected, ability.value) && !race[ability.value+'_bonus'];
+        })
+      )
+    })
+    console.log(arr);
+    return arr;
   },
   background() {
     return BACKGROUNDS[Template.instance().background.get()];
@@ -146,7 +183,9 @@ Template.Character_create.helpers({
     let str = [];
     const race = RACES[Template.instance().race.get()];
     _.each(race, function(value, key) {
-      if (key.indexOf('bonus') != -1) {
+      if (key == 'choose_bonus') {
+        str.push("+"+value.amount+" to your choice of "+value.count+" abilities");
+      } else if (key.indexOf('bonus') != -1) {
         let attr = attributeKeyToLabel(key);
         str.push('+'+value+' to '+attr);
       }
@@ -163,6 +202,13 @@ Template.Character_create.helpers({
         }
       }
     })
+    if (race.choose_bonus) {
+      _.each(Template.instance().selectedRacialBonuses.get(), function(abilityKey){
+        if (ability.key == abilityKey) {
+          bonus += ' +'+race.choose_bonus.amount+' from race';
+        }
+      })
+    }
     return bonus;
   },
   classDescription() {
@@ -374,8 +420,13 @@ Template.Character_create.events({
     updateProficienciesAndLanguages(instance);
   },
   'change select.classes'(e, instance){
-    instance.klass.set($(e.currentTarget).val());
+    const classKey = $(e.currentTarget).val();
+    instance.klass.set(classKey);
+    instance.subclass.set(CLASSES[classKey].subclasses[0] && CLASSES[classKey].subclasses[0].value);
     updateProficienciesAndLanguages(instance);
+  },
+  'change select.subclass'(e, instance){
+    instance.subclass.set($(e.currentTarget).val());
   },
   'change select.divine-domain'(e, instance){
     instance.divineDomain.set($(e.currentTarget).val());
@@ -390,6 +441,9 @@ Template.Character_create.events({
   'change select.background-select'(e, instance){
     instance.background.set($(e.currentTarget).val());
     updateProficienciesAndLanguages(instance);
+  },
+  'change select.racial-abilities'(e, instance){
+    instance.selectedRacialBonuses.set(_.map($('select.racial-abilities'), function(jq){ return $(jq).val()}));
   },
   'change select.double-proficiency-select'(e, instance){
     let profs = [];

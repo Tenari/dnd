@@ -1376,7 +1376,7 @@ export const CLASS_FEATURES = [
       "name": "Cleric"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/3",
+      "key": "cleric_life",
       "name": "Life"
     },
     "name": "Bonus Proficiency",
@@ -1393,7 +1393,7 @@ export const CLASS_FEATURES = [
       "name": "Cleric"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/3",
+      "key": "cleric_life",
       "name": "Life"
     },
     "name": "Disciple of Life",
@@ -1442,7 +1442,7 @@ export const CLASS_FEATURES = [
       "name": "Cleric"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/3",
+      "key": "cleric_life",
       "name": "Life"
     },
     "name": "Channel Divinity: Preserve Life",
@@ -1533,7 +1533,7 @@ export const CLASS_FEATURES = [
       "name": "Cleric"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/3",
+      "key": "cleric_life",
       "name": "Life"
     },
     "name": "Blessed Healer",
@@ -1593,7 +1593,7 @@ export const CLASS_FEATURES = [
       "name": "Cleric"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/3",
+      "key": "cleric_life",
       "name": "Life"
     },
     "name": "Divine Strike",
@@ -8043,5 +8043,253 @@ export const CLASS_FEATURES = [
       "If you want to cast either spell at a higher level, you must expend a spell slot as normal."
     ],
     "url": "http://www.dnd5eapi.co/api/features/416"
-  }
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_knowledge",
+      "name": "Knowledge"
+    },
+    name: "Blessings of Knowledge",
+    level: 1,
+    desc: [
+      "At 1st level, you learn two languages of your choice. You also become proficient in your choice of two of the following skills: Arcana, History, Nature, or Religion.",
+      "Your proficiency bonus is doubled for any ability check you make that uses either of those skills."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_knowledge",
+      "name": "Knowledge"
+    },
+    name: "Channel Divinity: Knowledge of the Ages",
+    level: 2,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to tap into a divine well of knowledge. As an action, you choose one skill or tool. For 10 minutes, you have proficiency with the chosen skill or tool."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_light",
+      "name": "Light"
+    },
+    name: "Bonus Cantrip",
+    level: 1,
+    desc: [
+      "When you choose this domain at 1st level, you gain the light cantrip if you don't already know it.",
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_light",
+      "name": "Light"
+    },
+    name: "Warding Flame",
+    level: 1,
+    desc: [
+      "Also at 1st level, you can interpose divine light between yourself and an attacking enemy. When you are attacked by a creature within 30 feet of you that you can see, you can use your reaction to impose disadvantage on the attack roll, causing light to flare before the attacker before it hits or misses. An attacker that can't be blinded is immune to this feature.",
+      "You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest.",
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_light",
+      "name": "Light"
+    },
+    name: "Channel Divinity: Radiance of the Dawn",
+    level: 2,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to harness sunlight, banishing darkness and dealing radiant damage to your foes.",
+      "As an action, you present your holy symbol, and any magical darkness within 30 feet of you is dispelled. Additionally, each hostile creature within 30 feet of you must make a Constitution saving throw. A creature takes radiant damage equal to 2d10 + your cleric level on a failed saving throw, and half as much damage on a successful one. A creature that has total cover from you is not affected."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_nature",
+      "name": "Nature"
+    },
+    name: "Acolyte of Nature",
+    level: 1,
+    desc: [
+      "At 1st level, you learn one druid cantrip of your choice. You also gain proficiency in one of the following skills of your choice: Animal Handling, Nature, or Survival.",
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_nature",
+      "name": "Nature"
+    },
+    name: "Bonus Proficiency",
+    level: 1,
+    desc: [
+      "Also at 1st level, you gain proficiency with heavy armor."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_nature",
+      "name": "Nature"
+    },
+    name: "Channel Divinity: Charm Animals and Plants",
+    level: 2,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to charm animals and plants.",
+      "As an action, you present your holy symbol and invoke the name of your deity. Each beast or plant creature that can see you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is charmed by you for 1 minute or until it takes damage. While it is charmed by you, it is friendly to you and other creatures you designate.",
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_tempest",
+      "name": "Tempest"
+    },
+    name: "Bonus Proficiencies",
+    level: 1,
+    desc: [
+      "At 1st level, you gain proficiency with martial weapons and heavy armor."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_tempest",
+      "name": "Tempest"
+    },
+    name: "Wrath of the Storm",
+    level: 1,
+    desc: [
+      "Also at 1st level, you can thunderously rebuke attackers. When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to cause the creature to make a Dexterity saving throw. The creature takes 2d8 lightning or thunder damage (your choice) on a failed saving throw, and half as much damage on a successful one.",
+      "You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_tempest",
+      "name": "Tempest"
+    },
+    name: "Channel Divinity: Destructive Wrath",
+    level: 2,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to wield the power of the storm with unchecked ferocity.",
+      "When you roll lightning or thunder damage, you can use your Channel Divinity to deal maximum damage, instead of rolling."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_trickery",
+      "name": "Trickery"
+    },
+    name: "Blessing of the Trickster",
+    level: 1,
+    desc: [
+      "Starting when you choose this domain at 1st level, you can use your action to touch a willing creature other than yourself to give it advantage on Dexterity (Stealth) checks. This blessing lasts for 1 hour or until you use this feature again."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_trickery",
+      "name": "Trickery"
+    },
+    name: "Channel Divinity: Invoke Duplicity",
+    level: 2,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to create an illusory duplicate of yourself.",
+      "As an action, you create a perfect illusion of yourself that lasts for 1 minute, or until you lose your concentration (as if you were concentrating on a spell). The illusion appears in an unoccupied space that you can see within 30 feet of you. As a bonus action on your turn, you can move the illusion up to 30 feet to a space you can see, but it must remain within 120 feet of you.",
+      "For the duration, you can cast spells as though you were in the illusion's space, but you must use your own senses. Additionally, when both you and your illusion are within 5 feet of a creature that can see the illusion, you have advantage on attack rolls against that creature, given how distracting the illusion is to the target."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_war",
+      "name": "War"
+    },
+    name: "Bonus Proficiencies",
+    level: 1,
+    desc: [
+      "At 1st level, you gain proficiency with martial weapons and heavy armor."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_war",
+      "name": "War"
+    },
+    name: "War Priest",
+    level: 1,
+    desc: [
+      "From 1st level, your god delivers bolts of inspiration to you while you are engaged in battle. When you use the Attack action, you can make one weapon attack as a bonus action. You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest."
+    ],
+  },
+  {
+    "class": {
+      index: 3,
+      name: "Cleric",
+    },
+    subclass: {
+      "key": "cleric_war",
+      "name": "War"
+    },
+    name: "Channel Divinity: Guided Strike",
+    level: 1,
+    desc: [
+      "Starting at 2nd level, you can use your Channel Divinity to strike with supernatural accuracy. When you make an attack roll, you can use your Channel Divinity to gain a +10 bonus to the roll. You make this choice after you see the roll, but before the DM says whether the attack hits or misses."
+    ],
+  },
 ];

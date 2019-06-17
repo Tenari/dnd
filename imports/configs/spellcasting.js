@@ -49,32 +49,55 @@ export const SPELLCASTING = {
       20: {cantrips: 4, spells: 22, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 2, 7: 2, 8: 1, 9: 1}},
     }
   },
+  cleric: {
+    "index": 2,
+    "class": {
+      "index": 3,
+      "name": "Cleric"
+    },
+    "level": 1,
+    "spellcasting_ability": 'wis',
+    "info": [{
+      "name": "Cantrips",
+      "desc": ["At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table."]
+    }, {
+      "name": "Preparing and Casting Spells",
+      "desc": ["The Cleric table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spell\'s level or higher. You regain all expended spell slots when you finish a long rest.", "You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list. When you do so, choose a number of cleric spells equal to your Wisdom modifier + your cleric level (minimum of one spell). The spells must be of a level for which you have spell slots.", "For example, if you are a 3rd-level cleric, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesn\'t remove it from your list of prepared spells.", "You can change your list of prepared spells when you finish a long rest. Preparing a new list of cleric spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list."]
+    }, {
+      "name": "Spellcasting Ability",
+      "desc": ["Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity. You use your Wisdom whenever a cleric spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a cleric spell you cast and when making an attack roll with one.", "Spell save DC = 8 + your proficiency bonus + your Wisdom modifier", "Spell attack modifier = your proficiency bonus + your Wisdom modifier"]
+    }, {
+      "name": "Ritual Casting",
+      "desc": ["You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared."]
+    }, {
+      "name": "Spellcasting Focus",
+      "desc": ["You can use a holy symbol (see Equipment) as a spellcasting focus for your cleric spells."]
+    }],
+    details_per_level: {
+      1:  {cantrips: 3, slots: {1: 2}},
+      2:  {cantrips: 3, slots: {1: 3}},
+      3:  {cantrips: 3, slots: {1: 4, 2: 2}},
+      4:  {cantrips: 4, slots: {1: 4, 2: 3}},
+      5:  {cantrips: 4, slots: {1: 4, 2: 3, 3: 2}},
+      6:  {cantrips: 4, slots: {1: 4, 2: 3, 3: 3}},
+      7:  {cantrips: 4, slots: {1: 4, 2: 3, 3: 3, 4: 1}},
+      8:  {cantrips: 4, slots: {1: 4, 2: 3, 3: 3, 4: 2}},
+      9:  {cantrips: 4, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 1}},
+      10: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2}},
+      11: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1}},
+      12: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1}},
+      13: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1}},
+      14: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1}},
+      15: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1}},
+      16: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1}},
+      17: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1}},
+      18: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1}},
+      19: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 2, 7: 1, 8: 1, 9: 1}},
+      20: {cantrips: 5, slots: {1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 2, 7: 2, 8: 1, 9: 1}},
+    }
+  },
 };
 /*
-	"index": 2,
-	"class": {
-		"url": "http://www.dnd5eapi.co/api/classes/3",
-		"name": "Cleric"
-	},
-	"level": 1,
-	"spellcasting_ability": { "url": "http://www.dnd5eapi.co/api/ability-scores/5", "name": "WIS" },
-	"info": [{
-		"name": "Cantrips",
-		"desc": ["At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table."]
-	}, {
-		"name": "Preparing and Casting Spells",
-		"desc": ["The Cleric table shows how many spell slots you have to cast your spells of 1st level and higher. To cast one of these spells, you must expend a slot of the spellâ€™s level or higher. You regain all expended spell slots when you finish a long rest.", "You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list. When you do so, choose a number of cleric spells equal to your Wisdom modifier + your cleric level (minimum of one spell). The spells must be of a level for which you have spell slots.", "For example, if you are a 3rd-level cleric, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell cure wounds, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesnâ€™t remove it from your list of prepared spells.", "You can change your list of prepared spells when you finish a long rest. Preparing a new list of cleric spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list."]
-	}, {
-		"name": "Spellcasting Ability",
-		"desc": ["Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity. You use your Wisdom whenever a cleric spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a cleric spell you cast and when making an attack roll with one.", "Spell save DC = 8 + your proficiency bonus + your Wisdom modifier", "Spell attack modifier = your proficiency bonus + your Wisdom modifier"]
-	}, {
-		"name": "Ritual Casting",
-		"desc": ["You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared."]
-	}, {
-		"name": "Spellcasting Focus",
-		"desc": ["You can use a holy symbol (see Equipment) as a spellcasting focus for your cleric spells."]
-	}],
-	"url": "http://www.dnd5eapi.co/api/spellcasting/2"
 }, {
 	"index": 3,
 	"class": {

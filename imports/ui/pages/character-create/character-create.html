@@ -22,6 +22,13 @@
         <div>{{raceDescription}}</div>
         <p>Size: {{raceSize}}</p>
         <p>Racial bonus: {{racialBonus}}</p>
+        {{#if hasRacialAbilityChoice}}
+          <div>
+            {{#each choices in racialAbilityChoices}}
+              {{> dropdown options=choices className='racial-abilities'}}
+            {{/each}}
+          </div>
+        {{/if}}
         {{#each trait in raceTraits}}
           <div class="character-create-row">
             <div class="header-section"><strong>{{trait.name}}</strong></div>
@@ -52,6 +59,12 @@
             </div>
           </div>
         {{/each}}
+        {{#if subclasses}}
+          <div class="character-create-row">
+            <div class="header-section"><strong>Subclass</strong></div>
+            <div class="content-section">{{> dropdown options=subclasses className='subclass'}}</div>
+          </div>
+        {{/if}}
       </div>
     </div>
 
