@@ -1,4 +1,4 @@
-const SUBCLASSES = {
+export const SUBCLASSES = {
   cleric_knowledge: {
     key: "cleric_knowledge",
     "name": "Knowledge",
@@ -63,6 +63,7 @@ const SUBCLASSES = {
         "Revivify",
       ],
       7: [
+        "Guardian of Faith",
         "Death Ward",
       ],
       9: [
@@ -70,5 +71,130 @@ const SUBCLASSES = {
         "Raise Dead",
       ],
     }
-  }
+  },
+  cleric_light: {
+    key: "cleric_light",
+    "name": "Light",
+    desc: [
+      "Gods of light—including Helm, Lathander, Pholtus, Branchala, the Silver Flame, Belenus, Apollo, and Re-Horakhty—promote the ideals of rebirth and renewal, truth, vigilance, and beauty, often using the symbol of the sun. Some of these gods are portrayed as the sun itself or as a charioteer who guides the sun across the sky. Others are tireless sentinels whose eyes pierce every shadow and see through every deception. Some are deities of beauty and artistry, who teach that art is a vehicle for the soul's improvement. Clerics of a god of light are enlightened souls infused with radiance and the power of their gods' discerning vision, charged with chasing away lies and burning away darkness."
+    ],
+    cantrips: {
+      1: ['Light']
+    },
+    spells: {
+      1: [
+        "Burning Hands",
+        "Faerie Fire",
+      ],
+      3: [
+        "Flaming Sphere",
+        "Scorching Ray",
+      ],
+      5: [
+        "Daylight",
+        "Fireball",
+      ],
+      7: [
+        "Guardian of Faith",
+        "Wall of Fire"
+      ],
+      9: [
+        "Flame Strike",
+        "Scrying",
+      ],
+    }
+  },
+  cleric_nature: {
+    key: "cleric_nature",
+    "name": "Nature",
+    desc: [
+      "Gods of nature are as varied as the natural world itself, from inscrutable gods of the deep forests (such as Silvanus, Obad-Hai, Chislev, Balinor, and Pan) to friendly deities associated with particular springs and groves (such as Eldath). Druids revere nature as a whole and might serve one of these deities, practicing mysterious rites and reciting all-but-forgotten prayers in their own secret tongue. But many of these gods have clerics as well, champions who take a more active role in advancing the interests of a particular nature god. These clerics might hunt the evil monstrosities that despoil the woodlands, bless the harvest of the faithful, or wither the crops of those who anger their gods."
+    ],
+    cantrip_choices: {
+      1: [{from: 'druid_list'}]
+    },
+    proficiency_choices: [
+      {
+        choose: 1,
+        type: "proficiencies",
+        from: [
+          {"url": "http://www.dnd5eapi.co/api/proficiencies/106", "name": "Skill: Animal Handling"},
+          {"url": "http://www.dnd5eapi.co/api/proficiencies/115", "name": "Skill: Nature"},
+          {"url": "http://www.dnd5eapi.co/api/proficiencies/122", "name": "Skill: Survival"},
+        ]
+      }
+    ],
+    spells: {
+      1: [
+        "Animal Friendship",
+        "Speak with Animals",
+      ],
+      3: [
+        "Barkskin",
+        "Spike Growth",
+      ],
+      5: [
+        "Plant Growth",
+        "Wind Wall",
+      ],
+      7: [
+        "Dominate Beast",
+        "Grasping Vine"
+      ],
+      9: [
+        "Insect Plague",
+        "Tree Stride",
+      ],
+    }
+  },
+  cleric_tempest: {
+    key: "cleric_tempest",
+    "name": "Tempest",
+    desc: [
+      "Gods whose portfolios include the Tempest domain—including Talos, Umberlee, Kord, Zeboim, the Devourer, Zeus, and Thor—govern storms, sea, and sky. They include gods of lightning and thunder, gods of earthquakes, some fire gods, and certain gods of violence, physical strength, and courage. In some pantheons, a god of this domain rules over other deities and is known for swift justice delivered by thunderbolts. In the pantheons of seafaring people, gods of this domain are ocean deities and the patrons of sailors. Tempest gods send their clerics to inspire fear in the common folk, either to keep those folk on the path of righteousness or to encourage them to offer sacrifices of propitiation to ward off divine wrath."
+    ],
+    proficiencies: [
+      {name: "Heavy armor", "url": "http://www.dnd5eapi.co/api/proficiencies/3"},
+      {name: "Martial weapons", "url": "http://www.dnd5eapi.co/api/proficiencies/20"},
+    ],
+    spells: {
+      1: [ "Fog Cloud", "Thunderwave"],
+      3: ["Gust of Wind", "Shatter"],
+      5: [ "Call Lightning", "Sleet Storm"],
+      7: [ "Control Water", "Ice Storm"],
+      9: [ "Destructive Wave", "Insect Plague"],
+    }
+  },
+  cleric_trickery: {
+    key: "cleric_trickery",
+    "name": "Trickery",
+    desc: [
+      "Gods of trickery—such as Tymora, Beshaba, Olidammara, the Traveler, Garl Glittergold, and Loki—are mischief-makers and instigators who stand as a constant challenge to the accepted order among both gods and mortals. They're patrons of thieves, scoundrels, gamblers, rebels, and liberators. Their clerics are a disruptive force in the world, puncturing pride, mocking tyrants, stealing from the rich, freeing captives, and flouting hollow traditions. They prefer subterfuge, pranks, deception, and theft rather than direct confrontation."
+    ],
+    spells: {
+      1: [ "Charm Person", "Disguise Self"],
+      3: [ "Mirror Image", "Pass without Trace"],
+      5: [ "Blink", "Dispel Magic"],
+      7: [ "Dimension Door", "Polymorph"],
+      9: [ "Dominate Person", "Modify Memory"],
+    }
+  },
+  cleric_war: {
+    key: "cleric_war",
+    "name": "War",
+    desc: [
+      "War has many manifestations. It can make heroes of ordinary people. It can be desperate and horrific, with acts of cruelty and cowardice eclipsing instances of excellence and courage. In either case, the gods of war watch over warriors and reward them for their great deeds. The clerics of such gods excel in battle, inspiring others to fight the good fight or offering acts of violence as prayers. Gods of war include champions of honor and chivalry (such as Torm, Heironeous, and Kiri-Jolith) as well as gods of destruction and pillage (such as Erythnul, the Fury, Gruumsh, and Ares) and gods of conquest and domination (such as Bane, Hextor, and Maglubiyet). Other war gods (such as Tempus, Nike, and Nuada) take a more neutral stance, promoting war in all its manifestations and supporting warriors in any circumstance."
+    ],
+    proficiencies: [
+      {name: "Heavy armor", "url": "http://www.dnd5eapi.co/api/proficiencies/3"},
+      {name: "Martial weapons", "url": "http://www.dnd5eapi.co/api/proficiencies/20"},
+    ],
+    spells: {
+      1: [ "Divine Favor", "Shield of Faith"],
+      3: [ "Magic Weapon", "Spiritual Weapon"],
+      5: [ "Crusader's Mantle", "Spirit Guardians"],
+      7: [ "Freedom of Movement", "Stoneskin"],
+      9: [ "Flame Strike", "Hold Monster"],
+    }
+  },
 };

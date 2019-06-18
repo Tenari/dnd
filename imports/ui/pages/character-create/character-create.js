@@ -3,6 +3,7 @@ import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, AL
 import { PROFICIENCIES } from '../../../configs/proficiencies';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
+import { SUBCLASSES } from '/imports/configs/subclasses.js';
 import { TRAITS } from '/imports/configs/traits.js';
 import { SPELLCASTING } from '/imports/configs/spellcasting.js';
 import { SPELLS } from '/imports/configs/spells.js';
@@ -331,6 +332,12 @@ Template.Character_create.helpers({
     return _.map(BACKGROUNDS[Template.instance().background.get()].items, function(item){
       return item.item.name + " ("+item.quantity+")";
     }).join(", ");
+  },
+  subclassSpells() {
+    console.log(Template.instance().subclass.get());
+    const subclass = SUBCLASSES[Template.instance().subclass.get()];
+    console.log(subclass);
+    return subclass && subclass.spells && subclass.spells[1];
   }
 })
 
