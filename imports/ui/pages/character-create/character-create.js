@@ -90,6 +90,11 @@ Template.Character_create.helpers({
     }
     return spellcasting.details_per_level[1].spells || (1 + abilityModifier(ability));
   },
+  spellbook(){
+    const klass = CLASSES[Template.instance().klass.get()];
+    const spellcasting = SPELLCASTING[klass.spellcasting];
+    return spellcasting && spellcasting.details_per_level[1].spellbook;
+  },
   spellOptions() {
     const klass = CLASSES[Template.instance().klass.get()];
     return _.chain(SPELLS).select(function(spell){

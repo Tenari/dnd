@@ -753,14 +753,8 @@ export const CLASSES = [
 			}
 		],
 		"saving_throws": [
-			{
-				"name": "STR",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/1"
-			},
-			{
-				"name": "DEX",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/2"
-			}
+			{"name": "STR"},
+			{"name": "DEX"},
 		],
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/monk/levels",
@@ -830,14 +824,8 @@ export const CLASSES = [
 			}
 		],
 		"saving_throws": [
-			{
-				"name": "WIS",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/5"
-			},
-			{
-				"name": "CHA",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/6"
-			}
+			{"name": "WIS"},
+			{"name": "CHA"},
 		],
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/paladin/levels",
@@ -920,14 +908,8 @@ export const CLASSES = [
 			}
 		],
 		"saving_throws": [
-			{
-				"name": "STR",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/1"
-			},
-			{
-				"name": "DEX",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/2"
-			}
+			{"name": "STR"},
+			{"name": "DEX"},
 		],
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/ranger/levels",
@@ -939,10 +921,7 @@ export const CLASSES = [
 				"name": "Hunter"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/5",
-			"class": "Ranger"
-		},
+		"spellcasting": 'ranger',
 		"url": "http://www.dnd5eapi.co/api/classes/8"
 	},
 	{
@@ -1033,14 +1012,8 @@ export const CLASSES = [
 			}
 		],
 		"saving_throws": [
-			{
-				"name": "DEX",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/2"
-			},
-			{
-				"name": "INT",
-				"url": "http://www.dnd5eapi.co/api/ability-scores/4"
-			}
+			{"name": "DEX"},
+			{"name": "INT"},
 		],
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/rogue/levels",
@@ -1129,10 +1102,7 @@ export const CLASSES = [
 				"name": "Draconic"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/6",
-			"class": "Sorcerer"
-		},
+		"spellcasting": 'sorcerer',
 		"url": "http://www.dnd5eapi.co/api/classes/10"
 	},
 	{
@@ -1206,10 +1176,7 @@ export const CLASSES = [
 				"name": "Fiend"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/7",
-			"class": "Warlock"
-		},
+		"spellcasting": 'warlock',
 		"url": "http://www.dnd5eapi.co/api/classes/11"
 	},
 	{
@@ -1287,10 +1254,7 @@ export const CLASSES = [
 				"name": "Evocation"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/8",
-			"class": "Wizard"
-		},
+		"spellcasting": 'wizard',
 		"url": "http://www.dnd5eapi.co/api/classes/12"
 	}
 ];

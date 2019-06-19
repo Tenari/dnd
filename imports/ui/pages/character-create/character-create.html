@@ -168,7 +168,10 @@
 
         <div><a href="/spells" target="_blank">Spell info page</a></div>
         <div>Choose {{cantripCount}} cantrips {{> multiselect options=cantripOptions max=cantripCount name='cantrips' className='cantrips-select'}}</div>
-        <div>Choose {{spellCount}} 1st-level Spells {{> multiselect options=spellOptions max=spellCount name='cantrips' className='cantrips-select'}}</div>
+        <div>Choose {{spellCount}} 1st-level Spells to prepare{{> multiselect options=spellOptions max=spellCount name='prepared-spells' className='prepared-spells-select'}}</div>
+        {{#if spellbook}}
+          <div>Choose {{spellbook}} 1st-level Spells for your spellbook {{> multiselect options=spellOptions max=spellbook name='spellbook' className='spellbook-select'}}</div>
+        {{/if}}
       </div>
     </div>
     {{/if}}
