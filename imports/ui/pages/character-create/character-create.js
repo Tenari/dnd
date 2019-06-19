@@ -34,7 +34,7 @@ Template.Character_create.onCreated(function(){
   this.background = new ReactiveVar(_.keys(BACKGROUNDS)[0]);
   this.selectedRacialBonuses = new ReactiveVar(['str', 'dex']);
 
-  this.divineDomain = new ReactiveVar('knowledge'); //cleric only
+  this.spellbookList = new ReactiveVar([]); // wizard only
   this.buyPoints = new ReactiveVar(27);
   this.itemFilter = new ReactiveVar('');
   this.itemsTab = new ReactiveVar(null);
@@ -95,6 +95,11 @@ Template.Character_create.helpers({
     const spellcasting = SPELLCASTING[klass.spellcasting];
     return spellcasting && spellcasting.details_per_level[1].spellbook;
   },
+  spellbookList() {
+    return _.map(Template.instance().spellbookList.get(), function(spellName) {
+      return {name: spellName, value: spellName};
+    });
+  },
   spellOptions() {
     const klass = CLASSES[Template.instance().klass.get()];
     return _.chain(SPELLS).select(function(spell){
@@ -152,9 +157,6 @@ Template.Character_create.helpers({
   },
   classIs(compare) {
     return Template.instance().klass.get() == compare;
-  },
-  currentDomain() {
-    return Template.instance().divineDomain.get();
   },
   genders() {
     return [{value: 'male', label: 'Male'}, {value: 'female', label: 'Female'}];
@@ -414,13 +416,6 @@ function extraLanguages() {
       total += 1;
     }
   })
-  if (klass && klass.key == 'cleric') {
-    _.each(klass.divine_domains[instance.divineDomain.get()].features, function(b){
-      if (b == 'extra_language') {
-        total += 1;
-      }
-    })
-  }
   return total;
 }
 
@@ -436,20 +431,20 @@ Template.Character_create.events({
     const classKey = $(e.currentTarget).val();
     instance.klass.set(classKey);
     instance.subclass.set(CLASSES[classKey].subclasses[0] && CLASSES[classKey].subclasses[0].value);
+    instance.spellbookList.set([]); // reset to default
     updateProficienciesAndLanguages(instance);
   },
   'change select.subclass'(e, instance){
     instance.subclass.set($(e.currentTarget).val());
-  },
-  'change select.divine-domain'(e, instance){
-    instance.divineDomain.set($(e.currentTarget).val());
-    updateProficienciesAndLanguages(instance);
   },
   'change select.language-select'(e, instance){
     updateProficienciesAndLanguages(instance);
   },
   'change select.proficiency-select'(e, instance){
     updateProficienciesAndLanguages(instance);
+  },
+  'change select.spellbook-select'(e, instance) {
+    instance.spellbookList.set($(e.currentTarget).val());
   },
   'change select.background-select'(e, instance){
     instance.background.set($(e.currentTarget).val());
