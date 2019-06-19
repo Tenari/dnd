@@ -72,11 +72,14 @@ export const CLASSES = [
 			"url": "http://www.dnd5eapi.co/api/classes/barbarian/levels",
 			"class": "Barbarian"
 		},
+    chooses_subclass_at_level: 3,
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/1",
-				"name": "Berserker"
-			}
+			{"value": "ancestral_guardian", "label": "Ancestral Guardian"},
+			{"value": "battlerager", "label": "Battlerager"},
+			{"value": "berserker", "label": "Berserker"},
+			{"value": "storm_herald", "label": "Storm Herald"},
+			{"value": "totem_warrior", "label": "Totem Warrior"},
+			{"value": "zealot", "label": "Zealot"},
 		],
 		"url": "http://www.dnd5eapi.co/api/classes/1"
 	},
@@ -251,11 +254,13 @@ export const CLASSES = [
 			"url": "http://www.dnd5eapi.co/api/classes/bard/levels",
 			"class": "Bard"
 		},
+    chooses_subclass_at_level: 3,
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/2",
-				"name": "Lore"
-			}
+			{"value": "glamour","label": "Glamour"},
+			{"value": "lore","label": "Lore"},
+			{"value": "swords","label": "Swords"},
+			{"value": "valor","label": "Valor"},
+			{"value": "whispers","label": "Whispers"}
 		],
 		"spellcasting": 'bard',
 		"url": "http://www.dnd5eapi.co/api/classes/2"
@@ -325,6 +330,7 @@ export const CLASSES = [
 			"url": "http://www.dnd5eapi.co/api/classes/cleric/levels",
 			"class": "Cleric"
 		},
+    chooses_subclass_at_level: 1,
 		"subclasses": [
 			{
 				"value": 'cleric_knowledge',
@@ -475,16 +481,15 @@ export const CLASSES = [
 			"url": "http://www.dnd5eapi.co/api/classes/druid/levels",
 			"class": "Druid"
 		},
+    chooses_subclass_at_level: 2,
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/4",
-				"name": "Land"
-			}
+			{"value": "dreams", "label": "Dreams"},
+			{"value": "land", "label": "Land"},
+			{"value": "moon", "label": "Moon"},
+			{"value": "shepherd", "label": "Shepherd"},
+			{"value": "spores", "label": "Spores"},
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/3",
-			"class": "Druid"
-		},
+		"spellcasting": 'druid',
 		"url": "http://www.dnd5eapi.co/api/classes/4"
 	},
 	{
@@ -564,11 +569,11 @@ export const CLASSES = [
 			"url": "http://www.dnd5eapi.co/api/classes/fighter/levels",
 			"class": "Fighter"
 		},
+    chooses_subclass_at_level: 3,
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/5",
-				"name": "Champion"
-			}
+			{ "value": "battle_master", label: "Battle Master"},
+			{ "value": "champion", label: "Champion"},
+			{ "value": "eldritch_knight", label: "Eldritch Knight"},
 		],
 		"url": "http://www.dnd5eapi.co/api/classes/5"
 	},
@@ -844,10 +849,7 @@ export const CLASSES = [
 				"name": "Devotion"
 			}
 		],
-		"spellcasting": {
-			"url": "http://www.dnd5eapi.co/api/spellcasting/4",
-			"class": "Paladin"
-		},
+		"spellcasting": 'paladin',
 		"url": "http://www.dnd5eapi.co/api/classes/7"
 	},
 	{

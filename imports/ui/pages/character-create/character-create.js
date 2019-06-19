@@ -53,7 +53,8 @@ Template.Character_create.helpers({
     return name.length > 0 && instance.buyPoints.get() == 0 && instance.proficienciesArePicked.get();
   },
   choosesSpells() {
-    return CLASSES[Template.instance().klass.get()].spellcasting;
+    const key = CLASSES[Template.instance().klass.get()].spellcasting;
+    return key && SPELLCASTING[key].level == 1;
   },
   spellcastingInfo() {
     const klass = CLASSES[Template.instance().klass.get()];
@@ -105,7 +106,7 @@ Template.Character_create.helpers({
   },
   subclasses() {
     const klass = CLASSES[Template.instance().klass.get()];
-    return klass.subclasses;
+    return klass.chooses_subclass_at_level == 1 && klass.subclasses;
   },
   raceTraits(){
     const race = RACES[Template.instance().race.get()];

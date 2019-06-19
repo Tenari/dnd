@@ -18,26 +18,11 @@ export const SUBCLASSES = {
       }
     ],
     spells: {
-      1: [
-        "Command",
-        "Identify",
-      ],
-      3: [
-        "Augury",
-        "Suggestion",
-      ],
-      5: [
-        "Nondetection",
-        "Speak with Dead",
-      ],
-      7: [
-        "Arcane Eye",
-        "Confusion",
-      ],
-      9: [
-        "Legend Lore",
-        "Scrying",
-      ],
+      1: [ "Command", "Identify"],
+      3: [ "Augury", "Suggestion"],
+      5: [ "Nondetection", "Speak with Dead"],
+      7: [ "Arcane Eye", "Confusion" ],
+      9: [ "Legend Lore", "Scrying"],
     }
   },
   cleric_life: {
@@ -196,5 +181,41 @@ export const SUBCLASSES = {
       7: [ "Freedom of Movement", "Stoneskin"],
       9: [ "Flame Strike", "Hold Monster"],
     }
+  },
+  ancestral_guardian: {
+    key: 'ancestral_guardian',
+    name: "Ancestral Guardian",
+    desc: [
+    ]
+  },
+  battlerager: {
+    key: 'battlerager',
+    name: "Battlerager",
+    desc: [
+    ]
+  },
+  berserker: {
+    key: 'berserker',
+    name: "Berserker",
+    desc: [
+    ]
+  },
+  storm_herald: {
+    key: 'storm_herald',
+    name: "Storm Herald",
+    desc: [
+    ]
+  },
+  totem_warrior: {
+    key: 'totem_warrior',
+    name: "Totem Warrior",
+    desc: [
+    ]
+  },
+  zealot: {
+    key: 'zealot',
+    name: "Zealot",
+    desc: [
+    ]
   },
 };
