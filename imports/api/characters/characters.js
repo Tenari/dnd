@@ -38,8 +38,14 @@ Characters.helpers({
   displayRace() {
     return RACES[this.race].label;
   },
+  raceObj() {
+    return RACES[this.race];
+  },
   displayClass() {
     return CLASSES[this.klass].name;
+  },
+  classObj() {
+    return CLASSES[this.klass];
   },
   meleeAbilityModifier() {
     const weapon = this.equippedWeapon();

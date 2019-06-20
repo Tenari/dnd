@@ -342,7 +342,33 @@ Template.Character_create.helpers({
     const subclass = SUBCLASSES[Template.instance().subclass.get()];
     console.log(subclass);
     return subclass && subclass.spells && subclass.spells[1];
-  }
+  },
+  bonusCantripList() {
+    const race = RACES[Template.instance().race.get()];
+    if (_.contains(race.traits, 'cantrip')) {
+      return _.chain(SPELLS).select(function(spell){
+        return spell.level == 0 && _.pluck(spell.classes, 'name').includes("Wizard");
+      }).map(function(spell){
+        return {label: spell.name, value: spell.name};
+      }).value();
+    } else {
+      return false;
+    }
+  },
+  draconicAncestries(){
+    return [
+      {label: "Black", value: 'black'},
+      {label: "Blue", value: 'blue'},
+      {label: "Brass", value: 'brass'},
+      {label: "Bronze", value: 'bronze'},
+      {label: "Copper", value: 'copper'},
+      {label: "Gold", value: 'gold'},
+      {label: "Green", value: 'green'},
+      {label: "Red", value: 'red'},
+      {label: "Silver", value: 'silver'},
+      {label: "White", value: 'white'},
+    ]
+  },
 })
 
 function remainingWealth(instance) {
@@ -516,6 +542,7 @@ Template.Character_create.events({
       klass: instance.klass.curValue,
       background: instance.background.curValue,
     };
+    // TODO include draconic ancestry if they had that option
     // ability scores
     _.each(_.keys(ABILITIES), function(key, index) {
       const raceBonus = race[key+'_bonus'] || 0;
@@ -555,6 +582,11 @@ Template.Character_create.events({
       }
       i += 1;
     })
+    // TODO chosen spells
+      // bonus-cantrip
+      // cantrips-select
+      // spellbook-select
+      // prepared-spells-select
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {

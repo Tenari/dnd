@@ -8,6 +8,7 @@ export const TRAITS = {
     key: "dwarven_resiliance",
     "name": "Dwarven Resilience",
     desc: "You have advantage on saving throws against poison, and you have resistance against poison damage.",
+    combat: true,
   },
   stonecunning: {
     key: "stonecunning",
@@ -33,6 +34,7 @@ export const TRAITS = {
     key: "fey_ancestry",
     name: "Fey Ancestry",
     desc: "You have advantage on saving throws against being charmed, and magic can't put you to sleep.",
+    combat: true,
   },
   trance: {
     key: "trance",
@@ -48,6 +50,7 @@ export const TRAITS = {
     key: "cantrip",
     name: "Cantrip",
     desc: "You know one cantrip of your choice from the wizard spell list. Intelligence is your spellcasting ability for it.",
+    chooses_cantrip: true,
   },
   fleet_of_foot: {
     key: "fleet_of_foot",
@@ -58,46 +61,55 @@ export const TRAITS = {
     key: "mask_of_the_wild",
     name: "Mask of the Wild",
     desc: "You can attempt to hide even when you are only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.",
+    combat: true,
   },
   lucky: {
     key: "lucky",
     name: "Lucky",
     desc: "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.",
+    combat: true,
   },
   brave: {
     key: "brave",
     name: "Brave",
     desc: "You have advantage on saving throws against being frightened.",
+    combat: true,
   },
   halfling_nimbleness: {
     key: "halfling_nimbleness",
     name: "Halfling Nimbleness",
     desc: "You can move through the space of any creature that is of a size larger than yours.",
+    combat: true,
   },
   naturally_stealthy: {
     key: "naturally_stealthy",
     name: "Naturally Stealthy",
     desc: "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you.",
+    combat: true,
   },
   stout_resilience: {
     key: "stout_resilience",
     name: "Stout Resilience",
     desc: "You have advantage on saving throws against poison, and you have resistance against poison damage.",
+    combat: true,
   },
   draconic_ancestry: {
     key: "draconic_ancestry",
     name: "Draconic Ancestry",
     desc: "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
+    chooses_ancestry: true,
   },
   breath_weapon: {
     key: "breath_weapon",
     name: "Breath Weapon",
     desc: "You can use your action to exhale destructive energy. Your draconic ancestry determines the size, shape, and damage type of the exhalation.\nWhen you use your breath weapon, each creature in the area of the exhalation must make a saving throw, the type of which is determined by your draconic ancestry. The DC for this saving throw equals 8 + your Constitution modifier + your proficiency bonus. A creature takes 2d6 damage on a failed save, and half as much damage on a successful one. The damage increases to 3d6 at 6th level, 4d6 at 11th level, and 5d6 at 16th level.\nAfter you use your breath weapon, you can't use it again until you complete a short or long rest.",
+    combat: true,
   },
   draconic_damage_resistance: {
     key: "draconic_damage_resistance",
     name: "Damage Resistance",
     desc: "You have resistance to the damage type associated with your draconic ancestry.",
+    combat: true,
   },
   darkvision_gnome: {
     key: "darkvision_gnome",
@@ -108,6 +120,7 @@ export const TRAITS = {
     key: "gnome_cunning",
     name: "Gnome Cunning",
     desc: "You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.",
+    combat: true,
   },
   natural_illusionist: {
     key: "natural_illusionist",
@@ -168,11 +181,13 @@ export const TRAITS = {
     key: "relentless_endurance",
     name: "Relentless endurance",
     desc: "When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.",
+    combat: true,
   },
   savage_attacks: {
     key: "savage_attacks",
     name: "Savage Attacks",
     desc: "When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.",
+    combat: true,
   },
   darkvision_tiefling: {
     key: "darkvision_tiefling",
@@ -183,10 +198,12 @@ export const TRAITS = {
     key: "hellish_resistance",
     name: "Hellish Resistance",
     desc: "You have resistance to fire damage.",
+    combat: true,
   },
   infernal_legacy: {
     key: "infernal_legacy",
     name: "Infernal Legacy",
     desc: "You know the thaumaturgy cantrip. Once you reach 3rd level, you can cast the hellish rebuke spell as a 2nd-level spell; you must finish a long rest in order to cast the spell again using this trait. Once you reach 5th level, you can also cast the darkness spell; you must finish a long rest in order to cast the spell again using this trait. Charisma is your spellcasting ability for these spells.",
+    combat: true,
   },
 };

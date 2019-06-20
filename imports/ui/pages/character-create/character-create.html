@@ -32,7 +32,15 @@
         {{#each trait in raceTraits}}
           <div class="character-create-row">
             <div class="header-section"><strong>{{trait.name}}</strong></div>
-            <div class="content-section">{{trait.desc}}</div>
+            <div class="content-section">
+              <div>{{trait.desc}}</div>
+              {{#if trait.chooses_cantrip}}
+                <div>{{> dropdown options=bonusCantripList className='bonus-cantrip'}}</div>
+              {{/if}}
+              {{#if trait.chooses_ancestry}}
+                <div>{{> dropdown options=draconicAncestries className='draconic-ancestry'}}</div>
+              {{/if}}
+            </div>
           </div>
         {{/each}}
       </div>
@@ -73,22 +81,6 @@
 
     <div class="character-create-row">
       <div class="header-section">
-        <div class="section-title">Ability Scores</div>
-        <div class="section-detail">Points Left: {{reactiveVar 'buyPoints'}}</div>
-      </div>
-      <ul class="abilities-list">
-        {{#each ability in abilities}}
-          <li>
-            <span class="ability-label">{{ability.label}}</span>
-            <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
-            {{racialBonusFor ability}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-
-    <div class="character-create-row">
-      <div class="header-section">
         <div class="section-title">Background</div>
         <div class="section-detail">{{> dropdown options=backgrounds className='background-select'}}</div>
       </div>
@@ -111,6 +103,22 @@
           <div class="content-section">{{background.wealth}}gp</div>
         </div>
       </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Ability Scores</div>
+        <div class="section-detail">Points Left: {{reactiveVar 'buyPoints'}}</div>
+      </div>
+      <ul class="abilities-list">
+        {{#each ability in abilities}}
+          <li>
+            <span class="ability-label">{{ability.label}}</span>
+            <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
+            {{racialBonusFor ability}}
+          </li>
+        {{/each}}
+      </ul>
     </div>
 
     {{#if reactiveVar 'buyPoints'}}

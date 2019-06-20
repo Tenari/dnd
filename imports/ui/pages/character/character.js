@@ -67,7 +67,7 @@ Template.character_sheet.helpers({
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
 
-    let items =  _.select(_.map(character.items, function(item){
+    let items =  _.select(_.map(_.uniq(character.items), function(item){
       return Items.findOne(item);
     }), function(item){
       return item.equipment_category == "Weapon";
@@ -96,6 +96,19 @@ Template.character_sheet.helpers({
       damage: 1+abilityModifier(character.str),
       damage_type: 'Bludgeoning'
     })
+    _.each(items, function(weapon){
+      if (weapon.throw_range) {
+        const bonus = weapon.attackBonus(character);
+        result.push({
+          name: 'Throw '+weapon.name,
+          range: weapon.throw_range.normal + 'ft/'+weapon.throw_range.long,
+          positive: bonus >= 0,
+          bonus: bonus,
+          damage: weapon.damage.dice_count+'d'+weapon.damage.dice_value,
+          damage_type: weapon.damage.damage_type.name,
+        });
+      }
+    })
     return result;
   },
   combatFeatures(){
@@ -106,6 +119,15 @@ Template.character_sheet.helpers({
     let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
       return classFeature.class.name == character.displayClass() && classFeature.level <= character.level && classFeature.combat;
     }), function(f) {f.source = "Class"; return f;});
+
+    _.each(character.raceObj().traits, function(traitKey) {
+      let trait = TRAITS[traitKey];
+      trait.source = "Race";
+      if (trait.combat) {
+        features.push(trait)
+      }
+    })
+
     return features;
   }
 })

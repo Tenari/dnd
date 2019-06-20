@@ -73,7 +73,6 @@ export const RACES = {
     inte_bonus: 1,
     proficiencies: [116, 42, 48, 33, 56],
     saving_throw_advantages: ['charmed'],
-    extra_wizard_cantrips: 1,
     features: ['extra_language'],
     traits: ["darkvision_elf", "keen_senses", "fey_ancestry", "trance", "elf_weapon_training", "cantrip"],
     languages: ['common', 'elvish'],

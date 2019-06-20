@@ -413,6 +413,7 @@ export const CLASS_FEATURES = [
       "You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ",
       "Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/26"
   },
   {
@@ -7891,6 +7892,7 @@ export const CLASS_FEATURES = [
     "desc": [
       "Beginning at 2nd level, you can create pockets of relative safety within the effects of your evocation spells. When you cast an evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 + the spell’s level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/404"
   },
   {
@@ -7922,6 +7924,7 @@ export const CLASS_FEATURES = [
     "desc": [
       "Starting at 6th level, your damaging cantrips affect even creatures that avoid the brunt of the effect. When a creature succeeds on a saving throw against your cantrip, the creature takes half the cantrip’s damage (if any) but suffers no additional effect from the cantrip."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/406"
   },
   {
@@ -7953,6 +7956,7 @@ export const CLASS_FEATURES = [
     "desc": [
       "Beginning at 10th level, you can add your Intelligence modifier to one damage roll of any wizard evocation spell you cast."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/409"
   },
   {
@@ -7985,6 +7989,7 @@ export const CLASS_FEATURES = [
       "Starting at 14th level, you can increase the power of your simpler spells. When you cast a wizard spell of 1st through 5th level that deals damage, you can deal maximum damage with that spell.",
       "The first time you do so, you suffer no adverse effect. If you use this feature again before you finish a long rest, you take 2d12 necrotic damage for each level of the spell, immediately after you cast it. Each time you use this feature again before finishing a long rest, the necrotic damage per spell level increases by 1d12. This damage ignores resistance and immunity."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/412"
   },
   {
@@ -8014,6 +8019,7 @@ export const CLASS_FEATURES = [
       "At 18th level, you have achieved such mastery over certain spells that you can cast them at will. Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal.",
       "By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/414"
   },
   {
@@ -8043,6 +8049,7 @@ export const CLASS_FEATURES = [
       "When you reach 20th level, you gain mastery over two powerful spells and can cast them with little effort. Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don’t count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can’t do so again until you finish a short or long rest.",
       "If you want to cast either spell at a higher level, you must expend a spell slot as normal."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/416"
   },
   {
