@@ -186,12 +186,15 @@ export const SUBCLASSES = {
     key: 'ancestral_guardian',
     name: "Ancestral Guardian",
     desc: [
-    ]
+      "Some barbarians hail from cultures that revere their ancestors. These tribes teach that the warriors of the past linger in the world as mighty spirits, who can guide and protect the living. When a barbarian who follows this path rages, the barbarian contacts the spirit world and calls on these guardian spirits for aid.",
+      "Barbarians who draw on their ancestral guardians can better fight to protect their tribes and their allies. In order to cement ties to their ancestral guardians, barbarians who follow this path cover themselves in elaborate tattoos that celebrate their ancestors' deeds. These tattoos tell sagas of victories against terrible monsters and other fearsome rivals."
+    ],
   },
   battlerager: {
     key: 'battlerager',
     name: "Battlerager",
     desc: [
+      "Known as Kuldjargh (literally \"axe idiot\") in Dwarvish, battleragers are dwarf followers of the gods of war and take the Path of the Battlerager. They specialize in wearing bulky, spiked armor and throwing themselves into combat, striking with their body itself and giving themselves over to the fury of battle."
     ]
   },
   berserker: {
@@ -215,6 +218,42 @@ export const SUBCLASSES = {
   zealot: {
     key: 'zealot',
     name: "Zealot",
+    desc: [
+    ]
+  },
+  battle_master: {
+    key: 'battle_master',
+    name: "Battle Master",
+    desc: [
+    ]
+  },
+  champion: {
+    key: 'champion',
+    name: "Champion",
+    desc: [
+    ]
+  },
+  eldritch_knight: {
+    key: 'eldritch_knight',
+    name: "Eldritch Knight",
+    desc: [
+    ]
+  },
+  four_elements: {
+    key: 'four_elements',
+    name: "Four Elements",
+    desc: [
+    ]
+  },
+  open_hand: {
+    key: 'open_hand',
+    name: "Open Hand",
+    desc: [
+    ]
+  },
+  shadow: {
+    key: 'shadow',
+    name: "Shadow",
     desc: [
     ]
   },

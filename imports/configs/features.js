@@ -17,6 +17,7 @@ export const CLASS_FEATURES = [
       "Your rage lasts for 1 minute. It ends early if you are knocked Unconscious or if Your Turn ends and you haven't attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on Your Turn as a Bonus Action.",
       "Once you have raged the maximum number of times for your barbarian level, you must finish a Long Rest before you can rage again. You may rage 2 times at 1st level, 3 at 3rd, 4 at 6th, 5 at 12th, and 6 at 17th."
     ],
+    combat: true,
     action: {
       key: 'barbarian_rage',
       size: 'bonus',
@@ -58,7 +59,7 @@ export const CLASS_FEATURES = [
     "desc": [
       "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
     ],
-    "url": "http://www.dnd5eapi.co/api/features/2"
+    combat: true,
   },
   {
     "index": 3,
@@ -8290,6 +8291,45 @@ export const CLASS_FEATURES = [
     level: 1,
     desc: [
       "Starting at 2nd level, you can use your Channel Divinity to strike with supernatural accuracy. When you make an attack roll, you can use your Channel Divinity to gain a +10 bonus to the roll. You make this choice after you see the roll, but before the DM says whether the attack hits or misses."
+    ],
+  },
+  {
+    "class": {index: 1, name: "Barbarian"},
+    subclass: {
+      "key": "ancestral_guardian",
+      "name": "Ancestral Guardian"
+    },
+    name: "Ancestral Protectors",
+    level: 3,
+    desc: [
+      "Starting when you choose this path at 3rd level, spectral warriors appear when you enter your rage. While you're raging, the first creature you hit with an attack on your turn becomes the target of the warriors, which hinder its attacks. Until the start of your next turn, that target has disadvantage on any attack roll that isn't against you, and when the target hits a creature other than you with an attack, that creature has resistance to the damage dealt by the attack. The effect on the target ends early if your rage ends."
+    ],
+  },
+  {
+    "class": {index: 1, name: "Barbarian"},
+    subclass: {
+      "key": "battlerager",
+      "name": "Battlerager"
+    },
+    name: "Restriction - Dwarves Only",
+    level: 3,
+    desc: [
+      "Only dwarves can follow the Path of the Battlerager. The battlerager fills a particular niche in dwarven society and culture.",
+      "Your DM can lift this restriction to better suit the campaign. The restriction exists for the Forgotten Realms. It might not apply to your DM's setting or your DM's version of the Realms."
+    ],
+  },
+  {
+    "class": {index: 1, name: "Barbarian"},
+    subclass: {
+      "key": "battlerager",
+      "name": "Battlerager"
+    },
+    name: "Battlerager Armor",
+    level: 3,
+    desc: [
+      "When you choose this path at 3rd level, you gain the ability to use spiked armor as a weapon.",
+      "While you are wearing spiked armor and are raging, you can use a bonus action to make one melee weapon attack with your armor spikes at a target within 5 feet of you. If the attack hits, the spikes deal 1d4 piercing damage. You use your Strength modifier for the attack and damage rolls.",
+      "Additionally, when you use the Attack action to grapple a creature, the target takes 3 piercing damage if your grapple check succeeds."
     ],
   },
 ];

@@ -29,36 +29,6 @@
       </div>
     </div>
     <div class="columns">
-      <div class="ability-scores">
-        {{#each abilityScore in abilityScores}}
-          {{> character_abilityScore abilityScore}}
-        {{/each}}
-      </div>
-      <div class="proficiencies">
-        <div class="horizontal-block">
-          <div class="detail"></div>
-          <div class="label">Inspiration</div>
-        </div>
-        <div class="horizontal-block">
-          <div class="detail">{{character.proficiencyBonus}}</div>
-          <div class="label">Proficiency bonus</div>
-        </div>
-        <div class="saving-throws">
-          <div class="saving-throw-row">{{#if character.proficiencies "99"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 100}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 101}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 102}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 103}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 104}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
-          <div class="label">saving throws</div>
-        </div>
-        <div class="skill-list">
-          {{#each skill in skills}}
-            <div class="skill-row">{{#if character.proficientInSkill skill.name}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
-          {{/each}}
-          <div class="label">skills</div>
-        </div>
-      </div>
       <div class="ac-hp">
         <div class="just-ac-hp">
           <div class="ac-speed-row">
@@ -109,11 +79,76 @@
             </div>
           </div>
         </div>
-        <div class="attacks-and-spellcasting">
-          {{#each attack in attacks}}
-            {{> characterSheet_attackRow attack}}
+      </div>
+      <div class="attacks-and-spellcasting">
+        <div class="label">weapon attacks</div>
+        <div class="attack-row heading">
+          <div class="name">Name</div>
+          <div class="range">Range</div>
+          <div class="bonus">To hit bonus</div>
+          <div class="damage">Damage</div>
+          <div class="damage-type">Damage Type</div>
+        </div>
+        {{#each attack in attacks}}
+          {{> characterSheet_attackRow attack}}
+        {{/each}}
+        <div class="label">Combat features</div>
+        <div class="attack-row heading">
+          <div class="range">Source</div>
+          <div class="name">Name</div>
+          <div class="details">Details</div>
+        </div>
+        {{#each feature in combatFeatures}}
+          <div class="attack-row">
+            <div class="range">{{feature.source}}</div>
+            <div class="name">{{feature.name}}</div>
+            <div class="details" title="{{feature.desc}}">{{feature.desc}}</div>
+          </div>
+        {{/each}}
+        <div class="label">Other Combat actions</div>
+        <div class="attack-row">
+          <div class="misc">Dash</div>
+          <div class="misc">Disengage</div>
+          <div class="misc">Dodge</div>
+          <div class="misc">Help</div>
+          <div class="misc">Hide</div>
+          <div class="misc">Grapple</div>
+          <div class="misc">Ready</div>
+          <div class="misc">Search</div>
+          <div class="misc">Shove</div>
+          <div class="misc">Use object</div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="ability-scores">
+        {{#each abilityScore in abilityScores}}
+          {{> character_abilityScore abilityScore}}
+        {{/each}}
+      </div>
+      <div class="proficiencies">
+        <div class="horizontal-block">
+          <div class="detail"></div>
+          <div class="label">Inspiration</div>
+        </div>
+        <div class="horizontal-block">
+          <div class="detail">{{character.proficiencyBonus}}</div>
+          <div class="label">Proficiency bonus</div>
+        </div>
+        <div class="saving-throws">
+          <div class="saving-throw-row">{{#if character.proficiencies "99"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 100}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 101}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 102}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 103}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
+          <div class="saving-throw-row">{{#if character.proficiencies 104}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
+          <div class="label">saving throws</div>
+        </div>
+        <div class="skill-list">
+          {{#each skill in skills}}
+            <div class="skill-row">{{#if character.proficientInSkill skill.name}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
           {{/each}}
-          <div class="label">attacks & spellcasting</div>
+          <div class="label">skills</div>
         </div>
       </div>
       <div class="flavor">
@@ -164,6 +199,7 @@
     <div class="name" title="{{name}}">{{name}}</div>
     <div class="range">{{range}}ft</div>
     <div class="bonus">{{#if positive}}+{{else}}-{{/if}}{{bonus}}</div>
-    <div class="damage">{{damage}} {{damage_type}}</div>
+    <div class="damage">{{damage}}</div>
+    <div class="damage-type">{{damage_type}}</div>
   </div>
 </template>

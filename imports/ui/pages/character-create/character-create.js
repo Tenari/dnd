@@ -53,18 +53,16 @@ Template.Character_create.helpers({
     return name.length > 0 && instance.buyPoints.get() == 0 && instance.proficienciesArePicked.get();
   },
   choosesSpells() {
-    const key = CLASSES[Template.instance().klass.get()].spellcasting;
-    return key && SPELLCASTING[key].level == 1;
+    const key = Template.instance().klass.get();
+    return SPELLCASTING[key] && SPELLCASTING[key].level == 1;
   },
   spellcastingInfo() {
-    const klass = CLASSES[Template.instance().klass.get()];
-    const spellcasting = SPELLCASTING[klass.spellcasting];
-    return spellcasting.info;
+    const spellcasting = SPELLCASTING[Template.instance().klass.get()];
+    return spellcasting && spellcasting.info;
   },
   cantripCount(){
-    const klass = CLASSES[Template.instance().klass.get()];
-    const spellcasting = SPELLCASTING[klass.spellcasting];
-    return spellcasting.details_per_level[1].cantrips;
+    const spellcasting = SPELLCASTING[Template.instance().klass.get()];
+    return spellcasting && spellcasting.details_per_level[1].cantrips;
   },
   cantripOptions() {
     const klass = CLASSES[Template.instance().klass.get()];
@@ -75,9 +73,8 @@ Template.Character_create.helpers({
     }).value();
   },
   spellCount(){
-    const klass = CLASSES[Template.instance().klass.get()];
     const race = RACES[Template.instance().race.get()];
-    const spellcasting = SPELLCASTING[klass.spellcasting];
+    const spellcasting = SPELLCASTING[Template.instance().klass.get()];
     let ability = Template.instance()[spellcasting.spellcasting_ability].get();
     if (race[spellcasting.spellcasting_ability+'_bonus']) {
       ability += race[spellcasting.spellcasting_ability+'_bonus'];
@@ -91,8 +88,7 @@ Template.Character_create.helpers({
     return spellcasting.details_per_level[1].spells || (1 + abilityModifier(ability));
   },
   spellbook(){
-    const klass = CLASSES[Template.instance().klass.get()];
-    const spellcasting = SPELLCASTING[klass.spellcasting];
+    const spellcasting = SPELLCASTING[Template.instance().klass.get()];
     return spellcasting && spellcasting.details_per_level[1].spellbook;
   },
   spellbookList() {

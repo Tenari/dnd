@@ -113,6 +113,9 @@
       </div>
     </div>
 
+    {{#if reactiveVar 'buyPoints'}}
+    {{else}}
+
     <div class="character-create-row">
       <div class="header-section">
         <div class="section-title">Proficiencies</div>
@@ -215,6 +218,7 @@
         </div>
       </div>
     </div>
+    {{/if}}
 
     {{#if canCreateCharacter}}
       <div><button class="submit-character">CREATE CHARACTER!!!</button></div>

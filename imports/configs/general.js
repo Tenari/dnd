@@ -1,6 +1,8 @@
 import { CLASS_FEATURES } from './features.js';
 
 export function indexFromUrl(obj){
+  if (obj.index) return obj.index;
+
   const splitted = obj.url.split('/');
   return parseInt(splitted[splitted.length-1]);
 }

@@ -170,15 +170,28 @@
     padding: 10px;
     border-style: double;
     margin-top: 10px;
+    width: 75%;
   }
   .attack-row {
     display: flex;
     justify-content: space-between;
+    &.heading {
+      &>div {
+        background-color: white;
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+        text-overflow: hidden;
+      }
+    }
     &>div {
       background-color: #eee;
       border-top-left-radius: 10px;
       border-bottom-right-radius: 10px;
       text-overflow: hidden;
+    }
+    .misc {
+      padding-left: 5px;
+      padding-right: 5px;
     }
     .name {
       width: 20%;
@@ -190,7 +203,16 @@
       width: 10%;
     }
     .damage {
-      width: 50%;
+      width: 40%;
+    }
+    .damage-type {
+      width: 10%;
+    }
+    .details {
+      width: 65%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

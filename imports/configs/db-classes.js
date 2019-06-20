@@ -1,6 +1,6 @@
-export const CLASSES = [
-	{
-		"index": 1,
+export const CLASSES = {
+	barbarian: {
+		key: 'barbarian',
 		"name": "Barbarian",
     "description": "Barbarians come alive in the chaos of combat. They can enter a berserk state where rage takes over, giving them superhuman strength and resilience. A barbarian can draw on this reservoir of fury only a few times without resting, but those few rages are usually sufficient to defeat whatever threats arise.",
 		"hit_die": 12,
@@ -81,10 +81,9 @@ export const CLASSES = [
 			{"value": "totem_warrior", "label": "Totem Warrior"},
 			{"value": "zealot", "label": "Zealot"},
 		],
-		"url": "http://www.dnd5eapi.co/api/classes/1"
 	},
-	{
-		"index": 2,
+	bard: {
+		key: 'bard',
 		"name": "Bard",
     "description": "In the worlds of D&D, words and music are not just vibrations of air, but vocalizations with power all their own. The bard is a master of song, speech, and the magic they contain. Bards say that the multiverse was spoken into existence, that the words of the gods gave it shape, and that echoes of these primordial Words of Creation still resound throughout the cosmos. The music of bards is an attempt to snatch and harness those echoes, subtly woven into their spells and powers.",
 		"hit_die": 8,
@@ -262,11 +261,9 @@ export const CLASSES = [
 			{"value": "valor","label": "Valor"},
 			{"value": "whispers","label": "Whispers"}
 		],
-		"spellcasting": 'bard',
-		"url": "http://www.dnd5eapi.co/api/classes/2"
 	},
-	{
-		"index": 3,
+	cleric: {
+		"key": "cleric",
 		"name": "Cleric",
     "description": "Divine magic, as the name suggests, is the power of the gods, flowing from them into the world. Clerics are conduits for that power, manifesting it as miraculous effects. The gods don\'t grant this power to everyone who seeks it, but only to those chosen to fulfill a high calling. Harnessing divine magic doesn\'t rely on study or training. A cleric might learn formulaic prayers and ancient rites, but the ability to cast cleric spells relies on devotion and an intuitive sense of a deity\'s wishes. Clerics combine the helpful magic of healing and inspiring their allies with spells that harm and hinder foes. They can provoke awe and dread, lay curses of plague or poison, and even call down flames from heaven to consume their enemies. For those evildoers who will benefit most from a mace to the head, clerics depend on their combat training to let them wade into melee with the power of the gods on their side.",
 		"hit_die": 8,
@@ -361,11 +358,9 @@ export const CLASSES = [
 				"label": "War"
 			}
 		],
-		"spellcasting": 'cleric',
-		"url": "http://www.dnd5eapi.co/api/classes/3"
 	},
-	{
-		"index": 4,
+	druid: {
+		"key": "druid",
 		"name": "Druid",
     "description": "Druids revere nature above all, gaining their spells and other magical powers either from the force of nature itself or from a nature deity. Many druids pursue a mystic spirituality of transcendent union with nature rather than devotion to a divine entity, while others serve gods of wild nature, animals, or elemental forces. The ancient druidic traditions are sometimes called the Old Faith, in contrast to the worship of gods in temples and shrines.",
 		"hit_die": 8,
@@ -489,11 +484,9 @@ export const CLASSES = [
 			{"value": "shepherd", "label": "Shepherd"},
 			{"value": "spores", "label": "Spores"},
 		],
-		"spellcasting": 'druid',
-		"url": "http://www.dnd5eapi.co/api/classes/4"
 	},
-	{
-		"index": 5,
+	fighter: {
+		"key": "fighter",
 		"name": "Fighter",
     "description": "Questing knights, conquering overlords, royal champions, elite foot soldiers, hardened mercenaries, and bandit kings—as fighters, they all share an unparalleled mastery with weapons and armor, and a thorough knowledge of the skills of combat. And they are well acquainted with death, both meting it out and staring it defiantly in the face.",
 		"hit_die": 10,
@@ -575,10 +568,9 @@ export const CLASSES = [
 			{ "value": "champion", label: "Champion"},
 			{ "value": "eldritch_knight", label: "Eldritch Knight"},
 		],
-		"url": "http://www.dnd5eapi.co/api/classes/5"
 	},
-	{
-		"index": 6,
+	monk: {
+		"key": "monk",
 		"name": "Monk",
     "description": "Monks make careful study of a magical energy that most monastic traditions call ki. Monks harness this power within themselves to create magical effects and exceed their bodies' physical capabilities, and some of their special attacks can hinder the flow of ki in their opponents.",
 		"hit_die": 8,
@@ -761,15 +753,13 @@ export const CLASSES = [
 			"class": "Monk"
 		},
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/6",
-				"name": "Open Hand"
-			}
+			{value: 'four_elements', label: 'Four elements'},
+			{value: 'open_hand', label: 'open_hand'},
+			{value: 'shadow', label: 'Shadow'},
 		],
-		"url": "http://www.dnd5eapi.co/api/classes/6"
 	},
-	{
-		"index": 7,
+	paladin: {
+		"key": "paladin",
 		"name": "Paladin",
     "description":"A paladin swears to uphold justice and righteousness, to stand with the good things of the world against the encroaching darkness, and to hunt the forces of evil wherever they lurk.",
 		"hit_die": 10,
@@ -837,11 +827,9 @@ export const CLASSES = [
 				"name": "Devotion"
 			}
 		],
-		"spellcasting": 'paladin',
-		"url": "http://www.dnd5eapi.co/api/classes/7"
 	},
-	{
-		"index": 8,
+	ranger: {
+		"key": "ranger",
 		"name": "Ranger",
     "description": "Warriors of the wilderness, rangers specialize in hunting the monsters that threaten the edges of civilization--humanoid raiders, rampaging beasts and monstrosities, terrible giants and deadly dragons. They learn to track their quarry as a predator does, moving stealthily through the wilds and hiding themselves in brush and rubble. Rangers focus their combat training on techniques that are particularly useful against their specific favored foes.",
 		"hit_die": 10,
@@ -921,11 +909,9 @@ export const CLASSES = [
 				"name": "Hunter"
 			}
 		],
-		"spellcasting": 'ranger',
-		"url": "http://www.dnd5eapi.co/api/classes/8"
 	},
-	{
-		"index": 9,
+	rogue: {
+		"key": "rogue",
 		"name": "Rogue",
     "description":"Rogues devote as much effort to mastering the use of a variety of skills as they do to perfecting their combat abilities, giving them a broad expertise that few other characters can match. Many rogues focus on stealth and deception, while others refine the skills that help them in a dungeon environment, such as climbing, finding and disarming traps, and opening locks.",
 		"hit_die": 8,
@@ -1025,10 +1011,9 @@ export const CLASSES = [
 				"name": "Thief"
 			}
 		],
-		"url": "http://www.dnd5eapi.co/api/classes/9"
 	},
-	{
-		"index": 10,
+	sorcerer: {
+		"key": "sorcerer",
 		"name": "Sorcerer",
     "description":"Magic is a part of every sorcerer, suffusing body, mind, and spirit with a latent power that waits to be tapped. Some sorcerers wield magic that springs from an ancient bloodline infused with the magic of dragons. Others carry a raw, uncontrolled magic within them, a chaotic storm that manifests in unexpected ways.",
 		"hit_die": 6,
@@ -1102,11 +1087,9 @@ export const CLASSES = [
 				"name": "Draconic"
 			}
 		],
-		"spellcasting": 'sorcerer',
-		"url": "http://www.dnd5eapi.co/api/classes/10"
 	},
-	{
-		"index": 11,
+	warlock: {
+		"key": "warlock",
 		"name": "Warlock",
     "description":"Warlocks are seekers of the knowledge that lies hidden in the fabric of the multiverse. Through pacts made with mysterious beings of supernatural power, warlocks unlock magical effects both subtle and spectacular.",
 		"hit_die": 8,
@@ -1176,11 +1159,9 @@ export const CLASSES = [
 				"name": "Fiend"
 			}
 		],
-		"spellcasting": 'warlock',
-		"url": "http://www.dnd5eapi.co/api/classes/11"
 	},
-	{
-		"index": 12,
+	wizard: {
+		"key": "wizard",
 		"name": "Wizard",
     "description":"Wizards are supreme magic-users, defined and united as a class by the spells they cast. Drawing on the subtle weave of magic that permeates the cosmos, wizards cast spells of explosive fire, arcing lightning, subtle deception, and brute-force mind control.",
 		"hit_die": 6,
@@ -1254,7 +1235,5 @@ export const CLASSES = [
 				"name": "Evocation"
 			}
 		],
-		"spellcasting": 'wizard',
-		"url": "http://www.dnd5eapi.co/api/classes/12"
 	}
-];
+};

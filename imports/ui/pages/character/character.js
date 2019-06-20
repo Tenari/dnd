@@ -1,4 +1,6 @@
-import { ABILITIES, abilityModifier } from '../../../configs/general.js';
+import { ABILITIES, abilityModifier, indexFromUrl } from '../../../configs/general.js';
+import { CLASS_FEATURES } from '/imports/configs/features.js';
+import { TRAITS } from '/imports/configs/traits.js';
 import { Items } from '/imports/api/items/items.js';
 import { Skills } from '/imports/api/skills/skills.js';
 import { Characters } from '/imports/api/characters/characters.js';
@@ -71,7 +73,7 @@ Template.character_sheet.helpers({
       return item.equipment_category == "Weapon";
     });
 
-    return _.map(items, function(weapon){
+    let result = _.map(items, function(weapon){
       let range = weapon.range.normal;
       if (weapon.range.long) {
         range += '/'+weapon.range.long;
@@ -86,5 +88,24 @@ Template.character_sheet.helpers({
         damage_type: weapon.damage.damage_type.name,
       }
     });
+    result.push({
+      name: 'Unarmed strike',
+      range: 5,
+      positive: true,
+      bonus: character.proficiencyBonus() + abilityModifier(character.str),
+      damage: 1+abilityModifier(character.str),
+      damage_type: 'Bludgeoning'
+    })
+    return result;
+  },
+  combatFeatures(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+
+    let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
+      return classFeature.class.name == character.displayClass() && classFeature.level <= character.level && classFeature.combat;
+    }), function(f) {f.source = "Class"; return f;});
+    return features;
   }
 })
