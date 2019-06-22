@@ -1,5 +1,5 @@
 export const RACES = {
-  mountain_dwarf: {
+/*  mountain_dwarf: {
     label: 'Mountain Dwarf',
     description: 'Bold and hardy, dwarves are known as skilled warriors, miners, and workers of stone and metal. Though they stand well under 5 feet tall, dwarves are so broad and compact that they can weigh as much as a human standing nearly two feet taller. Their courage and endurance are also easily a match for any of the larger folk.',
 		"alignment": "Most dwarves are lawful, believing firmly in the benefits of a well-ordered society. They tend toward good as well, with a strong sense of fair play and a belief that everyone deserves to share in the benefits of a just order.",
@@ -62,7 +62,7 @@ export const RACES = {
 		},
 		"traits": ["darkvision_dwarf", "dwarven_resilience", "stonecunning", "dwarven_toughness"],
     languages: ['common', 'dwarvish'],
-  },
+  }, */
   high_elf: {
     label: 'High Elf',
     description: 'Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world.',

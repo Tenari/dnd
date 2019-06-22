@@ -1,6 +1,7 @@
-import { ABILITIES, abilityModifier, indexFromUrl } from '../../../configs/general.js';
+import { ABILITIES, abilityModifier, indexFromUrl, ordinalSuffixOf } from '../../../configs/general.js';
 import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { TRAITS } from '/imports/configs/traits.js';
+import { SPELLS } from '/imports/configs/spells.js';
 import { Items } from '/imports/api/items/items.js';
 import { Skills } from '/imports/api/skills/skills.js';
 import { Characters } from '/imports/api/characters/characters.js';
@@ -29,6 +30,9 @@ Template.character_sheet.onCreated(function(){
   }
 })
 
+Template.characterSheet_spellRow.helpers({
+  ordinal(number){return ordinalSuffixOf(number)},
+});
 Template.character_sheet.helpers({
   mod: abilityModifier,
   characterItems: function(){
@@ -129,5 +133,33 @@ Template.character_sheet.helpers({
     })
 
     return features;
-  }
+  },
+  spellSlots() {
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+    return _.map(character.spellcasting().details_per_level[character.level].slots, function(total, level){
+      return {level: ordinalSuffixOf(level), total, remaining: total};
+    })
+  },
+  preparedSpells(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+    return _.map(character.spells.prepared, function(spell){
+      let obj = _.clone(SPELLS[spell.name]);
+      obj.spellcasting_ability = spell.spellcasting_ability;
+      return obj;
+    })
+  },
+  cantrips(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+    return _.map(character.spells.cantrips, function(spell){
+      let obj = _.clone(SPELLS[spell.name]);
+      obj.spellcasting_ability = spell.spellcasting_ability;
+      return obj;
+    })
+  },
 })

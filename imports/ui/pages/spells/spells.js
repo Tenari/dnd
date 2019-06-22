@@ -3,7 +3,7 @@ import '/imports/ui/components/spell-card/spell-card.js';
 import './spells.html';
 
 Template.spells_page.onCreated(function(){
-  this.search = new ReactiveVar(null);
+  this.search = new ReactiveVar(FlowRouter.getQueryParam('search'));
 })
 
 Template.spells_page.helpers({

@@ -41,6 +41,7 @@ Meteor.methods({
       effects: [], // {name, type, duration}
       death_save_success: [],
       death_save_fail: [],
+      spells: details.spells, //{cantrips, known, prepared}
     };
     // inputs
     _.each(['name','gender','alignment','race','klass','str','con','dex','inte','wis','cha','background'], function(key){

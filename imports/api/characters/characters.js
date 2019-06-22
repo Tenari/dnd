@@ -9,6 +9,7 @@ import { RACES } from '../../configs/races.js';
 import { PROFICIENCIES } from '../../configs/proficiencies.js';
 import { CLASSES } from '../../configs/db-classes.js';
 import { CLASS_FEATURES } from '../../configs/features.js';
+import { SPELLCASTING } from '/imports/configs/spellcasting.js';
 import { Items } from '/imports/api/items/items.js';
 
 export const Characters = new Mongo.Collection('characters');
@@ -28,6 +29,9 @@ Characters.schema = new SimpleSchema({
 })
 
 Characters.helpers({
+  spellcasting(){
+    return SPELLCASTING[this.klass];
+  },
   proficiencyBonus() {
     return PROFICIENCY_BONUS[this.level] || 0;
   },

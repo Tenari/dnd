@@ -533,6 +533,7 @@ Template.Character_create.events({
     const race = RACES[instance.race.curValue];
     const klass = CLASSES[instance.klass.curValue];
     const klassItems = STARTING_EQUIPMENT[klass.name];
+    const spellcasting = SPELLCASTING[klass.key];
 
     let details = {
       name: $('input.character-name').val(),
@@ -583,10 +584,37 @@ Template.Character_create.events({
       i += 1;
     })
     // TODO chosen spells
-      // bonus-cantrip
-      // cantrips-select
-      // spellbook-select
-      // prepared-spells-select
+    details.spells = {
+      cantrips: [],
+      prepared: [],
+      known: [],
+    }
+    // bonus-cantrip
+    if ($('select.bonus-cantrip').length > 0) {
+      details.spells.cantrips.push({name: $('select.bonus-cantrip').val(), spellcasting_ability: 'inte'})
+    }
+    // cantrips-select
+    if ($('select.cantrips-select').length > 0) {
+      _.each($('select.cantrips-select').val(), function(spellName){
+        details.spells.cantrips.push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability})
+      })
+    }
+    // spellbook-select
+    if ($('select.spellbook-select').length > 0) {
+      _.each($('select.spellbook-select').val(), function(spellName){
+        details.spells.known.push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability})
+      })
+    }
+    // prepared-spells-select
+    if ($('select.prepared-spells-select').length > 0) {
+      _.each($('select.prepared-spells-select').val(), function(spellName){
+        details.spells.prepared.push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability})
+      })
+    }
+    
+    if (spellcasting.all_prepared && details.spells.prepared.length > details.spells.known.length) {
+      details.spells.known = details.spells.prepared;
+    }
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {

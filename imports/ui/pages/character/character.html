@@ -120,6 +120,37 @@
         </div>
       </div>
     </div>
+    {{#if character.spellcasting}}
+    <div class="columns">
+      <div class="spellcasting-stats">
+        <div class="label">Slots</div>
+        {{#each slot in spellSlots}}
+          <div>{{slot.level}}: {{slot.remaining}} / {{slot.total}} <button class="use-spell-slot" data-slot="{{slot.level}}">use</button></div>
+        {{/each}}
+      </div>
+      <div class="spells">
+        <div class="label">Cantrips</div>
+        <div class="spell-row">
+          <div class="spell-name">Name</div>
+          <div class="spell-ability">Spellcasting ability</div>
+          <div class="spell-range">Range</div>
+        </div>
+        {{#each spell in cantrips}}
+          {{> characterSheet_spellRow spell=spell}}
+        {{/each}}
+        <div class="label">Prepared Spells</div>
+        <div class="spell-row">
+          <div class="spell-level">Level</div>
+          <div class="spell-name">Name</div>
+          <div class="spell-ability">Spellcasting ability</div>
+          <div class="spell-range">Range</div>
+        </div>
+        {{#each spell in preparedSpells}}
+          {{> characterSheet_spellRow spell=spell}}
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
     <div class="columns">
       <div class="ability-scores">
         {{#each abilityScore in abilityScores}}
@@ -201,5 +232,17 @@
     <div class="bonus">{{#if positive}}+{{else}}-{{/if}}{{bonus}}</div>
     <div class="damage">{{damage}}</div>
     <div class="damage-type">{{damage_type}}</div>
+  </div>
+</template>
+<template name="characterSheet_spellRow">
+  <div class="spell-row">
+    {{#if spell.level}}
+      <div class="spell-level">{{ordinal spell.level}}</div>
+    {{/if}}
+    <div class="spell-name"><a href="/spells?search={{spell.name}}" target="_blank">{{spell.name}}</a></div>
+    <div class="spell-ability">{{spell.spellcasting_ability}}</div>
+    {{#if spell.range}}
+      <div class="spell-range">{{spell.range}}</div>
+    {{/if}}
   </div>
 </template>

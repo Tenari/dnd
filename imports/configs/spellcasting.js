@@ -26,6 +26,7 @@ export const SPELLCASTING = {
       "name": "Spellcasting Focus",
       "desc": ["You can use a musical instrument (see Equipment) as a spellcasting focus for your bard spells."]
     }],
+    all_prepared: true,
     details_per_level: {
       1:  {cantrips: 2, spells: 4,  slots: {1: 2}},
       2:  {cantrips: 2, spells: 5,  slots: {1: 3}},
