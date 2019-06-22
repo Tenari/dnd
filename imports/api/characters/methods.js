@@ -30,6 +30,7 @@ Meteor.methods({
       xp: 0,
       hp: hp_max,
       hp_max: hp_max,
+      temp_hp: 0,
       hitDieType: klass.hit_die,
       hitDieRemaining: 1,
       hitDieMax: 1,
@@ -120,5 +121,23 @@ Meteor.methods({
     let stats = encounter.moveStats;
     stats.movesLeft -= 1;
     Encounters.update(encounter._id, {$set: {characterLocations: locs, moveStats: stats}});
-  }
+  },
+  'characters.useSpellSlot'(cId, slot) {
+    slot = parseInt(slot);
+    const character = Characters.findOne(cId);
+    let slots = character.usedSlots || {};
+    if (!slots[slot]) {
+      slots[slot] = 0;
+    }
+    slots[slot] += 1;
+    Characters.update(cId, {$set: {usedSlots: slots}})
+  },
+  'characters.changeHp'(cId, val) {
+    const character = Characters.findOne(cId);
+    if (character.hp >= character.hp_max && val > 0) { return false;}
+    Characters.update(cId, {$inc: {hp: val}})
+  },
+  'characters.changeTempHp'(cId, val) {
+    Characters.update(cId, {$inc: {temp_hp: val}})
+  },
 });

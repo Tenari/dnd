@@ -139,7 +139,11 @@ Template.character_sheet.helpers({
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
     return _.map(character.spellcasting().details_per_level[character.level].slots, function(total, level){
-      return {level: ordinalSuffixOf(level), total, remaining: total};
+      return {
+        level: ordinalSuffixOf(level),
+        total,
+        remaining: total - ((character.usedSlots || {})[level] || 0)
+      };
     })
   },
   preparedSpells(){
@@ -147,6 +151,16 @@ Template.character_sheet.helpers({
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
     return _.map(character.spells.prepared, function(spell){
+      let obj = _.clone(SPELLS[spell.name]);
+      obj.spellcasting_ability = spell.spellcasting_ability;
+      return obj;
+    })
+  },
+  knownSpells(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+    return _.map(character.spells.known, function(spell){
       let obj = _.clone(SPELLS[spell.name]);
       obj.spellcasting_ability = spell.spellcasting_ability;
       return obj;
@@ -162,4 +176,34 @@ Template.character_sheet.helpers({
       return obj;
     })
   },
+  notAllPrepared() {
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return false;
+    return !character.spellcasting().all_prepared;
+  },
 })
+
+Template.character_sheet.events({
+  'click button.use-spell-slot'(e, instance){
+    const slot = $(e.currentTarget).attr('data-slot');
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.useSpellSlot', character._id, slot);
+  },
+  'click .current-hp>.score>button'(e, instance){
+    let val = -1;
+    if ($(e.currentTarget).hasClass('gain-hp')) {
+      val = 1;
+    }
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.changeHp', character._id, val);
+  },
+  'click .temp-hp>.score>button'(e, instance){
+    let val = -1;
+    if ($(e.currentTarget).hasClass('gain-hp')) {
+      val = 1;
+    }
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.changeTempHp', character._id, val);
+  },
+});

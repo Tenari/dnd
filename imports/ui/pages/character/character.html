@@ -48,11 +48,11 @@
           <div class="hp">
             <div class="current-hp">
               <div class="hp-max">Hit Point Maximum: {{character.hp_max}}</div>
-              <div class="score">{{character.hp}}</div>
+              <div class="score"><button class="gain-hp">+</button>{{character.hp}}<button class="lose-hp">-</button></div>
               <div class="label">current hit points</div>
             </div>
             <div class="temp-hp">
-              <div class="score">{{character.temp_hp}}</div>
+              <div class="score"><button class="gain-hp">+</button>{{character.temp_hp}}<button class="lose-hp">-</button></div>
               <div class="label">temporary hit points</div>
             </div>
           </div>
@@ -123,6 +123,16 @@
     {{#if character.spellcasting}}
     <div class="columns">
       <div class="spellcasting-stats">
+        <div class="box-row">
+          <div class="double-border">
+            <div class="score">{{character.spellSaveDC}}</div>
+            <div class="label">Spell Save DC</div>
+          </div>
+          <div class="double-border">
+            <div class="score">{{character.spellAttackMod}}</div>
+            <div class="label">Spell attack modifier</div>
+          </div>
+        </div>
         <div class="label">Slots</div>
         {{#each slot in spellSlots}}
           <div>{{slot.level}}: {{slot.remaining}} / {{slot.total}} <button class="use-spell-slot" data-slot="{{slot.level}}">use</button></div>
@@ -214,6 +224,20 @@
         {{/each}}
         <div>Money: {{character.wealth}} gp</div>
       </div>
+      {{#if notAllPrepared}}
+        <div class="all-spells">
+          <div class="label">All Known Spells (excluding cantrips)</div>
+          <div class="spell-row">
+            <div class="spell-level">Level</div>
+            <div class="spell-name">Name</div>
+            <div class="spell-ability">Spellcasting ability</div>
+            <div class="spell-range">Range</div>
+          </div>
+          {{#each spell in knownSpells}}
+            {{> characterSheet_spellRow spell=spell}}
+          {{/each}}
+        </div>
+      {{/if}}
     </div>
   </div>
 </template>

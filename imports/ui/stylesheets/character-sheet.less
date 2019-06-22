@@ -11,6 +11,18 @@
   .columns>div {
     margin-top: 20px;
   }
+  .double-border {
+    border-style: double;
+    border-radius: 10px;
+    .score {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+  .box-row {
+    display: flex;
+    justify-content: space-between;
+  }
 
   .header-row {
     text-align:left;
@@ -59,6 +71,21 @@
       }
     }
     .hp {
+      .score {
+        display:flex;
+        justify-content: space-between;
+        button {
+          font-size: 10px;
+          height: 20px;
+          margin-top: 10px;
+          &.gain-hp {
+            background-color: green;
+          }
+          &.lose-hp {
+            background-color: red;
+          }
+        }
+      }
       .current-hp {
         background-color:white;
         border-style: double;
@@ -228,7 +255,13 @@
       width: 20%;
     }
     .spell-ability {
-      width: 10%;
+      width: 20%;
     }
+  }
+  .equipment {
+    width: 50%;
+  }
+  .all-spells {
+    width: 50%;
   }
 }

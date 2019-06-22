@@ -139,5 +139,17 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   },
   canPerformAction(key, params) {
     return this.availableActions(params)
-  }
+  },
+  spellSaveDC() {
+    const casting = this.spellcasting();
+    return 8 + this.proficiencyBonus() + abilityModifier(this[casting.spellcasting_ability]);
+  },
+  spellAttackMod() {
+    const casting = this.spellcasting();
+    const mod = this.proficiencyBonus() + abilityModifier(this[casting.spellcasting_ability]);
+    if (mod > 0) {
+      return "+"+mod;
+    }
+    return mod;
+  },
 })
