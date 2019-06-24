@@ -115,6 +115,23 @@ Template.character_sheet.helpers({
     })
     return result;
   },
+  featuresAndTraits(){
+    const instance = Template.instance();
+    const character = instance.data.character || instance.character.get();
+    if (!character) return [];
+
+    let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
+      return classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
+    }), function(f) {f.source = "Class"; return f;});
+
+    _.each(character.raceObj().traits, function(traitKey) {
+      let trait = TRAITS[traitKey];
+      trait.source = "Race";
+      features.push(trait)
+    })
+
+    return features;
+  },
   combatFeatures(){
     const instance = Template.instance();
     const character = instance.data.character || instance.character.get();
@@ -205,5 +222,17 @@ Template.character_sheet.events({
     }
     const character = instance.data.character || instance.character.get();
     Meteor.call('characters.changeTempHp', character._id, val);
+  },
+  'click .death-success,.death-fail'(e, instance) {
+    let key = 'fail';
+    if ($(e.currentTarget).hasClass('death-success')) {
+      key = 'success';
+    }
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.deathSavingThrow', character._id, key);
+  },
+  'click .reset-death-throws'(e, instance) {
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.resetDeathThrows', character._id);
   },
 });

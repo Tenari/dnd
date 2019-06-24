@@ -140,4 +140,14 @@ Meteor.methods({
   'characters.changeTempHp'(cId, val) {
     Characters.update(cId, {$inc: {temp_hp: val}})
   },
+  'characters.deathSavingThrow'(cId, key){
+    const character = Characters.findOne(cId);
+    const true_key = 'death_save_'+key;
+    let arr = character[true_key];
+    arr.push(true);
+    Characters.update(cId, {$set: {[true_key]: arr}})
+  },
+  'characters.resetDeathThrows'(cId) {
+    Characters.update(cId, {$set: {death_save_success: [], death_save_fail: []}})
+  },
 });

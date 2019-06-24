@@ -77,6 +77,9 @@
               </div>
               <div class="label">Death saves</div>
             </div>
+            <div>
+              <button class="reset-death-throws">reset</button>
+            </div>
           </div>
         </div>
       </div>
@@ -191,6 +194,14 @@
           {{/each}}
           <div class="label">skills</div>
         </div>
+      </div>
+      <div class="features-misc">
+        {{#each feature in featuresAndTraits}}
+          <div class="box-row">
+            <div class="name">{{feature.name}}</div>
+            <div class="details" title="{{feature.desc}}">{{feature.desc}}</div>
+          </div>
+        {{/each}}
       </div>
       <div class="flavor">
         <div class="flavor-box">
