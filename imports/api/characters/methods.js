@@ -8,6 +8,7 @@ import { Characters } from './characters.js';
 import { abilityModifier, calculateAC, indexFromUrl } from '/imports/configs/general.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
 import { RACES } from '/imports/configs/races.js';
+import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { PROFICIENCIES } from '/imports/configs/proficiencies.js';
 import { BACKGROUNDS } from '/imports/configs/backgrounds.js';
 import { ITEMS } from '/imports/configs/items.js';
@@ -43,10 +44,13 @@ Meteor.methods({
       death_save_success: [],
       death_save_fail: [],
       spells: details.spells, //{cantrips, known, prepared}
+      featureChoices: details.featureChoices, // {index: choice}
     };
     // inputs
-    _.each(['name','gender','alignment','race','klass','str','con','dex','inte','wis','cha','background'], function(key){
-      charObj[key] = details[key];
+    _.each(['name','gender','alignment','race','klass','str','con','dex','inte','wis','cha','background','draconicAncestry'], function(key){
+      if (details[key]) {
+        charObj[key] = details[key];
+      }
     })
     // proficiencies
     const raceProfs = race.proficiencies || [];
@@ -81,7 +85,7 @@ Meteor.methods({
     const equippedWeapon = _.find(items, function(i){return i.equipment_category == "Weapon"});
     const equippedArmor = _.find(items, function(i){return i.equipment_category == "Armor"});
     charObj.equippedItems = _.pluck(_.compact([equippedWeapon, equippedArmor]), '_id');
-    charObj.ac = calculateAC({dex: details.dex}, Items.find({_id: {$in: charObj.equippedItems}}).fetch());
+    charObj.ac = calculateAC({dex: details.dex, featureChoices: details.featureChoices, features(){return _.select(CLASS_FEATURES, function(f){return f.class.name == klass.name && f.level <= 1})}}, Items.find({_id: {$in: charObj.equippedItems}}).fetch());
 
     return Characters.insert(charObj);
   },

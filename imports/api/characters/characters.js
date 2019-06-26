@@ -128,14 +128,19 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   },
   availableActions(params) {
     let actions = [];
-    const klass = CLASSES[this.klass];
-    const level = this.level;
-    _.each(_.select(CLASS_FEATURES, function(feature){
-      return feature.class.level <= level && feature.class.name == klass.name && feature.action && feature.action.key;
+    _.each(_.select(this.features(), function(feature){
+      return feature.action && feature.action.key;
     }), function(feature){
       actions.push(feature.action.key);
     })
     return actions;
+  },
+  features(){
+    const klass = CLASSES[this.klass];
+    const level = this.level;
+    return _.select(CLASS_FEATURES, function(feature) {
+      return feature.class.level <= level && feature.class.name == klass.name;
+    })
   },
   canPerformAction(key, params) {
     return this.availableActions(params)

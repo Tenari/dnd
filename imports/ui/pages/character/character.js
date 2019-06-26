@@ -121,7 +121,14 @@ Template.character_sheet.helpers({
     if (!character) return [];
 
     let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
-      return classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
+      let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
+      if (classFeature.choice) {
+        good = false;
+      }
+      if (classFeature.needs_to_be_chosen) {
+        good = good && character.featureChoices[classFeature.needs_to_be_chosen] && _.contains(character.featureChoices[classFeature.needs_to_be_chosen], classFeature.name);
+      }
+      return good;
     }), function(f) {f.source = "Class"; return f;});
 
     _.each(character.raceObj().traits, function(traitKey) {
@@ -138,7 +145,14 @@ Template.character_sheet.helpers({
     if (!character) return [];
 
     let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
-      return classFeature.class.name == character.displayClass() && classFeature.level <= character.level && classFeature.combat;
+      let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level && classFeature.combat;
+      if (classFeature.choice) {
+        good = false;
+      }
+      if (classFeature.needs_to_be_chosen) {
+        good = good && character.featureChoices[classFeature.needs_to_be_chosen] && _.contains(character.featureChoices[classFeature.needs_to_be_chosen], classFeature.name);
+      }
+      return good;
     }), function(f) {f.source = "Class"; return f;});
 
     _.each(character.raceObj().traits, function(traitKey) {
@@ -235,4 +249,9 @@ Template.character_sheet.events({
     const character = instance.data.character || instance.character.get();
     Meteor.call('characters.resetDeathThrows', character._id);
   },
+  'click button.equip-item'(e, instance) {
+    let id = $(e.currentTarget).attr('data-item');
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('items.equip', character._id, id);
+  }
 });

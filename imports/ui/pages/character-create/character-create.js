@@ -50,7 +50,13 @@ Template.Character_create.helpers({
   canCreateCharacter(){
     const instance = Template.instance();
     const name = instance.name.get();
-    return name.length > 0 && instance.buyPoints.get() == 0 && instance.proficienciesArePicked.get();
+    let featuresPicked = true;
+    $('select.feature-select').each(function(){
+      if (!$(this).val()) {
+        featuresPicked = false;
+      }
+    })
+    return featuresPicked && name.length > 0 && instance.buyPoints.get() == 0 && instance.proficienciesArePicked.get();
   },
   choosesSpells() {
     const key = Template.instance().klass.get();
@@ -542,8 +548,12 @@ Template.Character_create.events({
       race: instance.race.curValue,
       klass: instance.klass.curValue,
       background: instance.background.curValue,
+      featureChoices: {},
     };
-    // TODO include draconic ancestry if they had that option
+    // include draconic ancestry if they had that option
+    if ($('select.draconic-ancestry').length > 0) {
+      details.draconicAncestry = $('select.draconic-ancestry').val();
+    }
     // ability scores
     _.each(_.keys(ABILITIES), function(key, index) {
       const raceBonus = race[key+'_bonus'] || 0;
@@ -583,7 +593,7 @@ Template.Character_create.events({
       }
       i += 1;
     })
-    // TODO chosen spells
+    // chosen spells
     details.spells = {
       cantrips: [],
       prepared: [],
@@ -612,9 +622,14 @@ Template.Character_create.events({
       })
     }
     
-    if (spellcasting.all_prepared && details.spells.prepared.length > details.spells.known.length) {
+    if (spellcasting && spellcasting.all_prepared && details.spells.prepared.length > details.spells.known.length) {
       details.spells.known = details.spells.prepared;
     }
+
+    $('select.feature-select').each(function(){
+      details.featureChoices[$(this).attr('name')] = $(this).val();
+    })
+    // class specific junk
 
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {

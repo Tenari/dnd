@@ -54,7 +54,27 @@ export function calculateAC(character, items) {
         dexBonus = _.min([armor.armor_class.max_bonus, dexBonus]);
       }
     }
-    return (armor && armor.armor_class.base || 0) + (shield && shield.armor_class.base || 0) + dexBonus;
+    let extraBonus = 0;
+    _.each(character.features(), function(feature){
+      if (feature.needs_to_be_chosen) {
+        if (character.featureChoices[feature.needs_to_be_chosen]) {
+          if (_.contains(character.featureChoices[feature.needs_to_be_chosen], feature.name)) {
+            if (feature.acBonus) {
+              if (feature.acBonus.condition) {
+                if (feature.acBonus.condition == 'armor' && armor) {
+                  extraBonus = feature.acBonus.amount;
+                }
+              } else {
+                extraBonus = feature.acBonus.amount;
+              }
+            }
+          }
+        }
+      } else if (feature.acBonus){
+        extraBonus = feature.acBonus.amount;
+      }
+    })
+    return (armor && armor.armor_class.base || 0) + (shield && shield.armor_class.base || 0) + dexBonus + extraBonus;
   } else {
     return 10 + abilityModifier(character.dex);
   }

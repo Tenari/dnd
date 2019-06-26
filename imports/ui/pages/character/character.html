@@ -230,6 +230,10 @@
             {{item.name}} ({{item.equipment_category}})
             {{#if item.equipped character}}
               [Equipped]
+            {{else}}
+              {{#if item.equipable}}
+                <button class="equip-item" data-item="{{item._id}}">equip</button>
+              {{/if}}
             {{/if}}
           </div>
         {{/each}}

@@ -6,6 +6,9 @@ import { abilityModifier } from '../../configs/general.js';
 export const Items = new Mongo.Collection('items');
 
 Items.helpers({
+  equipable() {
+    return _.contains(['Weapon','Armor'], this.equipment_category);
+  },
   equipped(character){
     return _.contains(character.equippedItems, this._id);
   },
@@ -57,5 +60,8 @@ Items.helpers({
     })
 
     return (profMultiplier * character.proficiencyBonus()) + this.attackAbilityModifier(character);
-  }
+  },
+  isTwoHanded(){
+    return _.pluck(this.properties, 'name').includes("Two-Handed");
+  },
 })

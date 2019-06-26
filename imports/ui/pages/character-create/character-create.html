@@ -67,7 +67,7 @@
             </div>
           </div>
           {{#if feature.choice}}
-            <div>{{> multiselect options=feature.choice.from max=feature.choice.choose name='feature-choice' className='feature-select'}}</div>
+            <div>{{> multiselect options=feature.choice.from max=feature.choice.choose name=feature.index className='feature-select'}}</div>
           {{/if}}
         {{/each}}
         {{#if subclasses}}
