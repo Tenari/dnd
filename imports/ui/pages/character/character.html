@@ -76,8 +76,6 @@
                 <div class="death-fail">{{#if character.deathSave 'fail' 2}}&#10004;{{/if}}</div>
               </div>
               <div class="label">Death saves</div>
-            </div>
-            <div>
               <button class="reset-death-throws">reset</button>
             </div>
           </div>
@@ -195,14 +193,18 @@
           <div class="label">skills</div>
         </div>
       </div>
-      <div class="features-misc">
+      <table class="features-misc">
         {{#each feature in featuresAndTraits}}
-          <div class="box-row">
-            <div class="name">{{feature.name}}</div>
-            <div class="details" title="{{feature.desc}}">{{feature.desc}}</div>
-          </div>
+          <tr>
+            <td class="name">{{feature.name}}</td>
+            {{#if feature.chooses_ancestry}}
+              <td class="details" title="{{feature.desc}}">Your ancestry is {{feature.ancestry}}</td>
+            {{else}}
+              <td class="details" title="{{feature.desc}}">{{feature.desc}}</td>
+            {{/if}}
+          </tr>
         {{/each}}
-      </div>
+      </table>
       <div class="flavor">
         <div class="flavor-box">
           <div class="text">{{character.personality_traits}}</div>

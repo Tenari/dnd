@@ -28,6 +28,11 @@ Meteor.startup(() => {
       Items.insert(item);
     })
   }
+  if (!Items.findOne({index: 11}).range.long) {
+    _.each(JSON.parse(Assets.getText('5e-SRD-Equipment.json')), function(item) {
+      Items.update({name: item.name},{$set: {range: item.range}});
+    })
+  }
 
   //load in the skills
   if (Skills.find().count() === 0) {

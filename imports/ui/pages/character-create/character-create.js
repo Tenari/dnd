@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, ALIGNMENTS, LANGUAGES, indexFromUrl } from '../../../configs/general.js';
+import { ABILITIES, attributeKeyToLabel, abilityModifier, ABILITY_SCORE_COST, ALIGNMENTS, LANGUAGES, indexFromUrl, DRACONIC_ANCESTRIES } from '../../../configs/general.js';
 import { PROFICIENCIES } from '../../../configs/proficiencies';
 import { RACES } from '../../../configs/races.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
@@ -362,18 +362,9 @@ Template.Character_create.helpers({
     }
   },
   draconicAncestries(){
-    return [
-      {label: "Black", value: 'black'},
-      {label: "Blue", value: 'blue'},
-      {label: "Brass", value: 'brass'},
-      {label: "Bronze", value: 'bronze'},
-      {label: "Copper", value: 'copper'},
-      {label: "Gold", value: 'gold'},
-      {label: "Green", value: 'green'},
-      {label: "Red", value: 'red'},
-      {label: "Silver", value: 'silver'},
-      {label: "White", value: 'white'},
-    ]
+    return _.map(DRACONIC_ANCESTRIES, function(obj, key) {
+      return {label: obj.name, value: key};
+    })
   },
 })
 

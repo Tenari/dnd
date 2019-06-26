@@ -187,3 +187,66 @@ export function ordinalSuffixOf(i) {
     }
     return i + "th";
 }
+
+export const DRACONIC_ANCESTRIES = {
+  black: {
+    key: 'black',
+    name: 'Black',
+    damage_type: 'acid',
+    breath: '5 by 30 ft. line (Dex. save)',
+  },
+  blue: {
+    key: 'blue',
+    name: 'Blue',
+    damage_type: 'lightning',
+    breath: '5 by 30 ft. line (Dex. save)',
+  },
+  brass: {
+    key: 'brass',
+    name: 'Brass',
+    damage_type: 'fire',
+    breath: '5 by 30 ft. line (Dex. save)',
+  },
+  bronze: {
+    key: 'bronze',
+    name: 'Bronze',
+    damage_type: 'lightning',
+    breath: '5 by 30 ft. line (Dex. save)',
+  },
+  copper: {
+    key: 'copper',
+    name: 'Copper',
+    damage_type: 'acid',
+    breath: '5 by 30 ft. line (Dex. save)',
+  },
+  gold: {
+    key: 'gold',
+    name: 'Gold',
+    damage_type: 'fire',
+    breath: '15 ft. cone (Dex. save)',
+  },
+  green: {
+    key: 'green',
+    name: 'Green',
+    damage_type: 'poison',
+    breath: '15 ft. cone (Dex. save)',
+  },
+  red: {
+    key: 'red',
+    name: 'Red',
+    damage_type: 'fire',
+    breath: '15 ft. cone (Dex. save)',
+  },
+  silver: {
+    key: 'silver',
+    name: 'Silver',
+    damage_type: 'cold',
+    breath: '15 ft. cone (Dex. save)',
+  },
+  white: {
+    key: 'white',
+    name: 'White',
+    damage_type: 'cold',
+    breath: '15 ft. cone (Dex. save)',
+  },
+}

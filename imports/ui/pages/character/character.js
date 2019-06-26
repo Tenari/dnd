@@ -1,4 +1,4 @@
-import { ABILITIES, abilityModifier, indexFromUrl, ordinalSuffixOf } from '../../../configs/general.js';
+import { ABILITIES, abilityModifier, indexFromUrl, ordinalSuffixOf, DRACONIC_ANCESTRIES } from '../../../configs/general.js';
 import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { TRAITS } from '/imports/configs/traits.js';
 import { SPELLS } from '/imports/configs/spells.js';
@@ -40,9 +40,18 @@ Template.character_sheet.helpers({
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
 
-    return _.map(character.items, function(item){
+    let naiveList = _.map(character.items, function(item){
       return Items.findOne(item);
     });
+    let goods = _.map(_.groupBy(naiveList, '_id'), function(list, id) {
+      let item = list[0];
+      if (list.length > 1) {
+        item.name += (' x'+list.length);
+      }
+      return item;
+    })
+    console.log(goods);
+    return goods;
   },
   character: function(){
     const instance = Template.instance();
@@ -135,6 +144,9 @@ Template.character_sheet.helpers({
     _.each(character.raceObj().traits, function(traitKey) {
       let trait = TRAITS[traitKey];
       trait.source = "Race";
+      if (trait.chooses_ancestry) {
+        trait.ancestry = character.draconicAncestry;
+      }
       features.push(trait)
     })
 
@@ -157,9 +169,15 @@ Template.character_sheet.helpers({
     }), function(f) {f.source = "Class"; return f;});
 
     _.each(character.raceObj().traits, function(traitKey) {
-      let trait = TRAITS[traitKey];
+      let trait = _.clone(TRAITS[traitKey]);
       trait.source = "Race";
       if (trait.combat) {
+        if (trait.key == 'breath_weapon') {
+          trait.desc = DRACONIC_ANCESTRIES[character.draconicAncestry].breath + ' ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type;
+        }
+        if (trait.key == 'draconic_damage_resistance') {
+          trait.desc = 'You have resistance to ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type + ' damage';
+        }
         features.push(trait)
       }
     })
