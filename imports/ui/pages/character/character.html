@@ -266,7 +266,7 @@
 </template>
 
 <template name="characterSheet_attackRow">
-  <div class="attack-row">
+  <div class="attack-row {{#if equipped}}equipped{{/if}}">
     <div class="name" title="{{name}}">{{name}}</div>
     <div class="range">{{range}}ft</div>
     <div class="bonus">{{#if positive}}+{{else}}-{{/if}}{{bonus}}</div>

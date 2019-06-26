@@ -13,7 +13,7 @@ Meteor.methods({
     let equippedItems = Items.find({_id: {$in: character.equippedItems}}).fetch();
     let newEquippedList;
     if (itemObj.equipment_category == 'Weapon' && itemObj.isTwoHanded()) {
-      newEquippedList = createNewEquippedList(equippedItems, character);
+      newEquippedList = createNewEquippedList(equippedItems, character, item);
       Characters.update(cid, {$set: {equippedItems: newEquippedList}});
     } else {
       let handsUsed = 0;
@@ -32,7 +32,7 @@ Meteor.methods({
       if (handsUsed < 2) {
         Characters.update(cid, {$push: {equippedItems: item}});
       } else {
-        newEquippedList = createNewEquippedList(equippedItems, character);
+        newEquippedList = createNewEquippedList(equippedItems, character, item);
         Characters.update(cid, {$set: {equippedItems: newEquippedList}});
       }
     }
@@ -46,7 +46,7 @@ Meteor.methods({
   },
 });
 
-function createNewEquippedList(equippedItems, character) {
+function createNewEquippedList(equippedItems, character, item) {
   let itemsToRemove = _.pluck(_.select(equippedItems, function(i) {
     return i.armor_category == "Shield" || i.equipment_category == 'Weapon';
   }), '_id');

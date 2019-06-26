@@ -90,6 +90,7 @@ Template.character_sheet.helpers({
         bonus: bonus,
         damage: weapon.damage.dice_count+'d'+weapon.damage.dice_value,
         damage_type: weapon.damage.damage_type.name,
+        equipped: weapon.equipped(character),
       }
     });
     result.push({
