@@ -124,6 +124,21 @@
     }
     .hit-dice-and-death-saves {
       display: flex;
+      .score {
+        display:flex;
+        justify-content: space-between;
+        button {
+          font-size: 10px;
+          height: 20px;
+          margin-top: 10px;
+          &.gain-hp {
+            background-color: green;
+          }
+          &.lose-hp {
+            background-color: red;
+          }
+        }
+      }
       .hit-dice, .death-saves {
         border-style: double;
         border-radius: 10px;

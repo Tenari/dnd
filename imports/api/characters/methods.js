@@ -136,6 +136,13 @@ Meteor.methods({
     slots[slot] += 1;
     Characters.update(cId, {$set: {usedSlots: slots}})
   },
+  'characters.resetSpellSlot'(cId, slot) {
+    slot = parseInt(slot);
+    const character = Characters.findOne(cId);
+    let slots = character.usedSlots || {};
+    slots[slot] = 0;
+    Characters.update(cId, {$set: {usedSlots: slots}})
+  },
   'characters.changeHp'(cId, val) {
     const character = Characters.findOne(cId);
     if (character.hp >= character.hp_max && val > 0) { return false;}
@@ -143,6 +150,11 @@ Meteor.methods({
   },
   'characters.changeTempHp'(cId, val) {
     Characters.update(cId, {$inc: {temp_hp: val}})
+  },
+  'characters.changeHitDice'(cId, val) {
+    const character = Characters.findOne(cId);
+    if (character.hitDieRemaining >= character.hitDieMax && val > 0) { return false;}
+    Characters.update(cId, {$inc: {hitDieRemaining: val}})
   },
   'characters.deathSavingThrow'(cId, key){
     const character = Characters.findOne(cId);

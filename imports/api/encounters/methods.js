@@ -150,6 +150,7 @@ Meteor.methods({
          add character [_id] [x] [y]
          remove [thing] [x] [y]
          set mode [modename]
+         awardxp [amount]
     */
     if (tokens[0] == 'add') {
       if (tokens[1] == 'wall' && tokens[2] && tokens[3]) {
@@ -259,6 +260,16 @@ Meteor.methods({
       let otherLocations = _.reject(encounter.characterLocations, function(loc){return loc.characterId == currentLocation.characterId});
       otherLocations.push(currentLocation);
       Encounters.update(eid, {$set: {characterLocations: otherLocations}});
+    } else if (tokens[0] == 'awardxp') {
+      let charIds = _.chain(encounter.characterLocations)
+          .map(function(loc){ return Characters.findOne(loc.characterId)})
+          .select(function(character) {return character;})
+          .pluck('_id').value();
+      console.log(charIds);
+      Characters.update({_id: {$in: charIds}}, {$inc: {xp: parseInt(tokens[1])}});
+    } else if (tokens[0] == 'awardmoney') {
+      // awardmoney _id amount
+      Characters.update({_id: tokens[1]}, {$inc: {wealth: parseInt(tokens[2])}});
     }
   },
   'encounters.endTurn': endTurn,

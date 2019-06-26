@@ -240,6 +240,11 @@ Template.character_sheet.events({
     const character = instance.data.character || instance.character.get();
     Meteor.call('characters.useSpellSlot', character._id, slot);
   },
+  'click button.reset-spell-slot'(e, instance){
+    const slot = $(e.currentTarget).attr('data-slot');
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.resetSpellSlot', character._id, slot);
+  },
   'click .current-hp>.score>button'(e, instance){
     let val = -1;
     if ($(e.currentTarget).hasClass('gain-hp')) {
@@ -255,6 +260,14 @@ Template.character_sheet.events({
     }
     const character = instance.data.character || instance.character.get();
     Meteor.call('characters.changeTempHp', character._id, val);
+  },
+  'click .hit-dice>.score>button'(e, instance){
+    let val = -1;
+    if ($(e.currentTarget).hasClass('gain-hp')) {
+      val = 1;
+    }
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('characters.changeHitDice', character._id, val);
   },
   'click .death-success,.death-fail'(e, instance) {
     let key = 'fail';

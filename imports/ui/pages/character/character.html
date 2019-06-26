@@ -59,7 +59,7 @@
           <div class="hit-dice-and-death-saves">
             <div class="hit-dice">
               <div class="hit-dice-total">Total: {{character.hitDieMax}}d{{character.hitDieType}}</div>
-              <div class="score">{{character.hitDieRemaining}}</div>
+              <div class="score"><button class="gain-hp">+</button>{{character.hitDieRemaining}}<button class="lose-hp">-</button></div>
               <div class="label">hit dice</div>
             </div>
             <div class="death-saves">
@@ -136,7 +136,11 @@
         </div>
         <div class="label">Slots</div>
         {{#each slot in spellSlots}}
-          <div>{{slot.level}}: {{slot.remaining}} / {{slot.total}} <button class="use-spell-slot" data-slot="{{slot.level}}">use</button></div>
+          <div>
+            {{slot.level}}: {{slot.remaining}} / {{slot.total}}
+            <button class="use-spell-slot" data-slot="{{slot.level}}">use</button>
+            <button class="reset-spell-slot" data-slot="{{slot.level}}">reset</button>
+          </div>
         {{/each}}
       </div>
       <div class="spells">
