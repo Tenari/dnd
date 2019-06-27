@@ -110,8 +110,9 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   },
   savingThrowBonus(key) {
     let bonus = abilityModifier(this[key]);
-    if (this.proficiencies[key+"_saving_throw"]) {
-      bonus += (this.proficiencies[key+"_saving_throw"] * this.proficiencyBonus());
+    let name = "Saving Throw: "+(key == 'inte' ? "INT" : key.toUpperCase());
+    if (this.proficientInSkill(name)) {
+      bonus += (this.proficiencyInSkill(name) * this.proficiencyBonus());
     }
     return bonus;
   },

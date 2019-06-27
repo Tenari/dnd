@@ -5,6 +5,8 @@ import { Games } from '../../api/games/games.js';
 import { MonsterTemplates } from '../../api/monsterTemplates/monsterTemplates.js';
 import { Items } from '../../api/items/items.js';
 import { Skills } from '../../api/skills/skills.js';
+import { Characters } from '/imports/api/characters/characters.js';
+import { PROFICIENCIES } from '/imports/configs/proficiencies.js';
 
 Meteor.startup(() => {
   // if the Games collection is empty
@@ -44,4 +46,15 @@ Meteor.startup(() => {
       Skills.insert(skill);
     })
   }
+
+  Characters.find({}).fetch().forEach(function(character){
+    let profs = character.proficiencies;
+    _.each(character.classObj().saving_throws, function(st){
+      let prof = _.find(PROFICIENCIES, function(obj){
+        return obj.name == "Saving Throw: "+st.name;
+      })
+      profs[prof.index] = 1;
+    })
+    Characters.update(character._id, {$set: {proficiencies: profs}});
+  })
 });

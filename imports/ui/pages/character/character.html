@@ -182,12 +182,12 @@
           <div class="label">Proficiency bonus</div>
         </div>
         <div class="saving-throws">
-          <div class="saving-throw-row">{{#if character.proficiencies "99"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 100}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 101}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 102}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 103}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
-          <div class="saving-throw-row">{{#if character.proficiencies 104}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: STR"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'str'}} Strength</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: DEX"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'dex'}} Dexterity</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: CON"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'con'}} Constitution</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: INT"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'inte'}} Intelligence</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: WIS"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'wis'}} Wisdom</div>
+          <div class="saving-throw-row">{{#if character.proficientInSkill "Saving Throw: CHA"}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.displaySavingThrowBonus 'cha'}} Charisma</div>
           <div class="label">saving throws</div>
         </div>
         <div class="skill-list">
