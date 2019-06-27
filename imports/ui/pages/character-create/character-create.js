@@ -344,9 +344,7 @@ Template.Character_create.helpers({
     }).join(", ");
   },
   subclassSpells() {
-    console.log(Template.instance().subclass.get());
     const subclass = SUBCLASSES[Template.instance().subclass.get()];
-    console.log(subclass);
     return subclass && subclass.spells && subclass.spells[1];
   },
   bonusCantripList() {
@@ -390,6 +388,14 @@ function computeProficiencies(instance) {
       profs.push(parseInt(index));
     })
   })
+  if (klass.chooses_subclass_at_level == 1) {
+    const subclass = SUBCLASSES[Template.instance().subclass.get()];
+    if (subclass.proficiencies) {
+      _.each(subclass.proficiencies, function(p){
+        profs.push(parseInt(indexFromUrl(p)));
+      })
+    }
+  }
   return _.uniq(profs);
 }
 function updateProficienciesAndLanguages(instance) {
@@ -531,6 +537,7 @@ Template.Character_create.events({
     const klass = CLASSES[instance.klass.curValue];
     const klassItems = STARTING_EQUIPMENT[klass.name];
     const spellcasting = SPELLCASTING[klass.key];
+    const subclass = SUBCLASSES[Template.instance().subclass.get()];
 
     let details = {
       name: $('input.character-name').val(),
@@ -541,6 +548,9 @@ Template.Character_create.events({
       background: instance.background.curValue,
       featureChoices: {},
     };
+    if (subclass) {
+      details.subclass = subclass.key;
+    }
     // include draconic ancestry if they had that option
     if ($('select.draconic-ancestry').length > 0) {
       details.draconicAncestry = $('select.draconic-ancestry').val();
@@ -610,6 +620,12 @@ Template.Character_create.events({
     if ($('select.prepared-spells-select').length > 0) {
       _.each($('select.prepared-spells-select').val(), function(spellName){
         details.spells.prepared.push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability})
+      })
+    }
+
+    if (spellcasting && subclass && subclass.spells) {
+      subclass.spells[1].forEach(function(name){
+        details.spells.prepared.push({name: name, spellcasting_ability: spellcasting.spellcasting_ability})
       })
     }
     

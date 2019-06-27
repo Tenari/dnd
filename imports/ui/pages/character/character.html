@@ -260,6 +260,9 @@
         </div>
       {{/if}}
     </div>
+    <div>
+      Proficiencies: {{character.allProficienciesList}}
+    </div>
   </div>
 </template>
 
@@ -275,7 +278,7 @@
   <div class="attack-row {{#if equipped}}equipped{{/if}}">
     <div class="name" title="{{name}}">{{name}}</div>
     <div class="range">{{range}}ft</div>
-    <div class="bonus">{{#if positive}}+{{else}}-{{/if}}{{bonus}}</div>
+    <div class="bonus">{{#if positive}}+{{else}}{{/if}}{{bonus}}</div>
     <div class="damage">{{damage}}</div>
     <div class="damage-type">{{damage_type}}</div>
   </div>

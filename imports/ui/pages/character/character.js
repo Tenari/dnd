@@ -132,6 +132,9 @@ Template.character_sheet.helpers({
 
     let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
       let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
+      if (classFeature.subclass && classFeature.subclass.key) {
+        good = good && classFeature.subclass.key == character.subclass;
+      }
       if (classFeature.choice) {
         good = false;
       }

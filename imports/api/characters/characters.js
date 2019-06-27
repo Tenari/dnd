@@ -29,6 +29,11 @@ Characters.schema = new SimpleSchema({
 })
 
 Characters.helpers({
+  allProficienciesList(){
+    return _.map(this.proficiencies, function(val, index){
+      return PROFICIENCIES[index].name;
+    }).join(', ');
+  },
   spellcasting(){
     return SPELLCASTING[this.klass];
   },

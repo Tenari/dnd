@@ -2,6 +2,7 @@
 
 import { Mongo } from 'meteor/mongo';
 import { abilityModifier } from '../../configs/general.js';
+import { PROFICIENCIES } from '/imports/configs/proficiencies.js';
 
 export const Items = new Mongo.Collection('items');
 
@@ -49,10 +50,18 @@ Items.helpers({
   attackBonus(character) {
     let possibleProfs = [this.name.toLowerCase()];
     if (this.weapon_category == "Simple") {
-      possibleProfs.push('simple_weapon');
+      possibleProfs.push(19);
     } else if (this.weapon_category == "Martial") {
-      possibleProfs.push('martial_weapon');
+      possibleProfs.push(20);
     }
+
+    console.log(this);
+    const weaponName = this.name;
+    _.each(PROFICIENCIES, function(prof, index) {
+      if (prof.name == weaponName + "s") {
+        possibleProfs.push(index);
+      }
+    })
     let profMultiplier = 0;
     _.each(possibleProfs, function(prof){
       if (character.proficiencies[prof] > profMultiplier)

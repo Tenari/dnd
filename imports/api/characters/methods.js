@@ -11,7 +11,7 @@ import { RACES } from '/imports/configs/races.js';
 import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { PROFICIENCIES } from '/imports/configs/proficiencies.js';
 import { BACKGROUNDS } from '/imports/configs/backgrounds.js';
-import { ITEMS } from '/imports/configs/items.js';
+import { TRAITS } from '/imports/configs/traits.js';
 import { STARTING_EQUIPMENT } from '/imports/configs/starting-equipment.js';
 
 Meteor.methods({
@@ -23,7 +23,14 @@ Meteor.methods({
     const klass = CLASSES[details.klass];
     const bg = BACKGROUNDS[details.background];
 
-    const hp_max = klass.hit_die + abilityModifier(details.con);
+    let hp_max_bonus = 0;
+    _.each(race.traits, function(traitKey) {
+      const trait = TRAITS[traitKey];
+      if (trait.hp_max_bonus_per_level) {
+        hp_max_bonus += trait.hp_max_bonus_per_level;
+      }
+    })
+    const hp_max = klass.hit_die + abilityModifier(details.con) + hp_max_bonus;
     var charObj = {
       gameId,
       userId,
@@ -45,6 +52,7 @@ Meteor.methods({
       death_save_fail: [],
       spells: details.spells, //{cantrips, known, prepared}
       featureChoices: details.featureChoices, // {index: choice}
+      subclass: details.subclass,
     };
     // inputs
     _.each(['name','gender','alignment','race','klass','str','con','dex','inte','wis','cha','background','draconicAncestry'], function(key){

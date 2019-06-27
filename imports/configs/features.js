@@ -1401,8 +1401,9 @@ export const CLASS_FEATURES = [
     "name": "Disciple of Life",
     "level": 1,
     "desc": [
-      "Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell’s level."
+      "Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell’s level."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/75"
   },
   {

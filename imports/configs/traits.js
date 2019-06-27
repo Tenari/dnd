@@ -19,6 +19,7 @@ export const TRAITS = {
     key: "dwarven_toughness",
     "name": "Dwarven Toughness",
     desc: "Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.",
+    hp_max_bonus_per_level: 1,
   },
   darkvision_elf: {
     key: "darkvision_elf",
