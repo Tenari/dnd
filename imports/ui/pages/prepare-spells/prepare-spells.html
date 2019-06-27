@@ -1,0 +1,5 @@
+<template name="character_prepare_spells">
+  <div>Choose {{spellCount}} Spells to prepare</div>
+  <div>{{> multiselect options=spellbookList max=spellCount name='prepared-spells' className='prepared-spells-select'}}</div>
+  <button>Looks good</button>
+</template>

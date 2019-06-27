@@ -9,6 +9,7 @@ import '../../ui/pages/monsters/monsters.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
+import '../../ui/pages/prepare-spells/prepare-spells.js';
 import '../../ui/pages/encounter/encounter.js';
 import '../../ui/pages/dm/dm.js';
 import '../../ui/pages/character/character.js';
@@ -56,6 +57,12 @@ FlowRouter.route('/game/:_id/character/:cid', {
   name: 'Character.details',
   action() {
     BlazeLayout.render('App_body', { main: 'character_sheet' });
+  },
+});
+FlowRouter.route('/game/:_id/character/:cid/prepare-spells', {
+  name: 'Character.prepare-spells',
+  action() {
+    BlazeLayout.render('App_body', { main: 'character_prepare_spells' });
   },
 });
 FlowRouter.route('/game/:_id/dm-play', {

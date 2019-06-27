@@ -166,4 +166,9 @@ Meteor.methods({
   'characters.resetDeathThrows'(cId) {
     Characters.update(cId, {$set: {death_save_success: [], death_save_fail: []}})
   },
+  'characters.setPreparedSpells'(cId, spells) {
+    const character = Characters.findOne(cId);
+    let list = _.select(character.spells.known, function(s){return spells.includes(s.name);})
+    Characters.update(cId, {$set: {"spells.prepared": list}})
+  }
 });

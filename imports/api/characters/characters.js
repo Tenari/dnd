@@ -4,7 +4,7 @@
 
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { roll, abilityModifier, ALIGNMENTS, PROFICIENCY_BONUS } from '../../configs/general.js';
+import { roll, abilityModifier, ALIGNMENTS, PROFICIENCY_BONUS, LEVELS } from '/imports/configs/general.js';
 import { RACES } from '../../configs/races.js';
 import { PROFICIENCIES } from '../../configs/proficiencies.js';
 import { CLASSES } from '../../configs/db-classes.js';
@@ -156,5 +156,8 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
       return "+"+mod;
     }
     return mod;
+  },
+  needsToLevelUp(){
+    return LEVELS[this.level] <= this.xp;
   },
 })
