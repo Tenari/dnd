@@ -192,7 +192,7 @@
         </div>
         <div class="skill-list">
           {{#each skill in skills}}
-            <div class="skill-row">{{#if character.proficientInSkill skill.name}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill.key}} {{skill.name}} ({{skill.ability_score.name}})</div>
+            <div class="skill-row">{{#if character.proficientInSkill skill.name}}&#10004;{{else}}&nbsp;&nbsp;&nbsp;{{/if}} {{character.skillMod skill}} {{skill.name}} ({{skill.ability_score.name}})</div>
           {{/each}}
           <div class="label">skills</div>
         </div>

@@ -123,6 +123,18 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
     const prof = _.find(_.values(PROFICIENCIES), function(prof){return prof.name.match(skill);});
     return !!this.proficiencies[prof && prof.index];
   },
+  proficiencyInSkill(skill) {
+    const prof = _.find(_.values(PROFICIENCIES), function(prof){return prof.name.match(skill);});
+    return this.proficiencies[prof && prof.index];
+  },
+  skillMod(skill){
+    let mod = abilityModifier(this[skill.ability_score.key]);
+    if (this.proficientInSkill(skill.name)) {
+      mod += this.proficiencyInSkill(skill.name) * this.proficiencyBonus();
+    }
+    if (mod >= 0) mod = "+"+mod;
+    return mod;
+  },
   deathSave(direction, index) {
     return (this['death_save_'+direction] || [])[index];
   },
