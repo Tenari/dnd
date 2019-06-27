@@ -1,5 +1,5 @@
 export const CLASSES = {
-/*  barbarian: {
+  barbarian: {
 		key: 'barbarian',
 		"name": "Barbarian",
     "description": "Barbarians come alive in the chaos of combat. They can enter a berserk state where rage takes over, giving them superhuman strength and resilience. A barbarian can draw on this reservoir of fury only a few times without resting, but those few rages are usually sufficient to defeat whatever threats arise.",
@@ -81,7 +81,7 @@ export const CLASSES = {
 			{"value": "totem_warrior", "label": "Totem Warrior"},
 			{"value": "zealot", "label": "Zealot"},
 		],
-	},*/
+	},
 	bard: {
 		key: 'bard',
 		"name": "Bard",
