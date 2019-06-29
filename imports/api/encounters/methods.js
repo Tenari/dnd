@@ -266,7 +266,7 @@ Meteor.methods({
           .select(function(character) {return character;})
           .pluck('_id').value();
       console.log(charIds);
-      Characters.update({_id: {$in: charIds}}, {$inc: {xp: parseInt(tokens[1])}});
+      Characters.update({_id: {$in: charIds}}, {$inc: {xp: parseInt(tokens[1])}}, {multi: true});
     } else if (tokens[0] == 'awardmoney') {
       // awardmoney _id amount
       Characters.update({_id: tokens[1]}, {$inc: {wealth: parseInt(tokens[2])}});
