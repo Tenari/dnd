@@ -13,6 +13,7 @@ import '../../ui/pages/prepare-spells/prepare-spells.js';
 import '../../ui/pages/encounter/encounter.js';
 import '../../ui/pages/dm/dm.js';
 import '../../ui/pages/character/character.js';
+import '../../ui/pages/level/level.js';
 import '../../ui/pages/play/play.js';
 import '../../ui/pages/not-found/not-found.js';
 
@@ -81,6 +82,12 @@ FlowRouter.route('/game/:_id/encounter/:eid', {
   name: 'Game.encounter',
   action() {
     BlazeLayout.render('App_body', { main: 'Encounter' });
+  },
+});
+FlowRouter.route('/game/:_id/level/:cid', {
+  name: 'Character.level',
+  action() {
+    BlazeLayout.render('App_body', { main: 'level_up' });
   },
 });
 

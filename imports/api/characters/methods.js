@@ -178,5 +178,35 @@ Meteor.methods({
     const character = Characters.findOne(cId);
     let list = _.select(character.spells.known, function(s){return spells.includes(s.name);})
     Characters.update(cId, {$set: {"spells.prepared": list}})
+  },
+  'characters.levelUp'(cId, choices){
+    let character = Characters.findOne(cId);
+    if (character.needsToLevelUp()) {
+      character.level += 1;
+
+      character.hitDieMax += 1;
+      character.hitDieRemaining += 1;
+
+      const hpBuff = _.max([(character.hitDieType / 2 + 1) + abilityModifier(character.con), 1])
+      character.hp_max += hpBuff;
+      const hpBonusTrait = _.find(character.traits(), function(trait){return trait.hp_max_bonus_per_level;});
+      if (hpBonusTrait) {
+        character.hp_max += hpBonusTrait.hp_max_bonus_per_level;
+      }
+
+      character.hp = character.hp_max;
+
+      if (choices.newSpells) {
+        choices.newSpells.forEach(function(newSpell){
+          character.spells.known.push(newSpell)
+        })
+        if (character.spellcasting().all_prepared) {
+          choices.newSpells.forEach(function(newSpell){
+            character.spells.prepared.push(newSpell)
+          })
+        }
+      }
+      Characters.update(cId, character);
+    }
   }
 });

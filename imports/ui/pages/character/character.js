@@ -23,7 +23,12 @@ Template.character_sheet.onCreated(function(){
         }
         characters = this.subscribe('game.characters', this.gameId);
         if (characters.ready()) {
-          this.character.set(Characters.findOne(FlowRouter.getParam('cid')));
+          let character = Characters.findOne(FlowRouter.getParam('cid'));
+          if (character.needsToLevelUp()) {
+            FlowRouter.go('/game/'+this.gameId+'/level/'+character._id);
+          } else {
+            this.character.set(character);
+          }
         }
       }
     })
@@ -50,7 +55,6 @@ Template.character_sheet.helpers({
       }
       return item;
     })
-    console.log(goods);
     return goods;
   },
   character: function(){
@@ -213,11 +217,7 @@ Template.character_sheet.helpers({
     const instance = Template.instance();
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
-    return _.map(character.spells.known, function(spell){
-      let obj = _.clone(SPELLS[spell.name]);
-      obj.spellcasting_ability = spell.spellcasting_ability;
-      return obj;
-    })
+    return character.spellsKnown();
   },
   cantrips(){
     const instance = Template.instance();

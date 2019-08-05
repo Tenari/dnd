@@ -1,0 +1,27 @@
+<template name="level_up">
+  <h1>Level up!</h1>
+  <p>congrats</p>
+  <ul>
+    <u>New stuff</u>
+    {{#each feature in newFeatures}}
+      <li>
+        <strong>{{feature.name}}</strong>
+        {{#each line in feature.desc}}
+          <div>{{line}}</div>
+        {{/each}}
+      </li>
+    {{/each}}
+    <li>Hit point maximum will increase by {{hpMaxIncrease}}</li>
+  </ul>
+  {{#if spellcasting}}
+    <div>
+      {{#if choosesNewSpells}}
+        <div>
+          Choose {{newSpellCount}} new spell(s) of up to level {{newSpellLevel}} to learn
+          {{> multiselect options=spellOptions max=newSpellCount name='new-spells' className='new-spells-select'}}
+        </div>
+      {{/if}}
+    </div>
+  {{/if}}
+  <button class="level-up">Level up</button>
+</template>

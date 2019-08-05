@@ -6,10 +6,12 @@ import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { roll, abilityModifier, ALIGNMENTS, PROFICIENCY_BONUS, LEVELS } from '/imports/configs/general.js';
 import { RACES } from '../../configs/races.js';
+import { TRAITS } from '../../configs/traits.js';
 import { PROFICIENCIES } from '../../configs/proficiencies.js';
 import { CLASSES } from '../../configs/db-classes.js';
 import { CLASS_FEATURES } from '../../configs/features.js';
 import { SPELLCASTING } from '/imports/configs/spellcasting.js';
+import { SPELLS } from '/imports/configs/spells.js';
 import { Items } from '/imports/api/items/items.js';
 
 export const Characters = new Mongo.Collection('characters');
@@ -29,6 +31,18 @@ Characters.schema = new SimpleSchema({
 })
 
 Characters.helpers({
+  traits(){
+    return _.map(RACES[this.race].traits, function(key) {
+      return TRAITS[key];
+    })
+  },
+  spellsKnown(){
+    return _.map(this.spells.known, function(spell){
+      let obj = _.clone(SPELLS[spell.name]);
+      obj.spellcasting_ability = spell.spellcasting_ability;
+      return obj;
+    });
+  },
   allProficienciesList(){
     return _.map(this.proficiencies, function(val, index){
       return PROFICIENCIES[index].name;
