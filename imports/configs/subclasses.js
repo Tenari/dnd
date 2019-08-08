@@ -35,26 +35,11 @@ export const SUBCLASSES = {
       {name: "Heavy armor", "url": "http://www.dnd5eapi.co/api/proficiencies/3"}
     ],
     spells: {
-      1: [
-        "Bless",
-        "Cure Wounds",
-      ],
-      3: [
-        "Lesser Restoration",
-        "Spiritual Weapon",
-      ],
-      5: [
-        "Beacon of Hope",
-        "Revivify",
-      ],
-      7: [
-        "Guardian of Faith",
-        "Death Ward",
-      ],
-      9: [
-        "Mass Cure Wounds",
-        "Raise Dead",
-      ],
+      1: ["Bless", "Cure Wounds"],
+      3: ["Lesser Restoration", "Spiritual Weapon"],
+      5: ["Beacon of Hope", "Revivify"],
+      7: ["Guardian of Faith", "Death Ward"],
+      9: ["Mass Cure Wounds", "Raise Dead"],
     }
   },
   cleric_light: {

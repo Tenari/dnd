@@ -208,14 +208,18 @@ Meteor.methods({
         }
       }
 
+      // assign the subclass if it was chosen
       if (choices.subclass && SUBCLASSES[choices.subclass]){
         character.subclass = choices.subclass;
-        if (SUBCLASSES[choices.subclass].cantrips && SUBCLASSES[choices.subclass].cantrips[character.level]) {
-          SUBCLASSES[choices.subclass].cantrips[character.level].forEach(function(spellName){
-            character.spells.cantrips.push({name: spellName, spellcasting_ability: character.spellcasting().spellcasting_ability});
+      }
+      // assign the subclass cantrips/spells if there are any for this level
+      _.each({cantrips: 'cantrips', spells: 'known'}, function(characterKey, subclassKey){
+        if (SUBCLASSES[character.subclass][subclassKey] && SUBCLASSES[character.subclass][subclassKey][character.level]) {
+          SUBCLASSES[character.subclass][subclassKey][character.level].forEach(function(spellName){
+            character.spells[characterKey].push({name: spellName, spellcasting_ability: character.spellcasting().spellcasting_ability});
           })
         }
-      }
+      })
 
       Characters.update(cId, character);
     }

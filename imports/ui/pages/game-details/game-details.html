@@ -16,7 +16,7 @@
     <ul>
       {{#each characters}}
         {{#if userId}}
-          <li><a href="/game/{{gameId}}/character/{{_id}}">{{name}}</a>, Race: {{displayRace}}, Class: {{displayClass}}</li>
+          <li><a href="/game/{{gameId}}/character/{{_id}}">{{name}}</a>, Race: {{displayRace}}, Class: {{displayClass}}, level {{level}}</li>
         {{/if}}
       {{/each}}
     </ul>
