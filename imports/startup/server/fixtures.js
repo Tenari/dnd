@@ -59,15 +59,5 @@ Meteor.startup(() => {
       profs[prof.index] = 1;
     })
     Characters.update(character._id, {$set: {proficiencies: profs}});
-    // TODO fix clerics when they are created not after the fact
-    if (character.klass == 'cleric') {
-      const className = character.classObj().name;
-      let known = _.map(_.select(SPELLS, function(spell){
-        return spell.level != 0 && spell.level <= character.level && _.pluck(spell.classes, 'name').includes(className);
-      }), function(spell){
-        return {name: spell.name, spellcasting_ability: 'wis'};
-      });
-      Characters.update(character._id, {$set: {"spells.known": known}});
-    }
   })
 });

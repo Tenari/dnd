@@ -192,4 +192,11 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
   needsToLevelUp(){
     return LEVELS[this.level] <= this.xp;
   },
+  prepareableSpellCount(overrideLevel){
+    const sp = this.spellcasting();
+    if(!sp) return false;
+    const level = overrideLevel || this.level;
+    // it is either hardcoded or its level+mod(spellcasting_ability)
+    return sp.details_per_level[level].spells || (level + abilityModifier(this[sp.spellcasting_ability]));
+  },
 })

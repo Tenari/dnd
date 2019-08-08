@@ -74,6 +74,7 @@ export const SPELLCASTING = {
       "name": "Spellcasting Focus",
       "desc": ["You can use a holy symbol (see Equipment) as a spellcasting focus for your cleric spells."]
     }],
+    all_known: true, // true when the class does not need to learn spells, but is only limited by the highest slot level they have spells for. their list is determined by their class, period.
     details_per_level: {
       1:  {cantrips: 3, slots: {1: 2}},
       2:  {cantrips: 3, slots: {1: 3}},

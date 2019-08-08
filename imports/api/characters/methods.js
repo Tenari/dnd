@@ -6,6 +6,7 @@ import { Encounters } from '../encounters/encounters.js';
 import { Items } from '../items/items.js';
 import { Characters } from './characters.js';
 import { abilityModifier, calculateAC, indexFromUrl } from '/imports/configs/general.js';
+import { SPELLS } from '/imports/configs/spells.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
 import { SUBCLASSES } from '/imports/configs/subclasses.js';
 import { RACES } from '/imports/configs/races.js';
@@ -95,6 +96,15 @@ Meteor.methods({
     const equippedArmor = _.find(items, function(i){return i.equipment_category == "Armor"});
     charObj.equippedItems = _.pluck(_.compact([equippedWeapon, equippedArmor]), '_id');
     charObj.ac = calculateAC({dex: details.dex, featureChoices: details.featureChoices, features(){return _.select(CLASS_FEATURES, function(f){return f.class.name == klass.name && f.level <= 1})}}, Items.find({_id: {$in: charObj.equippedItems}}).fetch());
+
+    // fix cleric spells
+    if (charObj.klass == 'cleric') {
+      charObj.spells.known = _.map(_.select(SPELLS, function(spell){
+        return spell.level != 0 && spell.level <= 1 && _.pluck(spell.classes, 'name').includes(klass.name);
+      }), function(spell){
+        return {name: spell.name, spellcasting_ability: 'wis'};
+      });
+    }
 
     return Characters.insert(charObj);
   },
@@ -197,11 +207,12 @@ Meteor.methods({
 
       character.hp = character.hp_max;
 
-      if (choices.newSpells) {
+      const spellcasting = character.spellcasting();
+      if (spellcasting && choices.newSpells) {
         choices.newSpells.forEach(function(newSpell){
           character.spells.known.push(newSpell)
         })
-        if (character.spellcasting().all_prepared) {
+        if (spellcasting.all_prepared) {
           choices.newSpells.forEach(function(newSpell){
             character.spells.prepared.push(newSpell)
           })
@@ -216,10 +227,22 @@ Meteor.methods({
       _.each({cantrips: 'cantrips', spells: 'known'}, function(characterKey, subclassKey){
         if (character.subclass && SUBCLASSES[character.subclass][subclassKey] && SUBCLASSES[character.subclass][subclassKey][character.level]) {
           SUBCLASSES[character.subclass][subclassKey][character.level].forEach(function(spellName){
-            character.spells[characterKey].push({name: spellName, spellcasting_ability: character.spellcasting().spellcasting_ability});
+            character.spells[characterKey].push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability});
           })
         }
       })
+
+      // if their class knows all its spells automatically, update their list to include
+      if (spellcasting && spellcasting.all_known) {
+        const className = character.classObj().name;
+        const maxSpellLevel = _.max(_.keys(spellcasting.details_per_level[character.level].slots));
+        let known = _.map(_.select(SPELLS, function(spell){
+          return spell.level != 0 && spell.level <= maxSpellLevel && _.pluck(spell.classes, 'name').includes(className);
+        }), function(spell){
+          return {name: spell.name, spellcasting_ability: spellcasting.spellcasting_ability};
+        });
+        character.spells.known = _.uniq(_.union(character.spells.known, known), false, function(spell){return spell.name;});
+      }
 
       Characters.update(cId, character);
     }

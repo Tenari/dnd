@@ -47,6 +47,9 @@ function getSpellcasting(){
 }
 
 Template.level_up.helpers({
+  newPrepareableCount(){
+    return getCharacter().prepareableSpellCount(getCharacter().level+1);
+  },
   hpMaxIncrease(){
     const character = getCharacter();
     return _.max([(character.classObj().hit_die / 2 + 1) + abilityModifier(character.con), 1]);
@@ -63,8 +66,11 @@ Template.level_up.helpers({
       return details[character.level].spellbook < details[character.level + 1].spellbook;
     }
   },
-  // an array of lists of spells to choose from for however many you need to choose
-  spellsLists(){
+  knowsAllAndAccessMore(){
+    const character = getCharacter();
+    const sp = getSpellcasting();
+    return sp && sp.all_known &&
+           _.max(_.keys(sp.details_per_level[character.level + 1].slots)) > _.max(_.keys(sp.details_per_level[character.level].slots));
   },
   spellOptions() {
     const character = getCharacter();

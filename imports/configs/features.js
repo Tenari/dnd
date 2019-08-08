@@ -1436,7 +1436,8 @@ export const CLASS_FEATURES = [
       "As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.",
       "A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action."
     ],
-    "url": "http://www.dnd5eapi.co/api/features/77"
+    "url": "http://www.dnd5eapi.co/api/features/77",
+    combat: true,
   },
   {
     "index": 78,
@@ -1455,6 +1456,7 @@ export const CLASS_FEATURES = [
       "As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level.",
       "Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can’t use this feature on an undead or a construct."
     ],
+    combat: true,
     "url": "http://www.dnd5eapi.co/api/features/78"
   },
   {

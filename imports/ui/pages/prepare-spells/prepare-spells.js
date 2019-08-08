@@ -29,9 +29,7 @@ Template.character_prepare_spells.helpers({
     const instance = Template.instance();
     const character = instance.data.character || instance.character.get();
     if (!character) return 0;
-    const spellcasting = character.spellcasting();
-    let ability = character[spellcasting.spellcasting_ability];
-    return spellcasting.details_per_level[1].spells || (character.level + abilityModifier(ability));
+    return character.prepareableSpellCount();
   },
   spellbookList() {
     const instance = Template.instance();

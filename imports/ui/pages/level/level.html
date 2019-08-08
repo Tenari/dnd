@@ -19,9 +19,20 @@
       </li>
     {{/each}}
     <li>Hit point maximum will increase by {{hpMaxIncrease}}</li>
+    {{#if newPrepareableCount}}
+      <li>The new number of spells you can prepare is {{newPrepareableCount}}</li>
+    {{/if}}
   </ul>
   {{#if spellcasting}}
     <div>
+      {{#if knowsAllAndAccessMore}}
+        You get access to new spells! hooray.
+        <ul>
+        {{#each spell in spellOptions}}
+          <li><a href="/spells?search={{spell.value}}" target="_blank">{{spell.name}}</a></li>
+        {{/each}}
+        </ul>
+      {{/if}}
       {{#if choosesNewSpells}}
         <div>
           Choose {{newSpellCount}} new spell(s) of up to level {{newSpellLevel}} to learn
