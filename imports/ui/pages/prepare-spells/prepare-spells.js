@@ -31,7 +31,7 @@ Template.character_prepare_spells.helpers({
     if (!character) return 0;
     const spellcasting = character.spellcasting();
     let ability = character[spellcasting.spellcasting_ability];
-    return spellcasting.details_per_level[1].spells || (1 + abilityModifier(ability));
+    return spellcasting.details_per_level[1].spells || (character.level + abilityModifier(ability));
   },
   spellbookList() {
     const instance = Template.instance();

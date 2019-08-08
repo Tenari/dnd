@@ -7,6 +7,7 @@ import { Items } from '../items/items.js';
 import { Characters } from './characters.js';
 import { abilityModifier, calculateAC, indexFromUrl } from '/imports/configs/general.js';
 import { CLASSES } from '/imports/configs/db-classes.js';
+import { SUBCLASSES } from '/imports/configs/subclasses.js';
 import { RACES } from '/imports/configs/races.js';
 import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { PROFICIENCIES } from '/imports/configs/proficiencies.js';
@@ -206,6 +207,16 @@ Meteor.methods({
           })
         }
       }
+
+      if (choices.subclass && SUBCLASSES[choices.subclass]){
+        character.subclass = choices.subclass;
+        if (SUBCLASSES[choices.subclass].cantrips && SUBCLASSES[choices.subclass].cantrips[character.level]) {
+          SUBCLASSES[choices.subclass].cantrips[character.level].forEach(function(spellName){
+            character.spells.cantrips.push({name: spellName, spellcasting_ability: character.spellcasting().spellcasting_ability});
+          })
+        }
+      }
+
       Characters.update(cId, character);
     }
   }

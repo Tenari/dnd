@@ -1,6 +1,13 @@
 <template name="level_up">
   <h1>Level up!</h1>
   <p>congrats</p>
+  {{#if choosesSubclass}}
+    <p>Hey, look at you, you get to pick your subclass now! Choose wisely. Dont be a noob.</p>
+    <div><strong>Subclass:</strong> {{> dropdown options=subclasses className='subclass'}}</div>
+    {{#each line in subclassDescription}}
+      <div>{{line}}</div>
+    {{/each}}
+  {{/if}}
   <ul>
     <u>New stuff</u>
     {{#each feature in newFeatures}}

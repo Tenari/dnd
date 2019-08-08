@@ -7879,41 +7879,6 @@ export const CLASS_FEATURES = [
     "url": "http://www.dnd5eapi.co/api/features/402"
   },
   {
-    "index": 403,
-    "class": {
-      "url": "http://www.dnd5eapi.co/api/classes/12",
-      "name": "Wizard"
-    },
-    "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/12",
-      "name": "Evocation"
-    },
-    "name": "Evocation Savant",
-    "level": 2,
-    "desc": [
-      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an evocation spell into your spellbook is halved."
-    ],
-    "url": "http://www.dnd5eapi.co/api/features/403"
-  },
-  {
-    "index": 404,
-    "class": {
-      "url": "http://www.dnd5eapi.co/api/classes/12",
-      "name": "Wizard"
-    },
-    "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/12",
-      "name": "Evocation"
-    },
-    "name": "Sculpt Spells",
-    "level": 2,
-    "desc": [
-      "Beginning at 2nd level, you can create pockets of relative safety within the effects of your evocation spells. When you cast an evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 + the spell’s level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save."
-    ],
-    combat: true,
-    "url": "http://www.dnd5eapi.co/api/features/404"
-  },
-  {
     "index": 405,
     "class": {
       "url": "http://www.dnd5eapi.co/api/classes/12",
@@ -8355,6 +8320,210 @@ export const CLASS_FEATURES = [
       "When you choose this path at 3rd level, you gain the ability to use spiked armor as a weapon.",
       "While you are wearing spiked armor and are raging, you can use a bonus action to make one melee weapon attack with your armor spikes at a target within 5 feet of you. If the attack hits, the spikes deal 1d4 piercing damage. You use your Strength modifier for the attack and damage rolls.",
       "Additionally, when you use the Attack action to grapple a creature, the target takes 3 piercing damage if your grapple check succeeds."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'abjuration',
+      "name": "Abjuration"
+    },
+    "name": "Arcane Ward",
+    "level": 2,
+    "desc": [
+      "Starting at 2nd level, you can weave magic around yourself for protection. When you cast an abjuration spell of 1st level or higher, you can simultaneously use a strand of the spell's magic to create a magical ward on yourself that lasts until you finish a long rest. The ward has hit points equal to twice your wizard level + your Intelligence modifier. Whenever you take damage, the ward takes the damage instead. If this damage reduces the ward to 0 hit points, you take any remaining damage.",
+      "While the ward has 0 hit points, it can't absorb damage, but its magic remains. Whenever you cast an abjuration spell of 1st level or higher, the ward regains a number of hit points equal to twice the level of the spell.",
+      "Once you create the ward, you can't create it again until you finish a long rest."
+    ],
+    combat: true,
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'abjuration',
+      "name": "Abjuration"
+    },
+    "name": "Abjuration Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an abjuration spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'conjuration',
+      "name": "Conjuration"
+    },
+    "name": "Conjuration Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an conjuration spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'conjuration',
+      "name": "Conjuration"
+    },
+    "name": "Minor Conjuration",
+    "level": 2,
+    "desc": [
+      "Starting at 2nd level when you select this school, you can use your action to conjure up an inanimate object in your hand or on the ground in an unoccupied space that you can see within 10 feet of you. This object can be no larger than 3 feet on a side and weigh no more than 10 pounds, and its form must be that of a nonmagical object that you have seen. The object is visibly magical, radiating dim light out to 5 feet.",
+      "The object disappears after 1 hour, when you use this feature again, if it takes any damage, or if it deals any damage."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'divination',
+      "name": "Divination"
+    },
+    "name": "Divination Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an divination spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'divination',
+      "name": "Divination"
+    },
+    "name": "Portent",
+    "level": 2,
+    "desc": [
+      "Starting at 2nd level when you choose this school, glimpses of the future begin to press in on your awareness. When you finish a long rest, roll two d20s and record the numbers rolled. You can replace any attack roll, saving throw, or ability check made by you or a creature that you can see with one of these foretelling rolls. You must choose to do so before the roll, and you can replace a roll in this way only once per turn.",
+      "Each foretelling roll can be used only once. When you finish a long rest, you lose any unused foretelling rolls."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'enchantment',
+      "name": "Enchantment"
+    },
+    "name": "Enchantment Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an enchantment spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'enchantment',
+      "name": "Enchantment"
+    },
+    "name": "Hypnotic Gaze",
+    "level": 2,
+    "desc": [
+      "Starting at 2nd level when you choose this school, your soft words and enchanting gaze can magically enthrall another creature. As an action, choose one creature that you can see within 5 feet of you. If the target can see or hear you, it must succeed on a Wisdom saving throw against your wizard spell save DC or be charmed by you until the end of your next turn. The charmed creature's speed drops to 0, and the creature is incapacitated and visibly dazed.",
+      "On subsequent turns, you can use your action to maintain this effect, extending its duration until the end of your next turn. However, the effect ends if you move more than 5 feet away from the creature, if the creature can neither see nor hear you, or if the creature takes damage.",
+      "Once the effect ends, or if the creature succeeds on its initial saving throw against this effect, you can't use this feature on that creature again until you finish a long rest."
+    ],
+    combat: true,
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'evocation',
+      "name": "Evocation"
+    },
+    "name": "Evocation Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an evocation spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'evocation',
+      "name": "Evocation"
+    },
+    "name": "Sculpt Spells",
+    "level": 2,
+    "desc": [
+      "Beginning at 2nd level, you can create pockets of relative safety within the effects of your evocation spells. When you cast an evocation spell that affects other creatures that you can see, you can choose a number of them equal to 1 + the spell's level. The chosen creatures automatically succeed on their saving throws against the spell, and they take no damage if they would normally take half damage on a successful save."
+    ],
+    combat: true,
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'illusion',
+      "name": "Illusion"
+    },
+    "name": "Illusion Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an illusion spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'illusion',
+      "name": "Illusion"
+    },
+    "name": "Improved Minor Illusion",
+    "level": 2,
+    "desc": [
+      "When you choose this school at 2nd level, you learn the minor illusion cantrip. If you already know this cantrip, you learn a different wizard cantrip of your choice. The cantrip doesn't count against your number of cantrips known.",
+      "When you cast minor illusion, you can create both a sound and an image with a single casting of the spell."
+    ],
+    combat: true,
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'necromancy',
+      "name": "Necromancy"
+    },
+    "name": "Necromancy Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an necromancy spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'necromancy',
+      "name": "Necromancy"
+    },
+    "name": "Grim Harvest",
+    "level": 2,
+    "desc": [
+      "At 2nd level, you gain the ability to reap life energy from creatures you kill with your spells. Once per turn when you kill one or more creatures with a spell of 1st level or higher, you regain hit points equal to twice the spell's level, or three times its level if the spell belongs to the School of Necromancy. You don't gain this benefit for killing constructs or undead."
+    ],
+    combat: true,
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'transmutation',
+      "name": "Transmutation"
+    },
+    "name": "Transmutation Savant",
+    "level": 2,
+    "desc": [
+      "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an transmutation spell into your spellbook is halved."
+    ],
+  },
+  {
+    "class": {index: 12, "name": "Wizard"},
+    "subclass": {
+      key: 'transmutation',
+      "name": "Transmutation"
+    },
+    "name": "Minor Alchemy",
+    "level": 2,
+    "desc": [
+      "Starting at 2nd level when you select this school, you can temporarily alter the physical properties of one nonmagical object, changing it from one substance into another. You perform a special alchemical procedure on one object composed entirely of wood, stone (but not a gemstone), iron, copper, or silver, transforming it into a different one of those materials. For each 10 minutes you spend performing the procedure, you can transform up to 1 cubic foot of material. After 1 hour, or until you lose your concentration (as if you were concentrating on a spell), the material reverts to its original substance."
     ],
   },
 ];

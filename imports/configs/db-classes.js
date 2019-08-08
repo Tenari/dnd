@@ -1225,15 +1225,20 @@ export const CLASSES = {
 				"url": "http://www.dnd5eapi.co/api/ability-scores/5"
 			}
 		],
+    chooses_subclass_at_level: 2,
 		"class_levels": {
 			"url": "http://www.dnd5eapi.co/api/classes/wizard/levels",
 			"class": "Wizard"
 		},
 		"subclasses": [
-			{
-				"url": "http://www.dnd5eapi.co/api/subclasses/12",
-				"name": "Evocation"
-			}
+			{"value": "abjuration", "label": "Abjuration"},
+			{"value": "conjuration", "label": "Conjuration"},
+			{"value": "divination", "label": "Divination"},
+			{"value": "enchantment", "label": "Enchantment"},
+			{"value": "evocation", "label": "Evocation"},
+			{"value": "illusion", "label": "Illusion"},
+			{"value": "necromancy", "label": "Necromancy"},
+			{"value": "transmutation", "label": "Transmutation"},
 		],
 	}
 };

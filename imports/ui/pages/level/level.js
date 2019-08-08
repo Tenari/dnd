@@ -1,6 +1,7 @@
 import { ABILITIES, abilityModifier, indexFromUrl, ordinalSuffixOf, DRACONIC_ANCESTRIES } from '../../../configs/general.js';
 import { CLASS_FEATURES } from '/imports/configs/features.js';
 import { SPELLS } from '/imports/configs/spells.js';
+import { SUBCLASSES } from '/imports/configs/subclasses.js';
 import { Characters } from '/imports/api/characters/characters.js';
 import { Games } from '/imports/api/games/games.js';
 import './level.html';
@@ -12,6 +13,7 @@ Template.level_up.onCreated(function(){
     this.gameId = FlowRouter.getParam('_id');
     var characters;
     this.character = new ReactiveVar(null);
+    this.subclass = new ReactiveVar(null);
     this.autorun(() => {
       if (games.ready()) {
         if (Games.findOne(this.gameId) == undefined || Meteor.userId() == null) {
@@ -22,6 +24,8 @@ Template.level_up.onCreated(function(){
           let character = Characters.findOne(FlowRouter.getParam('cid'));
           if (character.needsToLevelUp()) {
             this.character.set(character);
+            console.log(character.classObj().subclasses[0].value);
+            this.subclass.set(character.subclass || character.classObj().subclasses[0].value);
           } else {
             FlowRouter.go('/game/'+this.gameId);
           }
@@ -53,7 +57,11 @@ Template.level_up.helpers({
   choosesNewSpells() {
     const character = getCharacter();
     const details = getSpellcasting().details_per_level;
-    return details[character.level].spells < details[character.level + 1].spells;
+    if (details[1].spells) {
+      return details[character.level].spells < details[character.level + 1].spells;
+    } else if (details[1].spellbook) {
+      return details[character.level].spellbook < details[character.level + 1].spellbook;
+    }
   },
   // an array of lists of spells to choose from for however many you need to choose
   spellsLists(){
@@ -75,7 +83,11 @@ Template.level_up.helpers({
   newSpellCount() {
     const character = getCharacter();
     const spellcasting = getSpellcasting();
-    return spellcasting.details_per_level[character.level + 1].spells - spellcasting.details_per_level[character.level].spells;
+    if (spellcasting.details_per_level[1].spells) {
+      return spellcasting.details_per_level[character.level + 1].spells - spellcasting.details_per_level[character.level].spells;
+    } else if (spellcasting.details_per_level[1].spellbook) {
+      return spellcasting.details_per_level[character.level + 1].spellbook - spellcasting.details_per_level[character.level].spellbook;
+    }
   },
   newSpellLevel(){
     const character = getCharacter();
@@ -86,11 +98,12 @@ Template.level_up.helpers({
     const instance = Template.instance();
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
+    const subclass = instance.subclass.get();
 
     let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
       let good = classFeature.class.name == character.displayClass() && classFeature.level == character.level + 1;
       if (classFeature.subclass && classFeature.subclass.key) {
-        good = good && classFeature.subclass.key == character.subclass;
+        good = good && classFeature.subclass.key == subclass;
       }
       if (classFeature.choice) {
         good = false;
@@ -103,6 +116,16 @@ Template.level_up.helpers({
 
     return features;
   },
+  choosesSubclass(){
+    const character = getCharacter();
+    return character.classObj().chooses_subclass_at_level == character.level+1;
+  },
+  subclasses(){
+    return getCharacter().classObj().subclasses;
+  },
+  subclassDescription() {
+    return SUBCLASSES[Template.instance().subclass.get()].desc;
+  },
 })
 Template.level_up.events({
   'click button.level-up'(e, instance){
@@ -114,8 +137,14 @@ Template.level_up.events({
         choices.newSpells.push({name: spellName, spellcasting_ability: character.spellcasting().spellcasting_ability});
       })
     }
+    if ($('select.subclass').length > 0) {
+      choices.subclass = $('select.subclass').val();
+    }
     Meteor.call('characters.levelUp', character._id, choices, function(){
       FlowRouter.go('Character.details', {_id: instance.gameId, cid: character._id});
     });
   },
+  'change select.subclass'(e, instance) {
+    instance.subclass.set(e.target.value);
+  }
 });
