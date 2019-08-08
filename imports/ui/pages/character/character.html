@@ -153,7 +153,12 @@
         {{#each spell in cantrips}}
           {{> characterSheet_spellRow spell=spell}}
         {{/each}}
-        <div class="label">Prepared Spells <a href="/game/{{character.gameId}}/character/{{character._id}}/prepare-spells">(prepare new spells)</a></div>
+        <div class="label">
+          Prepared Spells
+          {{#if notAllPrepared}}
+            <a href="/game/{{character.gameId}}/character/{{character._id}}/prepare-spells">(prepare new spells)</a>
+          {{/if}}
+        </div>
         <div class="spell-row">
           <div class="spell-level">Level</div>
           <div class="spell-name">Name</div>

@@ -48,7 +48,7 @@ function getSpellcasting(){
 
 Template.level_up.helpers({
   newPrepareableCount(){
-    return getCharacter().prepareableSpellCount(getCharacter().level+1);
+    return !getSpellcasting().all_prepared && getCharacter().prepareableSpellCount(getCharacter().level+1);
   },
   hpMaxIncrease(){
     const character = getCharacter();
