@@ -2501,10 +2501,11 @@ export const CLASS_FEATURES = [
     "name": "Action Surge (1 use)",
     "level": 2,
     "desc": [
-      "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.",
-      "Once you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn."
+      "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.",
+      "Once you use this feature, you must finish a short or long rest before you can use it again."
     ],
-    "url": "http://www.dnd5eapi.co/api/features/139"
+    "url": "http://www.dnd5eapi.co/api/features/139",
+    combat: true,
   },
   {
     "index": 140,
@@ -2766,7 +2767,7 @@ export const CLASS_FEATURES = [
     },
     "subclass": {},
     "name": "Action Surge (2 uses)",
-    "level": 2,
+    "level": 17,
     "desc": [
       "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.",
       "Once you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn."
