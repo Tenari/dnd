@@ -250,5 +250,13 @@ Template.character_sheet.events({
     let id = $(e.currentTarget).attr('data-item');
     const character = instance.data.character || instance.character.get();
     Meteor.call('items.equip', character._id, id);
+  },
+  'click .add-item>div>button'(e, instance) {
+    e.preventDefault();
+    const character = instance.data.character || instance.character.get();
+    const name = $('.add-item input[name="item_name"]').val();
+    const count = parseInt($('.add-item input[name="count"]').val());
+    const weight = parseFloat($('.add-item input[name="weight"]').val());
+    Meteor.call('items.add', character._id, name, count, weight);
   }
 });

@@ -44,6 +44,24 @@ Meteor.methods({
       Characters.update(cid, {$set: {ac: newAC}});
     }
   },
+  'items.add'(cid, name, count, weight) {
+    console.log(arguments);
+    let item = Items.findOne({name});
+    let itemId = null;
+    if (!item) {
+      itemId = Items.insert({
+        name,
+        equipment_category: 'Misc',
+        weight: weight,
+        cost: {quantity: 1, unit: 'cp'},
+      });
+    } else {
+      itemId = item._id;
+    }
+    _.times(count, function(){
+      Characters.update(cid, {$push: {items: itemId}});
+    })
+  }
 });
 
 function createNewEquippedList(equippedItems, character, item) {

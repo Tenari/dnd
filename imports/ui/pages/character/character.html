@@ -249,6 +249,13 @@
           </div>
         {{/each}}
         <div>Money: {{character.wealth}} gp</div>
+        <hr>
+        <div class="add-item">
+          <div>new item name: <input type="text" name="item_name"/></div>
+          <div>count: <input type="number" name="count"/></div>
+          <div>weight(lbs): <input type="number" name="weight"/></div>
+          <div><button>Add</button></div>
+        </div>
       </div>
       {{#if notAllPrepared}}
         <div class="all-spells">
