@@ -134,62 +134,24 @@ Template.character_sheet.helpers({
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
 
-    let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
-      let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
-      if (classFeature.subclass && classFeature.subclass.key) {
-        good = good && classFeature.subclass.key == character.subclass;
-      }
-      if (classFeature.choice) {
-        good = false;
-      }
-      if (classFeature.needs_to_be_chosen) {
-        good = good && character.featureChoices[classFeature.needs_to_be_chosen] && _.contains(character.featureChoices[classFeature.needs_to_be_chosen], classFeature.name);
-      }
-      return good;
-    }), function(f) {f.source = "Class"; return f;});
-
-    _.each(character.raceObj().traits, function(traitKey) {
-      let trait = TRAITS[traitKey];
-      trait.source = "Race";
-      if (trait.chooses_ancestry) {
-        trait.ancestry = character.draconicAncestry;
-      }
-      features.push(trait)
-    })
-
-    return features;
+    return character.featuresAndTraits();
   },
   combatFeatures(){
     const instance = Template.instance();
     const character = instance.data.character || instance.character.get();
     if (!character) return [];
 
-    let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
-      let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level && classFeature.combat;
-      if (classFeature.choice) {
-        good = false;
+    return _.map(_.select(character.featuresAndTraits(), function(item){
+      return item.combat;
+    }), function(item){
+      if (item.key == 'breath_weapon') {
+        item.desc = DRACONIC_ANCESTRIES[character.draconicAncestry].breath + ' ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type;
       }
-      if (classFeature.needs_to_be_chosen) {
-        good = good && character.featureChoices[classFeature.needs_to_be_chosen] && _.contains(character.featureChoices[classFeature.needs_to_be_chosen], classFeature.name);
+      if (item.key == 'draconic_damage_resistance') {
+        item.desc = 'You have resistance to ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type + ' damage';
       }
-      return good;
-    }), function(f) {f.source = "Class"; return f;});
-
-    _.each(character.raceObj().traits, function(traitKey) {
-      let trait = _.clone(TRAITS[traitKey]);
-      trait.source = "Race";
-      if (trait.combat) {
-        if (trait.key == 'breath_weapon') {
-          trait.desc = DRACONIC_ANCESTRIES[character.draconicAncestry].breath + ' ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type;
-        }
-        if (trait.key == 'draconic_damage_resistance') {
-          trait.desc = 'You have resistance to ' + DRACONIC_ANCESTRIES[character.draconicAncestry].damage_type + ' damage';
-        }
-        features.push(trait)
-      }
-    })
-
-    return features;
+      return item;
+    });
   },
   spellSlots() {
     const instance = Template.instance();

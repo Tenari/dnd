@@ -199,4 +199,32 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
     // it is either hardcoded or its level+mod(spellcasting_ability)
     return sp.details_per_level[level].spells || (level + abilityModifier(this[sp.spellcasting_ability]));
   },
+  featuresAndTraits(){
+    const character = this;
+
+    let features = _.map(_.select(CLASS_FEATURES, function(classFeature){
+      let good = classFeature.class.name == character.displayClass() && classFeature.level <= character.level;
+      if (classFeature.subclass && classFeature.subclass.key) {
+        good = good && classFeature.subclass.key == character.subclass;
+      }
+      if (classFeature.choice) {
+        good = false;
+      }
+      if (classFeature.needs_to_be_chosen) {
+        good = good && character.featureChoices[classFeature.needs_to_be_chosen] && _.contains(character.featureChoices[classFeature.needs_to_be_chosen], classFeature.name);
+      }
+      return good;
+    }), function(f) {f.source = "Class"; return f;});
+
+    _.each(character.raceObj().traits, function(traitKey) {
+      let trait = _.clone(TRAITS[traitKey]);
+      trait.source = "Race";
+      if (trait.chooses_ancestry) {
+        trait.ancestry = character.draconicAncestry;
+      }
+      features.push(trait)
+    })
+
+    return features;
+  },
 })
