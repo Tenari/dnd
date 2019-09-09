@@ -258,5 +258,10 @@ Template.character_sheet.events({
     const count = parseInt($('.add-item input[name="count"]').val());
     const weight = parseFloat($('.add-item input[name="weight"]').val());
     Meteor.call('items.add', character._id, name, count, weight);
-  }
+  },
+  'click button.remove-item'(e, instance) {
+    let id = $(e.currentTarget).attr('data-item');
+    const character = instance.data.character || instance.character.get();
+    Meteor.call('items.remove', character._id, id);
+  },
 });
