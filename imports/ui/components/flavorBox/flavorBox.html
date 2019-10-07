@@ -1,0 +1,11 @@
+<template name="flavorBox">
+  <div class="flavor-box">
+    {{#if editing}}
+      <textarea>{{text}}</textarea>
+      <button class="save-text">save</button>
+    {{else}}
+      <div class="text">{{text}}</div>
+    {{/if}}
+    <div class="label">{{label}}</div>
+  </div>
+</template>

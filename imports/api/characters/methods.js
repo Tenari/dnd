@@ -246,5 +246,8 @@ Meteor.methods({
 
       Characters.update(cId, character);
     }
-  }
+  },
+  'characters.saveText'(cId, field, text) {
+    Characters.update(cId, {$set: {[field]: text}})
+  },
 });

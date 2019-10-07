@@ -17,6 +17,7 @@ import '../../components/multiselect/multiselect.js';
 import '../../components/dropdown/dropdown.js';
 import '../../components/item/item.js';
 import '../../components/cleric-setup/cleric-setup.js';
+import '../../components/flavorBox/flavorBox.js';
 
 Template.Character_create.onCreated(function(){
   const that = this;
