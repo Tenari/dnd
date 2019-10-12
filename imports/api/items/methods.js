@@ -65,8 +65,8 @@ Meteor.methods({
   'items.remove'(cid, id) {
     let character = Characters.findOne(cid);
     if (_.contains(character.items, id)) {
-      let newItems = character.items.splice(_.indexOf(character.items, id), 1);
-      Characters.update(cid, {$set: {items: newItems}})
+      character.items.splice(_.indexOf(character.items, id), 1);
+      Characters.update(cid, {$set: {items: character.items}})
     }
   }
 });
