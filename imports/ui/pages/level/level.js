@@ -55,6 +55,7 @@ Template.level_up.helpers({
     const character = getCharacter();
     return character && _.max([(character.classObj().hit_die / 2 + 1) + abilityModifier(character.con), 1]);
   },
+  nextLevel(){return getCharacter() && getCharacter().level + 1},
   spellcasting() {
     return getSpellcasting();
   },
@@ -132,6 +133,10 @@ Template.level_up.helpers({
   },
   chosenSubclass(){
     return SUBCLASSES[Template.instance().subclass.get()];
+  },
+  subclassSpellsThisLevel(){
+    const character = getCharacter();
+    return character && character.subclassDetails().spells[character.level + 1];
   },
   allPossibleSkills(){
     const skills = _.pluck(getCharacter().skills(), 'name');

@@ -24,6 +24,16 @@
         {{#each line in feature.desc}}
           <div>{{line}}</div>
         {{/each}}
+        {{#if feature.show_subclass_spells_this_level}}
+          <p>
+            This level, your subclass grants you the following spells:
+            <ul>
+              {{#each spell in subclassSpellsThisLevel}}
+                <li><a href="/spells?search={{spell}}" target="_blank">{{spell}}</a></li>
+              {{/each}}
+            </ul>
+          </p>
+        {{/if}}
         {{#if feature.choice}}
           {{#if equals feature.choice.type 'maneuver'}}
             {{> multiselect options=feature.choice.from max=feature.choice.choose name='maneuvers' className='maneuvers-select'}}

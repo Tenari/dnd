@@ -8,6 +8,7 @@ import { roll, abilityModifier, ALIGNMENTS, PROFICIENCY_BONUS, LEVELS } from '/i
 import { RACES } from '../../configs/races.js';
 import { TRAITS } from '../../configs/traits.js';
 import { PROFICIENCIES } from '../../configs/proficiencies.js';
+import { SUBCLASSES } from '../../configs/subclasses.js';
 import { CLASSES } from '../../configs/db-classes.js';
 import { CLASS_FEATURES } from '../../configs/features.js';
 import { SPELLCASTING } from '/imports/configs/spellcasting.js';
@@ -60,6 +61,9 @@ Characters.helpers({
         return prof.type == 'Skills';
       }
     );
+  },
+  subclassDetails(){
+    return SUBCLASSES[this.subclass];
   },
   spellcasting(){
     return SPELLCASTING[this.klass];
