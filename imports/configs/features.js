@@ -408,6 +408,7 @@ export const CLASS_FEATURES = [
     "subclass": {},
     "name": "Bardic Inspiration (d6)",
     "level": 1,
+    short_desc: "bonus act: within 60ft, give someone a d6 that they can add to a d20 roll",
     "desc": [
       "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.",
       "You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. ",
@@ -455,41 +456,48 @@ export const CLASS_FEATURES = [
     "name": "Bard College",
     "level": 3,
     "desc": [
-      "At 3rd level, you delve into the advanced techniques of a bard college of your choice: the College of Lore or the College of Valor, both detailed at the end of the class description. Your choice grants you features at 3rd level and again at 6th and 14th level."
+      "You delve into the advanced techniques of a bard college of your choice: the College of Lore or the College of Valor. Your choice grants you features at 3rd level and again at 6th and 14th level."
     ],
     "url": "http://www.dnd5eapi.co/api/features/29"
   },
   {
     "index": 30,
     "class": {
-      "url": "http://www.dnd5eapi.co/api/classes/2",
+      index: 2,
       "name": "Bard"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/2",
-      "name": "Lore"
+      key: 'lore',
+      "name": "College of Lore"
     },
     "name": "Bonus Proficiencies",
     "level": 3,
     "desc": [
       "When you join the College of Lore at 3rd level, you gain proficiency with three skills of your choice."
     ],
+    "choice": {
+      "choose": 3,
+      "type": "proficiency",
+      "filter": "Skills",
+    },
     "url": "http://www.dnd5eapi.co/api/features/30"
   },
   {
     "index": 31,
     "class": {
-      "url": "http://www.dnd5eapi.co/api/classes/2",
+      index: 2,
       "name": "Bard"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/2",
-      "name": "Lore"
+      key: 'lore',
+      "name": "College of Lore"
     },
     "name": "Cutting Words",
     "level": 3,
+    combat: true,
+    short_desc: 'when enemy rolls d20, use up a Bardic Inspiration die to subtract from his roll',
     "desc": [
-      "Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others.",
+      "Also at 3rd level the College of Lore teaches you how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others.",
       "When a creature that you can see within 60 feet of you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll.",
       "You can choose to use this feature after the creature makes its roll, but before the GM determines whether the attack roll or ability check succeeds or fails, or before the creature deals its damage. The creature is immune if it can't hear you or if it's immune to being charmed."
     ],
@@ -501,89 +509,15 @@ export const CLASS_FEATURES = [
       "url": "http://www.dnd5eapi.co/api/classes/2",
       "name": "Bard"
     },
-    "subclass": {},
     "name": "Choose: Expertise 1",
     "level": 3,
     "desc": [
-      "At 3rd level, choose two of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies. At 10th level, you can choose another two skill proficiencies to gain this benefit."
+      "Choose two of your skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies. At 10th level, you can choose another two skill proficiencies to gain this benefit."
     ],
     "choice": {
       "choose": 2,
-      "type": "feature",
-      "from": [
-        {
-          "url": "http://www.dnd5eapi.co/api/features/278",
-          "name": "Expertise: Acrobatics"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/277",
-          "name": "Expertise: Animal Handling"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/261",
-          "name": "Expertise: Arcana"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/262",
-          "name": "Expertise: Athletics"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/263",
-          "name": "Expertise: Deception"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/264",
-          "name": "Expertise: History"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/265",
-          "name": "Expertise: Insight"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/266",
-          "name": "Expertise: Intimidation"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/267",
-          "name": "Expertise: Investigation"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/268",
-          "name": "Expertise: Medicine"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/269",
-          "name": "Expertise: Nature"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/270",
-          "name": "Expertise: Perception"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/271",
-          "name": "Expertise: Performance"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/272",
-          "name": "Expertise: Persuasion"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/273",
-          "name": "Expertise: Religion"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/274",
-          "name": "Expertise: Sleight of Hand"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/275",
-          "name": "Expertise: Stealth"
-        },
-        {
-          "url": "http://www.dnd5eapi.co/api/features/276",
-          "name": "Expertise: Survival"
-        }
-      ]
+      "type": "expertise",
+      "filter": "Skills",
     },
     "url": "http://www.dnd5eapi.co/api/features/32"
   },
@@ -1013,7 +947,7 @@ export const CLASS_FEATURES = [
     },
     "subclass": {
       "url": "http://www.dnd5eapi.co/api/subclasses/2",
-      "name": "Lore"
+      "name": "College of Lore"
     },
     "name": "Additional Magical Secrets",
     "level": 6,
@@ -1228,7 +1162,7 @@ export const CLASS_FEATURES = [
     },
     "subclass": {
       "url": "http://www.dnd5eapi.co/api/subclasses/2",
-      "name": "Lore"
+      "name": "College of Lore"
     },
     "name": "Peerless Skill",
     "level": 14,
@@ -2436,6 +2370,7 @@ export const CLASS_FEATURES = [
     "subclass": {},
     "name": "Fighting Style: Great Weapon Fighting",
     "level": 1,
+    short_desc: "With 2h weapon, reroll damage die on 1 or 2",
     "desc": [
       "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit."
     ],
@@ -2487,6 +2422,7 @@ export const CLASS_FEATURES = [
     "subclass": {},
     "name": "Second Wind",
     "level": 1,
+    short_desc: "bonus action: regain (1d10 + fighter_level) HP. 1x per short/long rest",
     "desc": [
       "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again."
     ],
@@ -2502,6 +2438,7 @@ export const CLASS_FEATURES = [
     "subclass": {},
     "name": "Action Surge (1 use)",
     "level": 2,
+    short_desc: "1x per short/long rest, take an extra action on your turn",
     "desc": [
       "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.",
       "Once you use this feature, you must finish a short or long rest before you can use it again."
@@ -2519,7 +2456,7 @@ export const CLASS_FEATURES = [
     "name": "Martial Archetype",
     "level": 3,
     "desc": [
-      "At 3rd level, you choose an archetype that you strive to emulate in your combat styles and techniques. Choose Champion, Battle Master, or Eldritch Knight, all detailed at the end of the class description. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level."
+      "At 3rd level, you choose an archetype that you strive to emulate in your combat styles and techniques. The archetype you choose grants you features at 3rd level and again at 7th, 10th, 15th, and 18th level."
     ],
     "url": "http://www.dnd5eapi.co/api/features/140"
   },
@@ -2530,7 +2467,7 @@ export const CLASS_FEATURES = [
       "name": "Fighter"
     },
     "subclass": {
-      "url": "http://www.dnd5eapi.co/api/subclasses/5",
+      key: 'champion',
       "name": "Champion"
     },
     "name": "Improved Critical",
@@ -2538,7 +2475,6 @@ export const CLASS_FEATURES = [
     "desc": [
       "Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20."
     ],
-    "url": "http://www.dnd5eapi.co/api/features/141"
   },
   {
     "index": 142,
@@ -8527,6 +8463,102 @@ export const CLASS_FEATURES = [
     "level": 2,
     "desc": [
       "Starting at 2nd level when you select this school, you can temporarily alter the physical properties of one nonmagical object, changing it from one substance into another. You perform a special alchemical procedure on one object composed entirely of wood, stone (but not a gemstone), iron, copper, or silver, transforming it into a different one of those materials. For each 10 minutes you spend performing the procedure, you can transform up to 1 cubic foot of material. After 1 hour, or until you lose your concentration (as if you were concentrating on a spell), the material reverts to its original substance."
+    ],
+  },
+  {
+    "class": {
+      index: 5,
+      "name": "Fighter"
+    },
+    "subclass": {
+      key: 'battle_master',
+      "name": "Battle Master"
+    },
+    "name": "Student of War",
+    "level": 3,
+    "desc": [
+      "At 3rd level, you gain proficiency with one type of artisan's tools of your choice."
+    ],
+  },
+  {
+    "class": {
+      index: 5,
+      "name": "Fighter"
+    },
+    "subclass": {
+      key: 'battle_master',
+      "name": "Battle Master"
+    },
+    "name": "Combat Superiority",
+    "level": 3,
+    "desc": [
+      "When you choose this archetype at 3rd level, you learn maneuvers that are fueled by special dice called superiority dice.",
+      "Maneuvers. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack.",
+      "You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers, you can also replace one maneuver you know with a different one.",
+      "Superiority Dice. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest.",
+      "You gain another superiority die at 7th level and one more at 15th level.",
+      "Saving Throws. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects. The saving throw DC is calculated as follows:",
+      "Maneuver save DC = 8 + your proficiency bonus + your Strength or Dexterity modifier (your choice)",
+    ],
+    "choice": {
+      "choose": 3,
+      "type": "maneuver",
+      "from": [
+        {value: 'commanders_strike', name: "Commander's Strike"},
+        {value: 'disarming_attack', name: "Disarming Attack"},
+        {value: 'distracting_strike', name: "Distracting Strike"},
+        {value: 'evasive_footwork', name: "Evasive Footwork"},
+      ]
+    }
+  },
+  {
+    "class": {
+      index: 5,
+      "name": "Fighter"
+    },
+    "subclass": {
+      key: 'weapon_master',
+      "name": "Weapon Master"
+    },
+    "name": "Brutal Precision",
+    "level": 3,
+    combat: true,
+    short_desc: "Weapon attacks crit on 19 or 20",
+    "desc": [
+      "Starting at 3rd level, your strikes become so graceful, precise and swift, that you can easily target exposed vital organs of a creature before they have enough time to react. Your weapon attacks can score a critical hit on a roll of a 19 or 20."
+    ],
+  },
+  {
+    "class": {
+      index: 5,
+      "name": "Fighter"
+    },
+    "subclass": {
+      key: 'weapon_master',
+      "name": "Weapon Master"
+    },
+    "name": "Weapon Mastery",
+    "level": 7,
+    combat: true,
+    "desc": [
+      "Beginning at Level 7, choose a weapon you are proficient in. You now deal an extra 1d6 damage with that weapon."
+    ],
+  },
+  {
+    "class": {
+      index: 2,
+      "name": "Bard"
+    },
+    "subclass": {
+      key: 'valor',
+      "name": "College of Valor"
+    },
+    "name": "Combat Inspiration",
+    "level": 3,
+    combat: true,
+    short_desc: "Bardic Inspiration can be used on dmg roll and to buff AC when attacked",
+    "desc": [
+      "Also at 3rd level, you learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to a weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses."
     ],
   },
 ];

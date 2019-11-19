@@ -255,11 +255,8 @@ export const CLASSES = {
 		},
     chooses_subclass_at_level: 3,
 		"subclasses": [
-			{"value": "glamour","label": "Glamour"},
-			{"value": "lore","label": "Lore"},
-			{"value": "swords","label": "Swords"},
-			{"value": "valor","label": "Valor"},
-			{"value": "whispers","label": "Whispers"}
+			{"value": "lore","label": "College of Lore"},
+			{"value": "valor","label": "College of Valor"},
 		],
 	},
 	cleric: {
@@ -564,6 +561,7 @@ export const CLASSES = {
 		},
     chooses_subclass_at_level: 3,
 		"subclasses": [
+			{ "value": "weapon_master", label: "Weapon Master"},
 			{ "value": "battle_master", label: "Battle Master"},
 			{ "value": "champion", label: "Champion"},
 			{ "value": "eldritch_knight", label: "Eldritch Knight"},

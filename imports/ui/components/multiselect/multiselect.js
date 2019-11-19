@@ -1,6 +1,9 @@
 import 'chosen-js';
 import './multiselect.html';
 
+Template.multiselect.onDestroyed(function(){
+  this.$('select').chosen('destroy');
+})
 Template.multiselect.onRendered(function(){
   this.$('select').chosen({
     disable_search: true,

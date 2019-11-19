@@ -210,18 +210,28 @@ export const SUBCLASSES = {
     key: 'battle_master',
     name: "Battle Master",
     desc: [
+      "Those who emulate the archetypal Battle Master employ martial techniques passed down through generations. To a Battle Master, combat is an academic field, sometimes including subjects beyond battle such as weaponsmithing and calligraphy. Not every fighter absorbs the lessons of history, theory, and artistry that are reflected in the Battle Master archetype, but those who do are well-rounded fighters of great skill and knowledge."
     ]
   },
   champion: {
     key: 'champion',
     name: "Champion",
     desc: [
+      "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection. Those who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows."
     ]
+  },
+  weapon_master: {
+    key: 'weapon_master',
+    name: 'Weapon Master',
+    desc: [
+      "The Weapon Master is a warrior who not only seeks thrill and honor in combat but is revered for the way they fight. Tales of their combat prowess and proficiency on the battlefield echo throughout the planes."
+    ],
   },
   eldritch_knight: {
     key: 'eldritch_knight',
     name: "Eldritch Knight",
     desc: [
+      "The archetypal Eldritch Knight combines the martial mastery common to all fighters with a careful study of magic. Eldritch Knights use magical techniques similar to those practiced by wizards. They focus their study on two of the eight schools of magic—abjuration and evocation. Abjuration spells grant an Eldritch Knight additional protection in battle, and evocation spells deal damage to many foes at once, extending the fighter's reach in combat. These knights learn a comparatively small number of spells, committing them to memory instead of keeping them in a spellbook."
     ]
   },
   four_elements: {
@@ -302,6 +312,27 @@ export const SUBCLASSES = {
     desc: [
       "You are a student of spells that modify energy and matter. To you, the world is not a fixed thing, but eminently mutable, and you delight in being an agent of change. You wield the raw stuff of creation and learn to alter both physical forms and mental qualities. Your magic gives you the tools to become a smith on reality's forge.",
       "Some transmuters are tinkerers and pranksters, turning people into toads and transforming copper into silver for fun and occasional profit. Others pursue their magical studies with deadly seriousness, seeking the power of the gods to make and destroy worlds."
+    ],
+  },
+  lore: {
+    key: 'lore',
+    name: 'College of Lore',
+    desc: [
+      "Bards of the College of Lore know something about most things, collecting bits of knowledge from sources as diverse as scholarly tomes and peasant tales. Whether singing folk ballads in taverns or elaborate compositions in royal courts, these bards use their gifts to hold audiences spellbound. When the applause dies down, the audience members might find themselves questioning everything they held to be true, from their faith in the priesthood of the local temple to their loyalty to the king.",
+      "The loyalty of these bards lies in the pursuit of beauty and truth, not in fealty to a monarch or following the tenets of a deity. A noble who keeps such a bard as a herald or advisor knows that the bard would rather be honest than politic.",
+      "The college's members gather in libraries and sometimes in actual colleges, complete with classrooms and dormitories, to share their lore with one another. They also meet at festivals or affairs of state, where they can expose corruption, unravel lies, and poke fun at self-important figures of authority.",
+    ],
+  },
+  valor: {
+    key: 'valor',
+    name: 'College of Valor',
+    desc: [
+      "Bards of the College of Valor are daring skalds whose tales keep alive the memory of the great heroes of the past, and thereby inspire a new generation of heroes. These bards gather in mead halls or around great bonfires to sing the deeds of the mighty, both past and present. They travel the land to witness great events firsthand and to ensure that the memory of those events doesn't pass from the world. With their songs, they inspire others to reach the same heights of accomplishment as the heroes of old."
+    ],
+    proficiencies: [
+      {name: "Medium armor", "url": "http://www.dnd5eapi.co/api/proficiencies/2"},
+      {name: "Shields", "url": "http://www.dnd5eapi.co/api/proficiencies/18"},
+      {name: "Martial weapons", "url": "http://www.dnd5eapi.co/api/proficiencies/20"},
     ],
   },
 };

@@ -7,6 +7,14 @@
     {{#each line in subclassDescription}}
       <div>{{line}}</div>
     {{/each}}
+    {{#if chosenSubclass.proficiencies}}
+      <p>
+        This subclass also gives you automatic proficiency in
+        {{#each prof in chosenSubclass.proficiencies}}
+          {{prof.name}},
+        {{/each}}
+      </p>
+    {{/if}}
   {{/if}}
   <ul>
     <u>New stuff</u>
@@ -16,6 +24,21 @@
         {{#each line in feature.desc}}
           <div>{{line}}</div>
         {{/each}}
+        {{#if feature.choice}}
+          {{#if equals feature.choice.type 'maneuver'}}
+            {{> multiselect options=feature.choice.from max=feature.choice.choose name='maneuvers' className='maneuvers-select'}}
+          {{/if}}
+          {{#if equals feature.choice.type 'proficiency'}}
+            {{#if equals feature.choice.filter 'Skills'}}
+              {{> multiselect options=allPossibleSkills max=feature.choice.choose name='skills_proficiency' className='proficiency-select'}}
+            {{/if}}
+          {{/if}}
+          {{#if equals feature.choice.type 'expertise'}}
+            {{#if equals feature.choice.filter 'Skills'}}
+              {{> multiselect options=filteredSkills max=feature.choice.choose name='skills_expertise' className='expertise-select'}}
+            {{/if}}
+          {{/if}}
+        {{/if}}
       </li>
     {{/each}}
     <li>Hit point maximum will increase by {{hpMaxIncrease}}</li>

@@ -48,6 +48,19 @@ Characters.helpers({
       return PROFICIENCIES[index].name;
     }).join(', ');
   },
+  skills(){
+    return _.select(
+      _.map(this.proficiencies, function(val, index){
+        var obj = _.clone(PROFICIENCIES[index]);
+        obj.multiplier = val;
+        return obj;
+      }),
+
+      function(prof){
+        return prof.type == 'Skills';
+      }
+    );
+  },
   spellcasting(){
     return SPELLCASTING[this.klass];
   },

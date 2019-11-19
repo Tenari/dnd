@@ -192,60 +192,81 @@ Meteor.methods({
   },
   'characters.levelUp'(cId, choices){
     let character = Characters.findOne(cId);
-    if (character.needsToLevelUp()) {
-      character.level += 1;
+    if (!character.needsToLevelUp()) { return false; }
 
-      character.hitDieMax += 1;
-      character.hitDieRemaining += 1;
+    character.level += 1;
 
-      const hpBuff = _.max([(character.hitDieType / 2 + 1) + abilityModifier(character.con), 1])
-      character.hp_max += hpBuff;
-      const hpBonusTrait = _.find(character.traits(), function(trait){return trait.hp_max_bonus_per_level;});
-      if (hpBonusTrait) {
-        character.hp_max += hpBonusTrait.hp_max_bonus_per_level;
-      }
+    character.hitDieMax += 1;
+    character.hitDieRemaining += 1;
 
-      character.hp = character.hp_max;
-
-      const spellcasting = character.spellcasting();
-      if (spellcasting && choices.newSpells) {
-        choices.newSpells.forEach(function(newSpell){
-          character.spells.known.push(newSpell)
-        })
-        if (spellcasting.all_prepared) {
-          choices.newSpells.forEach(function(newSpell){
-            character.spells.prepared.push(newSpell)
-          })
-        }
-      }
-
-      // assign the subclass if it was chosen
-      if (choices.subclass && SUBCLASSES[choices.subclass]){
-        character.subclass = choices.subclass;
-      }
-      // assign the subclass cantrips/spells if there are any for this level
-      _.each({cantrips: 'cantrips', spells: 'known'}, function(characterKey, subclassKey){
-        if (character.subclass && SUBCLASSES[character.subclass][subclassKey] && SUBCLASSES[character.subclass][subclassKey][character.level]) {
-          SUBCLASSES[character.subclass][subclassKey][character.level].forEach(function(spellName){
-            character.spells[characterKey].push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability});
-          })
-        }
-      })
-
-      // if their class knows all its spells automatically, update their list to include
-      if (spellcasting && spellcasting.all_known) {
-        const className = character.classObj().name;
-        const maxSpellLevel = _.max(_.keys(spellcasting.details_per_level[character.level].slots));
-        let known = _.map(_.select(SPELLS, function(spell){
-          return spell.level != 0 && spell.level <= maxSpellLevel && _.pluck(spell.classes, 'name').includes(className);
-        }), function(spell){
-          return {name: spell.name, spellcasting_ability: spellcasting.spellcasting_ability};
-        });
-        character.spells.known = _.uniq(_.union(character.spells.known, known), false, function(spell){return spell.name;});
-      }
-
-      Characters.update(cId, character);
+    const hpBuff = _.max([(character.hitDieType / 2 + 1) + abilityModifier(character.con), 1])
+    character.hp_max += hpBuff;
+    const hpBonusTrait = _.find(character.traits(), function(trait){return trait.hp_max_bonus_per_level;});
+    if (hpBonusTrait) {
+      character.hp_max += hpBonusTrait.hp_max_bonus_per_level;
     }
+
+    character.hp = character.hp_max;
+
+    const spellcasting = character.spellcasting();
+    if (spellcasting && choices.newSpells) {
+      choices.newSpells.forEach(function(newSpell){
+        character.spells.known.push(newSpell)
+      })
+      if (spellcasting.all_prepared) {
+        choices.newSpells.forEach(function(newSpell){
+          character.spells.prepared.push(newSpell)
+        })
+      }
+    }
+
+    // assign the subclass if it was chosen
+    if (choices.subclass && SUBCLASSES[choices.subclass]){
+      character.subclass = choices.subclass;
+
+      if (SUBCLASSES[choices.subclass].proficiencies) {
+        const subclassProfs = _.map(SUBCLASSES[choices.subclass].proficiencies, indexFromUrl);
+        _.each(subclassProfs, function(index){
+          character.proficiencies[index] = _.max([1, character.proficiencies[index]||0]); // raise proficiencies multipler to 1 or leave at whatever higher number it was before.
+        })
+      }
+    }
+    // assign the subclass cantrips/spells if there are any for this level
+    _.each({cantrips: 'cantrips', spells: 'known'}, function(characterKey, subclassKey){
+      if (character.subclass && SUBCLASSES[character.subclass][subclassKey] && SUBCLASSES[character.subclass][subclassKey][character.level]) {
+        SUBCLASSES[character.subclass][subclassKey][character.level].forEach(function(spellName){
+          character.spells[characterKey].push({name: spellName, spellcasting_ability: spellcasting.spellcasting_ability});
+        })
+      }
+    })
+
+    // if their class knows all its spells automatically, update their list to include
+    if (spellcasting && spellcasting.all_known) {
+      const className = character.classObj().name;
+      const maxSpellLevel = _.max(_.keys(spellcasting.details_per_level[character.level].slots));
+      let known = _.map(_.select(SPELLS, function(spell){
+        return spell.level != 0 && spell.level <= maxSpellLevel && _.pluck(spell.classes, 'name').includes(className);
+      }), function(spell){
+        return {name: spell.name, spellcasting_ability: spellcasting.spellcasting_ability};
+      });
+      character.spells.known = _.uniq(_.union(character.spells.known, known), false, function(spell){return spell.name;});
+    }
+
+    // proficiencies chosen to learn?
+    if (choices.proficiencies) {
+      _.each(choices.proficiencies, function(index) {
+        character.proficiencies[index] = _.max([1, character.proficiencies[index]||0]); // multiplier is 1 or whatever it already was if they stupidly picked to learn what they already knew
+      })
+    }
+
+    // expertise learned?
+    if (choices.expertise) {
+      _.each(choices.expertise, function(index) {
+        character.proficiencies[index] = 2; // expertise proficiency is doubled
+      })
+    }
+
+    Characters.update(cId, character);
   },
   'characters.saveText'(cId, field, text) {
     Characters.update(cId, {$set: {[field]: text}})

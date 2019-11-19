@@ -103,7 +103,7 @@
           <div class="attack-row">
             <div class="range">{{feature.source}}</div>
             <div class="name">{{feature.name}}</div>
-            <div class="details" title="{{feature.desc}}">{{feature.desc}}</div>
+            <div class="details" title="{{feature.desc}}">{{#if feature.short_desc}}{{feature.short_desc}}{{else}}{{feature.desc}}{{/if}}</div>
           </div>
         {{/each}}
         <div class="label">Other Combat actions</div>
