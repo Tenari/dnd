@@ -226,8 +226,11 @@
       <div class="equipment">
         Items:
         {{#each item in characterItems}}
-          <div>
+          <div title="{{item.desc}}">
             {{item.name}} ({{item.equipment_category}})
+            {{#if item.desc}}
+              (!)
+            {{/if}}
             {{#if item.equipped character}}
               [Equipped]
             {{else}}
