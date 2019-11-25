@@ -6,6 +6,9 @@ Template.flavorBox.onCreated(function(){
 Template.flavorBox.helpers({
   editing(){
     return Template.instance().editing.get();
+  },
+  splitLines(string) {
+    return string.split("\n");
   }
 })
 Template.flavorBox.events({
