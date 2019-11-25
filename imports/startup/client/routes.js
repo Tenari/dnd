@@ -11,6 +11,7 @@ import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
 import '../../ui/pages/prepare-spells/prepare-spells.js';
 import '../../ui/pages/encounter/encounter.js';
+import '../../ui/pages/item/item.js';
 import '../../ui/pages/dm/dm.js';
 import '../../ui/pages/character/character.js';
 import '../../ui/pages/level/level.js';
@@ -88,6 +89,12 @@ FlowRouter.route('/game/:_id/level/:cid', {
   name: 'Character.level',
   action() {
     BlazeLayout.render('App_body', { main: 'level_up' });
+  },
+});
+FlowRouter.route('/item/new', {
+  name: 'Item.create',
+  action() {
+    BlazeLayout.render('App_body', { main: 'create_item' });
   },
 });
 

@@ -68,6 +68,10 @@ Meteor.methods({
       character.items.splice(_.indexOf(character.items, id), 1);
       Characters.update(cid, {$set: {items: character.items}})
     }
+  },
+  'items.create'(jsonString) {
+    const id = Items.insert(JSON.parse(jsonString));
+    return id;
   }
 });
 

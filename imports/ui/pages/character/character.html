@@ -215,11 +215,11 @@
         {{/each}}
       </table>
       <div class="flavor">
+        {{> flavorBox label="notes" field="notes" text=character.notes}}
         {{> flavorBox label="personality traits" field="personality_traits" text=character.personality_traits}}
         {{> flavorBox label="ideals" field="ideals" text=character.ideals}}
         {{> flavorBox label="bonds" field="bonds" text=character.bonds}}
         {{> flavorBox label="flaws" field="flaws" text=character.flaws}}
-        {{> flavorBox label="notes" field="notes" text=character.notes}}
       </div>
     </div>
     <div class="columns">

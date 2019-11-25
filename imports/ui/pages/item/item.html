@@ -1,0 +1,40 @@
+<template name="create_item">
+  <div>json: <textarea class="new-item-json">{
+  "name": "Warhammer",
+  "equipment_category": "Weapon",
+  "weapon_category": "Martial",
+  "weapon_range": "Melee",
+  "category_range": "Martial Melee",
+  "cost": {
+    "quantity": 15,
+    "unit": "gp"
+  },
+  "damage": {
+    "dice_count": 1,
+    "dice_value": 8,
+    "damage_type": {
+      "url": "http://www.dnd5eapi.co/api/damage-types/2",
+      "name": "Bludgeoning"
+    }
+  },
+  "range": {
+    "normal": 5,
+    "long": null
+  },
+  "weight": 2,
+  "properties": [{
+    "url": "http://www.dnd5eapi.co/api/weapon-properties/10",
+    "name": "Versatile"
+  }],
+  "2h_damage": {
+    "dice_count": 1,
+    "dice_value": 10,
+    "damage_type": {
+      "url": "http://www.dnd5eapi.co/api/damage-types/2",
+      "name": "Bludgeoning"
+    }
+  },
+  "desc": "this item does blah blah blah when used"
+}</textarea></div>
+  <button class="save-new-item">insert</button>
+</template>
