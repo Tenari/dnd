@@ -188,7 +188,7 @@ or bonds. The DM can also decide that circumstances influence a roll in one dire
     const klass = CLASSES[this.klass];
     const level = this.level;
     return _.select(CLASS_FEATURES, function(feature) {
-      return feature.class.level <= level && feature.class.name == klass.name;
+      return feature.level <= level && feature.class.name == klass.name;
     })
   },
   canPerformAction(key, params) {
