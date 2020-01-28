@@ -45,6 +45,10 @@ export function calculateAC(character, items) {
 
   let armor = _.find(items, function(item) {return item.equipment_category == "Armor" && item.armor_category != 'Shield';});
   let shield = _.find(items, function(item) {return item.equipment_category == "Armor" && item.armor_category == 'Shield';});
+  if (_.find(character.features(), function(feature){return feature.name == "Unarmored Defense"}) && !armor){
+    return 10 + abilityModifier(character.dex) + abilityModifier(character.con) + (shield && shield.armor_class.base || 0);
+  }
+
   if (armor || shield) {
     let dexBonus = abilityModifier(character.dex);
     if (armor) {
