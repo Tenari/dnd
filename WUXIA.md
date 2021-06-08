@@ -118,7 +118,7 @@ The format for a path overview description is:
 The Path Name
 
 | Item | Detail |
-| --- | --- |
+| ---  | ---    |
 | Highest Level attained | cultivation level of the founder/strongest practicioner |
 | Main Weapon            | Unarmed/dagger/sword/blunt/staff/thrown/bow             |
 | Rarity                 | Common/Uncommon/Rare/Extinct                            |
@@ -136,6 +136,8 @@ The Path Name
 
 The Heart of Pure Stars
 
+| Item | Detail |
+| ---  | ---    |
 | Highest Level attained | Immortal   |
 | Main Weapon            | Bow        |
 | Rarity                 | Uncommon   |
@@ -147,6 +149,8 @@ The Heart of Pure Stars
 
 The Path of the Flaming Fist
 
+| Item | Detail |
+| ---  | ---    |
 | Highest Level attained | Diamond |
 | Main Weapon            | Unarmed |
 | Rarity                 | Common  |
@@ -154,6 +158,8 @@ The Path of the Flaming Fist
 
 The Fiery Forge Path
 
+| Item | Detail |
+| ---  | ---    |
 | Highest Level attained | Heavenly Ruler |
 | Main Weapon            | Hammer         |
 | Rarity                 | Uncommon       |
@@ -161,6 +167,8 @@ The Fiery Forge Path
 
 The Feet of Five Flames
 
+| Item | Detail |
+| ---  | ---    |
 | Highest Level attained | Immortal       |
 | Main Weapon            | Mace + Unarmed |
 | Rarity                 | Rare           |
