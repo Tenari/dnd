@@ -64,7 +64,9 @@ Sect Masters:
 
 Next, you must fill out your techniques on the Character Sheet.
 
-#### Techinques
+#### Starting Techinques
+
+Techinques are either combat or non-combat powers/abilities that you can use. Often they use up chi.
 
 ## Progression
 
@@ -108,6 +110,7 @@ within each stage, you must grow your core until it can contain enough chi to sp
 ## Basic Game Cyle
 
 go on adventure/quest. get loot of monster cores/items. absorb chi from cores
+
 ## Paths
 
 The format for a path overview description is:
@@ -126,6 +129,17 @@ The Path Name
 **Rarity** affects how difficult it is to find path manuals and instructors and fellow practicioners to learn from.
 
 **Focus** What the path will help you succeed the most at. Not every path is for pure combat.
+
+#### Pure Paths
+
+The Heart of Pure Stars
+
+| Highest Level attained | Immortal   |
+| Main Weapon            | Bow        |
+| Rarity                 | Uncommon   |
+| Focus                  | Enchanting |
+
+#### Wood (life) Paths
 
 #### Fire Paths
 
@@ -149,3 +163,35 @@ The Feet of Five Flames
 | Main Weapon            | Mace + Unarmed |
 | Rarity                 | Rare           |
 | Focus                  | Combat         |
+
+#### Water Paths
+
+#### Metal
+
+#### Earth
+
+#### Air = wood + fire
+
+#### Blood = wood + water
+
+#### Force = wood + metal
+
+#### Gravity = wood + earth
+
+#### Lightning = fire + water
+
+#### Light = fire + metal
+
+#### Lava = fire + earth
+
+#### Ice = water + Air
+
+#### Decay = water + metal
+
+#### Acid = water + earth
+
+#### Dark = metal + earth
+
+## Items
+
+
