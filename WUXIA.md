@@ -7,9 +7,9 @@ In Wuxia, martial artists cultivate chi to become more powerful, eventually seek
 1. Name your character. Choose your Gender.
 2. How old were you when you learned to absorb chi? (5-50 years) Also fill in your height.
 3. Choose your family background:
-  - large/medium/small clan
-  - Noble/artisan/peasant family
-  - farming/fishing/mining/capital town
+    - large/medium/small clan
+    - Noble/artisan/peasant family
+    - farming/fishing/mining/capital town
 4. How did you learn? personal meditation | family teaching | martial arts practice | alchemical pill/natural treasure
 5. Roll your Base Stats.
 6. Choose a Path.
@@ -117,6 +117,8 @@ The format for a path overview description is:
 
 The Path Name
 
+| Item | Detail |
+| --- | --- |
 | Highest Level attained | cultivation level of the founder/strongest practicioner |
 | Main Weapon            | Unarmed/dagger/sword/blunt/staff/thrown/bow             |
 | Rarity                 | Common/Uncommon/Rare/Extinct                            |
