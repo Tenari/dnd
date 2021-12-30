@@ -1,0 +1,192 @@
+<template name="wuxia_createCharacter">
+  <form class="character-create-form">
+    <div class="character-create-row">
+      <div class="header-section"></div>
+      <div class="content-section">
+        <p class="character-name-row">
+          Name <input type="text" name="name" class="character-name"/>
+        </p>
+        <p class="gender-alignment">
+          <div>Gender: {{> dropdown options=genders className='genders'}}</div>
+          <div>Age: <input type="number" name="age" class="character-age"/></div>
+          <div>Height: <input type="number" name="height" class="character-height"/></div>
+        </p>
+      </div>
+    </div>
+
+    <p>In <strong>Wuxia</strong>, martial artists cultivate chi to become more powerful, eventually seeking to ascend. There are rare herbs, secret techiniques, magical pills and elixirs, storage rings, flying swords, talking dragons, and much more. The first step is to become a cultivator (a martial artist who can control chi), and choose a path.</p>
+    <p>Instead of levels 1 to 30 like in DnD, in this game you progress through different stages of enlightenment, eventually becoming an <strong>immortal</strong>. Within each stage, you must grow your core until it can contain enough chi to spend it to advance. You grow your core primarily by "purifying" which just means spending all your chi at once to reinforce your body. Each purification lets you roll 1d6 to expand your core's capacity and costs all the chi you can contain. If you spend a day cultivating in a good environment, you can fill your core completely. Since this is a somewhat slow method to progress, items like monster cores and magical pills are very helpful in providing chi that you can use to quickly purify multiple times in a row.</p>
+    <p>The stages of enlightenment are:</p>
+
+    <ul>
+      <li>Earthly realm:
+        <ul>
+          <li>iron</li>
+          <li>copper</li>
+          <li>silver</li>
+          <li>gold</li>
+        </ul>
+      </li>
+
+      <li>Precious realm:
+        <ul>
+          <li>marble</li>
+          <li>jade</li>
+          <li>opal</li>
+          <li>diamond</li>
+        </ul>
+      </li>
+
+      <li>Heavenly realm:
+        <ul>
+          <li>heavenly messenger</li>
+          <li>heavenly warrior</li>
+          <li>heavenly ruler</li>
+        </ul>
+      </li>
+
+      <li>Immortal</li>
+    </ul>
+
+    <p>The main stats are Strength, Quickness, Intelligence, Charisma, Tranquility. You start out with a 0 in all of them. You get some bonuses for family background:</p>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Clan Size</div>
+        <div class="section-detail">{{> dropdown options=clanSizes className='clanSizes' blank='true'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{backgroundDescription 'clanSize'}}</div>
+        <p>Clan size bonus: {{backgroundBonus 'clanSize'}}</p>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Family Status</div>
+        <div class="section-detail">{{> dropdown options=familyStatuses className='familyStatuses' blank='true'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{backgroundDescription 'familyStatus'}}</div>
+        <p>Family status bonus: {{backgroundBonus 'familyStatus'}}</p>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Home Town</div>
+        <div class="section-detail">{{> dropdown options=hometowns className='hometowns' blank='true'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{backgroundDescription 'hometown'}}</div>
+        <p>Home town bonus: {{backgroundBonus 'hometown'}}</p>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">First Step</div>
+        <div class="section-detail">{{> dropdown options=firstSteps className='firstSteps' blank='true'}}</div>
+      </div>
+      <div class="content-section">
+        <div>{{backgroundDescription 'firstStep'}}</div>
+        <p>First step bonus: {{backgroundBonus 'firstStep'}}</p>
+      </div>
+    </div>
+
+    {{#if notReactiveVar 'firstStep'}}
+    {{else}}
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Ability Scores</div>
+        <div class="section-detail">Points Left: {{reactiveVar 'buyPoints'}}</div>
+      </div>
+      <ul class="abilities-list">
+        {{#each ability in abilities}}
+          <li>
+            <span class="ability-label">{{ability.label}}</span>
+            <button class="decrement" data-key="{{ability.key}}">-</button><span class="score">{{reactiveVar ability.key}}</span><button class="increment" data-key="{{ability.key}}">+</button>
+            {{backgroundBonusFor ability.key}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    {{#if reactiveVar 'buyPoints'}}
+    {{else}}
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Path Affinity</div>
+        <div class="section-detail">{{> dropdown options=affinities className='affinities'}}</div>
+      </div>
+      <div class="content-section columns">
+        <div class="path-diagram">
+          <div class="wood path {{affinityHighlightedClass 'wood'}}">Wood</div>
+          <div class="fire path {{affinityHighlightedClass 'fire'}}">Fire</div>
+          <div class="earth path {{affinityHighlightedClass 'earth'}}">Earth</div>
+          <div class="metal path {{affinityHighlightedClass 'metal'}}">Metal</div>
+          <div class="water path {{affinityHighlightedClass 'water'}}">Water</div>
+
+          <div class="pure path {{affinityHighlightedClass 'pure'}}">Pure</div>
+        </div>
+        <div>
+          <p>Available Paths</p>
+          <table class="list-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Highest Level Attained</th>
+                <th>Main Weapon</th>
+                <th>Rarity</th>
+                <th>Focus</th>
+              </tr>
+            </thead>
+            <tbody>
+            {{#each path in pathsForAffinity}}
+              <tr>
+                <td>{{path.label}}</td>
+                <td>{{path.high}}</td>
+                <td>{{path.weapon}}</td>
+                <td>{{path.rarity}}</td>
+                <td>{{path.focus}}</td>
+              </tr>
+            {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Path Name</div>
+      </div>
+      <div class="content-section">
+        <p class="character-name-row"><input type="text" name="path_name" class="path-name"/></p>
+        <p>You can choose to follow a pre-existing path, or to create your own. Functionally, a path is just a series of techniques. You can even change your path if you stumble across the path-manual to a path you prefer. You may keep the blank or fill in the name of your path at this time. If your Sect Master has a path, he can teach you that path more conveniently than if you want to follow some other path, but it is not required for you to follow his path.</p>
+      </div>
+    </div>
+
+    <div class="character-create-row">
+      <div class="header-section">
+        <div class="section-title">Sect Master</div>
+        <div class="section-detail">{{> dropdown options=masters className='masters'}}</div>
+      </div>
+      <div class="content-section">
+        <p>{{masterDescription}} for the Tranquil Mountain Warrior Sect</p>
+        <p>Path: {{masterPath}} ({{masterPathChi}})</p>
+      </div>
+    </div>
+
+    {{/if}}
+    {{/if}}
+
+    {{#if canCreateCharacter}}
+      <div><button class="submit-character">CREATE CHARACTER!!!</button></div>
+    {{else}}
+      <div>[Form not filled out]</div>
+    {{/if}}
+  </form>
+</template>

@@ -94,4 +94,36 @@ form.character-create-form {
       }
     }
   }
+  .path-diagram {
+    position: relative;
+    height: 300px;
+    width: 270px;
+    .path {
+      position: absolute;
+      height: 50px;
+      width: 50px;
+      border: 2px solid black;
+      border-radius: 50%;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.highlighted-affinity {
+        border-width: 4px;
+        box-shadow: 0px 0px 3px 3px #888;
+      }
+    }
+    .wood { background-color: green; left: 100px; top: 0;}
+    .fire { background-color: red;   left: 170px; top: 50px;}
+    .earth { background-color: brown;left: 140px; top: 130px;}
+    .metal { background-color: gray; left: 60px;  top: 130px;}
+    .water { background-color: blue; left: 30px;  top: 50px;}
+    .pure { color: black;            left: 100px; top: 74px;}
+  }
+  table.list-table {
+    th, td {
+      border: 1px solid black;
+    }
+  }
 }

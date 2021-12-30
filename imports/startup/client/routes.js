@@ -9,6 +9,7 @@ import '../../ui/pages/monsters/monsters.js';
 import '../../ui/pages/create-game/create-game.js';
 import '../../ui/pages/game-details/game-details.js';
 import '../../ui/pages/character-create/character-create.js';
+import '../../ui/pages/wuxia/createCharacter/createCharacter.js';
 import '../../ui/pages/prepare-spells/prepare-spells.js';
 import '../../ui/pages/encounter/encounter.js';
 import '../../ui/pages/item/item.js';
@@ -53,6 +54,12 @@ FlowRouter.route('/game/:_id/character/create', {
   name: 'Character.create',
   action() {
     BlazeLayout.render('App_body', { main: 'Character_create' });
+  },
+});
+FlowRouter.route('/game/:_id/wuxia/character/create', {
+  name: 'Wuxia.character.create',
+  action() {
+    BlazeLayout.render('App_body', { main: 'wuxia_createCharacter' });
   },
 });
 FlowRouter.route('/game/:_id/character/:cid', {

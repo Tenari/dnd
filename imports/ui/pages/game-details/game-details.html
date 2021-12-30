@@ -11,7 +11,11 @@
     {{#if hasCharacter}}
       <a href="/game/{{gameId}}/play">Play game</a>
     {{else}}
-      <a href="/game/{{gameId}}/character/create">Create a character to join this game</a>
+      {{#if isWuxiaGame}}
+        <a href="/game/{{gameId}}/wuxia/character/create">Create a wuxia character to join this game</a>
+      {{else}}
+        <a href="/game/{{gameId}}/character/create">Create a character to join this game</a>
+      {{/if}}
     {{/if}}
     <ul>
       {{#each characters}}

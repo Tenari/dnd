@@ -25,6 +25,9 @@ Template.Game_details.helpers({
   description() {
     return Games.findOne(Template.instance().gameId).description;
   },
+  isWuxiaGame() {
+    return Games.findOne(Template.instance().gameId).description == 'wuxia';
+  },
   isDM() {
     return Meteor.userId() == Games.findOne(Template.instance().gameId).userId;
   },

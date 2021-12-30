@@ -1,5 +1,8 @@
 <template name="dropdown">
   <select class="{{className}}" data-key="{{key}}">
+    {{#if blank}}
+      <option disabled selected value></option>
+    {{/if}}
     {{#each options}}
       <option value="{{value}}">{{label}}</option>
     {{/each}}
