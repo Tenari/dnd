@@ -156,7 +156,6 @@ export const AFFINITIES = {
     bases: ['earth'],
   },
 
-/*
   // wood + X
   air: {
     key: 'air',
@@ -199,17 +198,12 @@ export const AFFINITIES = {
   // water + X
   ice: {
     key: 'ice',
-    label: 'Ice (water + wood + fire)',
-    bases: ['water','wood','fire'],
+    label: 'Ice (water + metal)',
+    bases: ['water','metal'],
   },
   decay: {
     key: 'decay',
-    label: 'Decay (water + metal)',
-    bases: ['water','metal'],
-  },
-  acid: {
-    key: 'acid',
-    label: 'Acid (water + earth)',
+    label: 'Decay (water + earth)',
     bases: ['water','earth'],
   },
 
@@ -219,7 +213,6 @@ export const AFFINITIES = {
     label: 'Dark (metal + earth)',
     bases: ['metal','earth'],
   },
-*/
 };
 
 export const SECT_MASTERS = {
@@ -247,9 +240,9 @@ export const SECT_MASTERS = {
     name: "Master Xin",
     path: 'feet_of_five_flames',
   },
-  staff: {
-    key: "staff",
-    label: "Staff/Spear Martial Master",
+  pole: {
+    key: "pole",
+    label: "Polearm Martial Master",
     name: "Master Li",
     path: 'trodden_earth',
   },
@@ -303,7 +296,7 @@ export const PATHS = {
    label: "The Path of Overflowing Growth",
    chi: 'wood',
    high: 'Heavenly Ruler',
-   weapon: 'staff',
+   weapon: 'pole',
    rarity: 'Uncommon',
    focus: 'alchemy',
    techniques: ['duplicate_plant'],
@@ -317,7 +310,7 @@ export const PATHS = {
    weapon: 'unarmed',
    rarity: 'Common',
    focus: 'combat',
-   techniques: ['fire_punch'],
+   techniques: ['double_strike', 'basic_chi_strike','fire_punch'],
  },
  fiery_forge: {
    key: 'fiery_forge',
@@ -327,7 +320,7 @@ export const PATHS = {
    weapon: 'blunt',
    rarity: 'Uncommon',
    focus: 'smithing',
-   techniques: [],
+   techniques: ['basic_swing'],
  },
  feet_of_five_flames: {
    key: 'feet_of_five_flames',
@@ -337,7 +330,7 @@ export const PATHS = {
    weapon: 'blunt',
    rarity: 'Rare',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_swing"],
  },
  // water
  flowing_blade: {
@@ -348,7 +341,7 @@ export const PATHS = {
    weapon: 'dagger',
    rarity: 'Common',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_stab", "basic_chi_stab", "stab_like_water"],
  },
  // metal
  endless_sword: {
@@ -359,7 +352,7 @@ export const PATHS = {
    weapon: 'sword',
    rarity: 'Rare',
    focus: 'combat',
-   techniques: ['endless_sword'],
+   techniques: ['basic_slash','endless_sword'],
  },
  // earth
  trodden_earth: {
@@ -367,10 +360,10 @@ export const PATHS = {
    label: "The Trodden Earth Path",
    chi: 'earth',
    high: 'Immortal',
-   weapon: 'staff',
+   weapon: 'pole',
    rarity: 'Common',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_block"],
  },
  // air
  gentle_breeze: {
@@ -381,7 +374,7 @@ export const PATHS = {
    weapon: 'thrown',
    rarity: 'Uncommon',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_throw"],
  },
  // blood
  dripping_death: {
@@ -392,7 +385,7 @@ export const PATHS = {
    weapon: 'bow',
    rarity: 'Rare',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_shot"],
  },
  // force
  unseen_arrow: {
@@ -403,51 +396,77 @@ export const PATHS = {
    weapon: 'bow',
    rarity: 'Uncommon',
    focus: 'combat',
-   techniques: [],
+   techniques: ["basic_shot"],
  },
 };
 
 export const RARITIES = ["Common","Uncommon","Rare","Extinct"];
 
-export const TECHNIQUES = {
-  adaptive_weapon_1: {
-    key: 'adaptive_weapon_1',
-    label: 'Adaptive Weapon +1',
-    chi: 'pure',
-    desc: 'Enchant an ordinary weapon to give +1 to attacks channeling the chi type first imprinted on it.',
-    cost: 10,
-  },
-  duplicate_plant: {
-    key: 'duplicate_plant',
-    label: 'Duplicate Plant',
-    chi: 'wood',
-    desc: 'Duplicate a living plant in the ground next to it. Chi cost scales with rarity: 1/10/100/1000',
-    cost: [1,10,100,1000],
-  },
-  fire_punch: {
-    key: 'fire_punch',
-    label: 'Fire Punch',
-    chi: 'fire',
-    desc: 'Boost a punch with your fire chi.',
-    hit: 'd20+Quickness',
-    dmg: '1d4+Mastery+Tranquility',
-    cost: 1,
-  },
-  endless_sword: {
-    key: 'endless_sword',
-    label: 'Endless Sword',
-    chi: 'metal',
-    desc: 'Every enemy within 20 feet holding a bladed weapon is attacked.',
-    hit: 'd20+Quickness',
-    dmg: '1d6+Mastery+Tranquility',
-    cost: 20,
-  },
+export const TECHNIQUE_MASTERIES = {
+  incompetent: {key: 'incompetent', label: 'Incompetent', uses: 9},
+  mediocre: {key: 'mediocre', label: 'Mediocre', uses: 99},
+  competent: {key: 'competent', label: 'Competent', uses: 999},
+  innovative: {key: 'innovative', label: 'Innovative', uses: 9999},
+  master: {key: 'master', label: 'Master', uses: 9999999999},
 };
 
 export const WEAPON_TYPES = {
+  dagger: {
+    key: 'dagger',
+    label: 'Dagger',
+    range: { // this is equivalent to "melee"
+      accurate: 1 // means 1 square
+      // `penalty: X` would be a further range at which you could still hit but take a -2 to hit chance
+    },
+    dmg: 'd6',
+    cost: 'low',
+  },
+  sword: {
+    key: 'sword',
+    label: 'Sword',
+    range: {
+      accurate: 1,
+    },
+    dmg: 'd8',
+    cost: 'high',
+  },
+  blunt: {
+    key: 'blunt',
+    label: 'Blunt (mace/club)',
+    range: {
+      accurate: 1,
+    },
+    dmg: 'd6',
+    cost: 'med',
+  },
+  pole: {
+    key: 'pole',
+    label: 'Polearm',
+    range: {
+      accurate: 1,
+      penalty:  2,
+    },
+    dmg: 'd6',
+    cost: 'low',
+  },
+  thrown: {
+    key: 'thrown',
+    label: 'Thrown',
+    range: {
+      accurate: 4,
+      penalty:  8,
+    },
+    dmg: 'd4',
+    cost: 'med',
+  },
   bow: {
     key: 'bow',
     label: 'Bow',
-    ranged: true,
+    range: {
+      accurate: 8,
+      penalty:  16,
+    },
+    dmg: 'd6',
+    cost: 'high',
   },
 };

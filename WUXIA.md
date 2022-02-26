@@ -101,7 +101,17 @@ Sect Masters:
 
 #### Starting Techinques
 
-Techinques are either combat or non-combat powers/abilities that you can use. Often they use up chi. They can be learned from an NPC or character that knows them, or from a technique or path manual. (A Path manual will contain multiple techniques in the same vein). To learn a technique, you must meet the minimum requirements, and make an **attempt**. (Roll a d20 and add your relevant stat modifier, and subtract the listed amount of chi). If you succeed the technique DC, you learn it, if not, you must try again. Once you know a technique, you add it to your techniques list. Each time you use it successfully, you increase your `uses` stat in the technique block by one. Techniques grow in mastery with each use, and grow more powerful at each mastery level.
+Techinques are either combat or non-combat powers/abilities that you can use. Often they use up chi. Aside from extremely basic actions that everyone can take, nearly every action is a technique you must learn.
+
+They can be learned from an NPC or character that knows them, or from a technique manual or path manual. (A Path manual will contain multiple techniques in the same vein). To learn a technique, you must meet the minimum requirements, and make an **attempt**. (Roll a d20 and add your relevant stat modifier, and subtract the listed amount of chi). If you succeed the technique DC, you learn it, if not, you must try again. Once you know a technique, you add it to your techniques list.
+
+Each time you use a technique, you increase your `uses` stat in the technique block by one. Techniques grow in mastery with each use, and grow more powerful at each mastery level. "Successfull" uses for a combat technique means landing the hit. Unsuccessfull uses will grow your `uses` stat additionally, since you learn more from failure.
+
+- incompetent: 0-9 uses
+- mediocre: 10-99 uses
+- competent: 100 - 999 uses
+- innovative: 1k - 9,999 uses
+- masterful: 10k+ uses
 
 Everyone learns a Basic Strike attack (either a kick or punch) growing up, so that is already on your character sheet.
 
@@ -160,7 +170,7 @@ The Path Name
 | Item | Detail |
 | ---  | ---    |
 | Highest Level attained | cultivation level of the founder/strongest practicioner |
-| Main Weapon            | Unarmed/dagger/sword/blunt/staff/thrown/bow             |
+| Main Weapon            | Unarmed/dagger/sword/blunt/pole/thrown/bow              |
 | Rarity                 | Common/Uncommon/Rare/Extinct                            |
 | Focus                  | Combat/Alchemical/Smithing/Gardening/Enchanting         |
 
@@ -291,11 +301,11 @@ There are six weapon classes:
 | dagger    | melee | d6 | low  |
 | sword     | melee | d8 | high |
 | blunt     | melee | d6 | med  |
-| staff     | 5/10  | d6 | low  |
+| pole      | 5/10  | d6 | low  |
 | throwable | 20/40 | d4 | med  |
 | bow       | 40/80 | d6 | high |
 
-range numbers mean accurate range/penalty range, where you take a -2 to hit when at penalty range.
+range numbers mean accurate range/penalty range (in feet), where you take a -2 to hit when at penalty range.
 
 #### Armor
 
@@ -311,7 +321,7 @@ range numbers mean accurate range/penalty range, where you take a -2 to hit when
 | Basic Stab         | 0 | wield dagger | Stab with your dagger. To Hit: `d20+Quickness` Dmg: `1d6+Mastery` |
 | Basic Slash        | 0 | wield sword  | Slash with your sword. To Hit: `d20+Quickness` Dmg: `1d8+Mastery` |
 | Basic Swing        | 0 | wield blunt  | Swing with your hammer/mace. To Hit: `d20+Quickness` Dmg: `1d6+Mastery` |
-| Basic Block        | 0 | wield staff  | Block with your staff. Gives next attack on you a -5 to Hit. |
+| Basic Block        | 0 | wield pole   | Block with your pole. Gives next attack on you a -5 to Hit. |
 | Basic Throw        | 0 | wield throwable | Throw something at your opponent. Range: `20/40` To Hit: `d20+Strength` Dmg: `1d4+Mastery` |
 | Basic Shot         | 0 | wield bow    | Shoot a bow at your opponent. Range: `40/80` To Hit: `d20+Strength` Dmg: `1d6+Mastery` |
 | Dodge              | 5 | none | As a reaction to an attack, give it -2 to hit you. |
@@ -319,14 +329,14 @@ range numbers mean accurate range/penalty range, where you take a -2 to hit when
 | Basic Chi Stab     | 1 | wield dagger | Infuse a stab with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `1d6+Mastery+Tranquility` |
 | Basic Chi Slash    | 1 | wield sword  | Infuse a slash with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `1d8+Mastery+Tranquility` |
 | Basic Chi Swing    | 1 | wield blunt  | Infuse a swing with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `1d6+Mastery+Tranquility` |
-| Basic Chi Block    | 1 | wield staff  | Add your chi to a block with your staff. Give next attack on you a -6 to hit |
+| Basic Chi Block    | 1 | wield pole   | Add your chi to a block with your pole . Give next attack on you a -6 to hit |
 | Basic Chi Throw    | 1 | wield throwable | Throw extra hard with your chi. Range: `20/40` To Hit: `d20+Quickness` Dmg: `1d4+Mastery+Tranquility` |
 | Basic Chi Shot     | 1 | wield bow    | Infuse an arrow with your chi and shoot. Range: `40/80` To Hit: `d20+Quickness` Dmg: `1d6+Mastery+Tranquility` |
 | Chi Strike   | 10 | copper, hands free  | Infuse a punch with your chi to make it hit hard. To Hit: `d20+Quickness` Dmg: `2d4+Mastery+Tranquility` |
 | Chi Stab     | 10 | copper, wield dagger| Infuse a stab with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `2d6+Mastery+Tranquility` |
 | Chi Slash    | 10 | copper, wield sword | Infuse a slash with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `2d8+Mastery+Tranquility` |
 | Chi Swing    | 10 | copper, wield blunt | Infuse a swing with your chi to give it extra bite. To Hit: `d20+Quickness` Dmg: `2d6+Mastery+Tranquility` |
-| Chi Block    | 10 | copper, wield staff | Add your chi to a block with your staff. Give next attack on you a -8 to hit |
+| Chi Block    | 10 | copper, wield pole  | Add your chi to a block with your pole . Give next attack on you a -8 to hit |
 | Chi Throw    | 10 | copper, wield throwable | Throw extra hard with your chi. Range: `20/40` To Hit: `d20+Quickness` Dmg: `2d4+Mastery+Tranquility` |
 | Chi Shot     | 10 | copper, wield bow   | Infuse an arrow with your chi and shoot. Range: `40/80` To Hit: `d20+Quickness` Dmg: `2d6+Mastery+Tranquility` |
 | Chi Neutralization | 5 | none | Neutralize and balance the chi in a liquid base. (usually first step in recipies) |

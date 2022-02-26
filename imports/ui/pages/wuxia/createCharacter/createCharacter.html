@@ -161,25 +161,32 @@
 
     <div class="character-create-row">
       <div class="header-section">
-        <div class="section-title">Path Name</div>
+        <div class="section-title">Sect Master</div>
+        <div class="section-detail">{{> dropdown options=masters className='masters' blank='true'}}</div>
       </div>
       <div class="content-section">
-        <p class="character-name-row"><input type="text" name="path_name" class="path-name"/></p>
-        <p>You can choose to follow a pre-existing path, or to create your own. Functionally, a path is just a series of techniques. You can even change your path if you stumble across the path-manual to a path you prefer. You may keep the blank or fill in the name of your path at this time. If your Sect Master has a path, he can teach you that path more conveniently than if you want to follow some other path, but it is not required for you to follow his path.</p>
+        {{#if reactiveVar 'master'}}
+          <p>{{masterDescription}} for the Tranquil Mountain Warrior Sect</p>
+          <p>Path: {{masterPath}} ({{masterPathChi}})</p>
+        {{/if}}
       </div>
     </div>
 
+    {{#if reactiveVar 'master'}}
     <div class="character-create-row">
       <div class="header-section">
-        <div class="section-title">Sect Master</div>
-        <div class="section-detail">{{> dropdown options=masters className='masters'}}</div>
+        <div class="section-title">Techniques</div>
       </div>
       <div class="content-section">
-        <p>{{masterDescription}} for the Tranquil Mountain Warrior Sect</p>
-        <p>Path: {{masterPath}} ({{masterPathChi}})</p>
+        <div>{{techniques}}</div>
+        <p>
+           Choose {{techniqueCount}}
+           {{> multiselect options=techniqueOptions max=techniqueCount name='techniques' className='technique-select'}}
+        </p>
       </div>
     </div>
 
+    {{/if}}
     {{/if}}
     {{/if}}
 

@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import { ABILITIES, ABILITY_SCORE_COST, FAMILY_BACKGROUND, AFFINITIES, PATHS, SECT_MASTERS } from '../../../../configs/wuxia.js';
+import { ABILITIES, ABILITY_SCORE_COST, FAMILY_BACKGROUND, AFFINITIES, PATHS, SECT_MASTERS, TECHNIQUE_MASTERIES } from '../../../../configs/wuxia.js';
+import { TECHNIQUES } from '../../../../configs/techniques.js';
 import { attributeKeyToLabel, abilityModifier, indexFromUrl } from '../../../../configs/general.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 import './createCharacter.html';
@@ -23,7 +24,8 @@ Template.wuxia_createCharacter.onCreated(function(){
   this.firstStep = new ReactiveVar(null);
 
   this.affinity = new ReactiveVar(_.keys(AFFINITIES)[0]);
-  this.master = new ReactiveVar(_.keys(SECT_MASTERS)[0]);
+  this.master = new ReactiveVar(null);
+  this.techniques = new ReactiveVar(['basic_strike']);
 
   this.items = new ReactiveVar([]);
 
@@ -37,27 +39,43 @@ Template.wuxia_createCharacter.onCreated(function(){
 
 })
 
+const familyBgKeyLabels = (bgAttr) => {
+  return _.map(FAMILY_BACKGROUND[bgAttr], function(obj, key){
+    return {value: key, label: obj.label};
+  })
+}
+
+const currentMaster = () => {
+  return SECT_MASTERS[Template.instance().master.get()];
+}
+
+const learnableTechniques = () => {
+  const path_key = currentMaster().path;
+  const path_techs = PATHS[path_key].techniques;
+  const knownTechs = Template.instance().techniques.get();
+  return Object.values(TECHNIQUES).filter(t => {
+    return t.key === TECHNIQUES.basic_strike.key || path_techs.includes(t.key);
+  }).filter( t => {
+    let valid = true;
+    if (t.prereqs) {
+      t.prereqs.forEach(pre => {
+        if (pre.technique) {
+          if (!knownTechs.includes(pre.technique)) {
+            valid = false;
+          } else if (pre.mastery && pre.mastery !== TECHNIQUE_MASTERIES.incompetent.key) {
+            valid = false;
+          }
+        }
+      })
+    }
+    return valid;
+  });
+}
 Template.wuxia_createCharacter.helpers({
-  clanSizes(){
-    return _.map(FAMILY_BACKGROUND.clanSize, function(obj, key){
-      return {value: key, label: obj.label};
-    })
-  },
-  familyStatuses(){
-    return _.map(FAMILY_BACKGROUND.familyStatus, function(obj, key){
-      return {value: key, label: obj.label};
-    })
-  },
-  hometowns(){
-    return _.map(FAMILY_BACKGROUND.hometown, function(obj, key){
-      return {value: key, label: obj.label};
-    })
-  },
-  firstSteps(){
-    return _.map(FAMILY_BACKGROUND.firstStep, function(obj, key){
-      return {value: key, label: obj.label};
-    })
-  },
+  clanSizes(){ return familyBgKeyLabels('clanSize') },
+  familyStatuses(){ return familyBgKeyLabels('familyStatus') },
+  hometowns(){ return familyBgKeyLabels('hometown') },
+  firstSteps(){ return familyBgKeyLabels('firstStep') },
   backgroundDescription(attr) {
     return FAMILY_BACKGROUND[attr][Template.instance()[attr].get()].description;
   },
@@ -109,14 +127,14 @@ Template.wuxia_createCharacter.helpers({
     })
   },
   masterDescription(){
-    return SECT_MASTERS[Template.instance().master.get()].label;
+    return currentMaster().label;
   },
   masterPath(){
-    const path_key = SECT_MASTERS[Template.instance().master.get()].path;
+    const path_key = currentMaster().path;
     return PATHS[path_key].label;
   },
   masterPathChi(){
-    const path_key = SECT_MASTERS[Template.instance().master.get()].path;
+    const path_key = currentMaster().path;
     return AFFINITIES[PATHS[path_key].chi].label;
   },
   genders() {
@@ -131,7 +149,22 @@ Template.wuxia_createCharacter.helpers({
   canCreateCharacter(){
     const instance = Template.instance();
     const name = instance.name.get();
-    return name.length > 0 && instance.buyPoints.get() == 0;
+    const points = instance.buyPoints.get();
+    const master = instance.master.get();
+    const techniques = instance.techniques.get();
+    return name && name.length > 0 && points == 0 && master && techniques && techniques.length > 0;
+  },
+  // TODO limit which techniques new characters can learn by master & ?background?
+  techniqueCount() {
+    return learnableTechniques().length;
+  },
+  techniqueOptions() {
+    return learnableTechniques().map((t)=> {
+      return {
+        name: t.label,
+        value: t.key
+      }
+    });
   },
 })
 
@@ -179,6 +212,9 @@ Template.wuxia_createCharacter.events({
   'change select.masters'(e, instance){
     instance.master.set($(e.currentTarget).val());
   },
+  'change select.technique-select'(e, instance){
+    instance.techniques.set($(e.currentTarget).val());
+  },
   'click button.submit-character'(e, instance) {
     e.preventDefault();
     const gameId = FlowRouter.getParam('_id');
@@ -192,10 +228,20 @@ Template.wuxia_createCharacter.events({
     };
     // ability scores
     _.each(_.keys(ABILITIES), function(key, index) {
-      const raceBonus = race[key+'_bonus'] || 0;
-      details[key] = instance[key].curValue + raceBonus;
+      let bonus = 0;
+      ['clanSize', 'familyStatus', 'hometown', 'firstStep'].forEach((fkey)=>{
+        const options = FAMILY_BACKGROUND[fkey];
+        const choice = instance[fkey].get();
+        const choiceData = options[choice];
+        if (choiceData.bonus == ability) {
+          bonus += 1;
+        }
+      });
+      details[key] = instance[key].curValue + bonus;
     });
+    // TODO rest of attributes on character
 
+    // TODO update server side character creation
     Meteor.call('characters.insert', gameId, userId, details, (error) => {
       if (error) {
         alert(error.error);
